@@ -3,17 +3,15 @@ const mysql = require('mysql');
 
 const dbCon = mysql.createConnection({
     host: 'localhost',
-    user: 'admin',           // maybe too much privilege
-    password: 'adminPassword',    // for internal testing purposes only !!
+    user: 'admin',
+    password: 'password',
     database: 'patientDatabase',
-    multipleStatements: true, // security hole if not using prepared queries !!
+    multipleStatements: true,
 });
 
 // Connection to the database.
 dbCon.connect(function (err) {
-    if (err) {
-        throw err;
-    }
+    if (err) throw err;
     console.log('Connected to database!');
 });
 
@@ -22,12 +20,10 @@ const cbToPromise = function (fn, ...args) {
     return new Promise(function (resolve, reject) {
         fn(...args, (err, res, fields) => {
             if (err) {
-                /* return */
                 reject(err);
             }
             else {
-                /* return */
-                resolve({'result': res, 'fields': fields}); // return not needed, implicit ?
+                resolve({'result': res, 'fields': fields});
             }
         });
     });
@@ -44,15 +40,25 @@ const query = function (sql_query) {
 // --------------------------------------------------------------------------
 
 module.exports.users = {
-    byUsername: (username) => query(prepareQuery(`
+    byUsername: (mail) => query(prepareQuery(`
 select 
-    id, 
+    mail, 
     password, 
     type 
 from 
-    user 
+    authentication 
 where 
-    username = ?;`, [username])),
+    mail = ?;`, [mail])),
+}
+
+module.exports.patient = {
+    byUserId: (id) => query(prepareQuery(`
+select 
+    *
+from 
+    authentication 
+where 
+    patientId = ?;`, [id])),
 }
 
 // --------------------------------------------------------------------------
