@@ -2,10 +2,10 @@
 
 // Expressjs
 const express = require('express');
-const formidable = require('formidable');
 const path = require('path');
 const dbHelper = require('./dbhelper.js');
 const passwordHash = require('password-hash');
+const fs = require('fs');
 // https://github.com/validatorjs/validator.js#validators for more info
 const { body, param, validationResult } = require('express-validator');
 
@@ -39,6 +39,19 @@ module.exports = (passport) => {
     app.use(express.urlencoded());
     app.use(express.static('public'));
     app.use('/uploads', express.static('uploads'));
+
+    app.post('/upload', function (req,res) {
+        console.log("Received : " + req.body);//file.originalname);
+        let src = fs.createReadStream(req.file.path);
+        let dest = fs.createWriteStream('uploads/' + req.file.originalname);
+        src.pipe(dest);
+        src.on('end', function() {
+            fs.unlinkSync(req.file.path);
+            res.json('OK: received ' + req.file.originalname);
+        });
+        src.on('error', function(err) { res.json('Something went wrong!'); });
+
+    });
 
     /*app.get('/participe_evenement/:id_evenement',
         [require('connect-ensure-login').ensureLoggedIn()],
