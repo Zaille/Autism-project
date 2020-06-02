@@ -7,8 +7,9 @@
 
 // Expressjs
 const express = require('express');
+const formidable = require('formidable');
 const path = require('path');
-const dbHelper = require('./dbhelper');
+const dbHelper = require('./dbhelper.js');
 const passwordHash = require('password-hash');
 // https://github.com/validatorjs/validator.js#validators pour plus de check
 const { body, param, validationResult } = require('express-validator');
