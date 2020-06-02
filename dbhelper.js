@@ -7,8 +7,8 @@ const mysql = require('mysql');
 const dbCon = mysql.createConnection({
     host: 'localhost',
     user: 'admin',           // maybe too much privilege
-    password: 'password',    // for internal testing purposes only !!
-    database: 'polydb',
+    password: 'adminPassword',    // for internal testing purposes only !!
+    database: 'patientDatabase',
     multipleStatements: true, // security hole if not using prepared queries !!
 });
 
