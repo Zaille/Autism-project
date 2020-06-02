@@ -49,5 +49,5 @@ create table pictures (
 -- Create users --
 
 delete from mysql.user where User = 'admin';
-create user 'admin'@'localhost' IDENTIFIED WITH mysql_native_password BY 'adminPassword';
+create user 'admin'@'localhost' IDENTIFIED with mysql_native_password by 'password';
 grant all privileges on *.* to 'admin'@'localhost';

@@ -1,7 +1,4 @@
-/* eslint-env node */
 'use strict';
-
-// This module alows connection to a mysql/mariadb dadtabase
 const mysql = require('mysql');
 
 const dbCon = mysql.createConnection({

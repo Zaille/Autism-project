@@ -54,8 +54,8 @@ const requireAdminOnly = function (url) {
 };
 
 
-// Comme c'est un module nodejs il faut exporter les fonction qu'on veut rendre publiques
-// ici on n'exporte qu'ne seule fonction (anonyme) qui est le "constructeur" du module
+// Comme c'est un module nodejs il faut exporter les fonctions qu'on veut rendre publiques
+// ici on n'exporte qu'une seule fonction (anonyme) qui est le "constructeur" du module
 // Cette fonction prend en paramètre un objet "passport" pour la gestion de l'authentification
 module.exports = (passport) => {
     const app = express();
