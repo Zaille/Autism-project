@@ -13,7 +13,7 @@ create table users (
     parentFirstName varchar(50) not null,
     parentLastName varchar(50) not null,
     parentMail varchar(70) not null,
-    phoneNumber varchar(20) not null,
+    phoneNumber varchar(20) not null
 );
 
 create table authentication (
