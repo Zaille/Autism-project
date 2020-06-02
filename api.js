@@ -1,9 +1,4 @@
-/* eslint-env node */
 'use strict';
-
-// Ce module nodejs gère l'API de notre site
-// Il définit l'ensemble des routes (relative à "/api") corresponant aux
-// points d'entrée de l'API
 
 // Expressjs
 const express = require('express');
@@ -11,30 +6,16 @@ const formidable = require('formidable');
 const path = require('path');
 const dbHelper = require('./dbhelper.js');
 const passwordHash = require('password-hash');
-// https://github.com/validatorjs/validator.js#validators pour plus de check
+// https://github.com/validatorjs/validator.js#validators for more info
 const { body, param, validationResult } = require('express-validator');
 
 ////////////////////////////////////////////
-// Middle ware de gestion de droit
+// Authentication middleware
 ////////////////////////////////////////////
 
-const requireEtudiantOnly = (url) => {
+const requirePatientOnly = (url) => {
     return function (req, res, next) {
-        // ce middleware arrive toujours après le login.active
-        // Nous somme donc log avec une session valide
-
-        if (req.session.passport.user.type !== 3) {
-            return res.redirect(url || '/login');
-        }
-        next();
-    };
-};
-
-const requireProfesseurOnly = (url) => {
-    return function (req, res, next) {
-        // ce middleware arrive toujours après le login.active
-        // Nous somme donc log avec une session valide
-
+        // Already log in session
         if (req.session.passport.user.type !== 2) {
             return res.redirect(url || '/login');
         }
@@ -44,9 +25,7 @@ const requireProfesseurOnly = (url) => {
 
 const requireAdminOnly = function (url) {
     return function (req, res, next) {
-        // ce middleware arrive toujours après le login.active
-        // Nous somme donc log avec une session valide
-
+        // Already log in session
         if (req.session.passport.user.type !== 1) {
             return res.redirect(url || '/login');
         }
@@ -54,10 +33,6 @@ const requireAdminOnly = function (url) {
     };
 };
 
-
-// Comme c'est un module nodejs il faut exporter les fonctions qu'on veut rendre publiques
-// ici on n'exporte qu'une seule fonction (anonyme) qui est le "constructeur" du module
-// Cette fonction prend en paramètre un objet "passport" pour la gestion de l'authentification
 module.exports = (passport) => {
     const app = express();
     app.use(express.json());
@@ -65,7 +40,7 @@ module.exports = (passport) => {
     app.use(express.static('public'));
     app.use('/uploads', express.static('uploads'));
 
-    app.get('/participe_evenement/:id_evenement',
+    /*app.get('/participe_evenement/:id_evenement',
         [require('connect-ensure-login').ensureLoggedIn()],
         function (req, res) {
             dbHelper.participe_evenement.byEventId(req.params.id_evenement)
@@ -113,7 +88,7 @@ module.exports = (passport) => {
             else {
                 return res.status(400).end();
             }
-        });
+        });*/
 
     return app;
 };
