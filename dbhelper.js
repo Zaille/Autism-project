@@ -61,6 +61,7 @@ where
     patientId = ?;`, [id])),
 }
 
+
 // --------------------------------------------------------------------------
 
 module.exports.atExit = function (options, exitCode) {
