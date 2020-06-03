@@ -41,24 +41,40 @@ const query = function (sql_query) {
 
 module.exports.users = {
     byUsername: (mail) => query(prepareQuery(`
-select 
-    mail, 
-    password, 
-    type 
-from 
-    authentication 
-where 
+select
+    mail,
+    password,
+    type
+from
+    authentication
+where
     mail = ?;`, [mail])),
 }
 
 module.exports.patient = {
     byUserId: (id) => query(prepareQuery(`
-select 
+select
     *
-from 
-    authentication 
-where 
+from
+    authentication
+where
     patientId = ?;`, [id])),
+
+    scores: () => query(`
+SELECT
+    u.firstName, u.lastName, u.age, s.score
+FROM
+    users u, scores s
+WHERE
+    u.patientId = s.patientId;`),
+
+    infoById: (id) => query(prepareQuery(`
+SELECT *
+FROM users u, anwsers a, scores s, pictures p
+WHERE u.patientId =  a.patientId
+AND u.patientId =  s.patientId
+AND u.patientId = p.patientId
+AND u.patientId  = ?;`), [id])
 }
 
 

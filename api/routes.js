@@ -19,4 +19,17 @@ module.exports = function (app) {
         }
     });
 
+    /* Get all scores */
+    app.get('/scores', function (req, res) {
+        dbHelper.patient.scores()
+            .then((rows) => res.json(rows.result))
+            .catch((err) => res.status(400).json({ err }));
+    });
+
+    /* Get all information of a patient */
+    app.get('/info/:id', function (req, res) {
+        dbHelper.patient.scores()
+            .then((rows) => res.json(rows.result))
+            .catch((err) => res.status(400).json({ err }));
+    });
 };
