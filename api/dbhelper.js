@@ -77,7 +77,11 @@ AND u.patientId = p.patientId
 AND u.patientId  = ?;`), [id])
 }
 
-
+module.exports.upload =  {
+    file: (data) => query(prepareQuery(`
+Insert into pictures
+values (?,?,?,?,?);`), data)
+};
 // --------------------------------------------------------------------------
 
 module.exports.atExit = function (options, exitCode) {

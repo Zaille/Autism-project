@@ -1,16 +1,25 @@
+dbHelper = require("./dbhelper");
+
 module.exports = function (app) {
 
     app.post('/upload', function (req,res) {
         console.log("Upload !");
         console.dir(req.body);
         console.dir(req.files);
+        let splitPath;
+        let path;
+        let i = 1;
         try {
             if (!req.files) {
                 res.redirect('/');
             }
             else {
-                let image = req.files.file;
-                image.mv('./api/images/' + image.name);
+                req.files['files[]'].forEach(elem => {
+                    splitPath = elem.name.split('.');
+                    path = req.body.email + '_picture' + i + '.' + splitPath[splitPath.length - 1];
+                    elem.mv('./api/images/' + path);
+                    i = i + 1;
+                });
                 res.redirect('/');
             }
         }
