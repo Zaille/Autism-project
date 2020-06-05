@@ -11,7 +11,7 @@ module.exports = function (app) {
         let i = 1;
         try {
             if (!req.files) {
-                res.redirect('/');
+                res.status(400).send();
             }
             else {
                 req.files['files[]'].forEach(elem => {

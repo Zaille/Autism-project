@@ -80,8 +80,14 @@ AND u.patientId  = ?;`), [id])
 module.exports.upload =  {
     file: (data) => query(prepareQuery(`
 Insert into pictures
-values (?,?,?,?,?);`), data)
+values (?,?,?,?,?);`), data),
+
+    getIdByMail: (email) => query(prepareQuery(`
+Select patientId from users
+where parentMail = ?;`), email),
 };
+
+
 // --------------------------------------------------------------------------
 
 module.exports.atExit = function (options, exitCode) {
