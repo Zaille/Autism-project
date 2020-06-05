@@ -16,11 +16,11 @@ module.exports = function (app) {
             else {
                 req.files['files[]'].forEach(elem => {
                     splitPath = elem.name.split('.');
-                    path = req.body.email + '_picture' + i + '.' + splitPath[splitPath.length - 1];
-                    elem.mv('./api/images/' + path);
+                    path = req.body.email + '_video' + i + '.' + splitPath[splitPath.length - 1];
+                    elem.mv('./api/videos/' + path);
                     i = i + 1;
                 });
-                res.redirect('/');
+                res.status(201).send();
             }
         }
         catch (err) {
