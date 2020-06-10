@@ -13,6 +13,8 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Stack(
             children: <Widget>[
@@ -32,19 +34,16 @@ class HomeState extends State<Home> {
             ],
           ),
           Container(
-            transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFFFFF), Color(0xFFC9F1FD)]
-                )
-            ),
-            height: 30,
-          ),
-          Container(
-              transform: Matrix4.translationValues(0.0, -30.08, 0.0),
-              color: Color(0xFFC9F1FD),
+              decoration: BoxDecoration(
+                color: Color(0xFFC9F1FD),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFFC9F1FD).withOpacity(1),
+                    spreadRadius: 10,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
               height: 350.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,21 +90,10 @@ class HomeState extends State<Home> {
                 ],
               )
           ),
-          Container(
-            transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFC9F1FD), Color(0xFFFFFF)]
-                )
-            ),
-            height: 30,
-          ),
           Center(
               child: Container(
-                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-                  padding: const EdgeInsets.only( top: 25.0, left: 50.0, right: 50 ),
+//                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                  padding: const EdgeInsets.symmetric( vertical: 35.0, horizontal: 50 ),
                   child: Text("© 2009 Diana Robins, Deborah Fein, & Marianne Barton.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
