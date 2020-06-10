@@ -85,6 +85,10 @@ values (?,?,?,?,?);`), data),
     getIdByMail: (email) => query(prepareQuery(`
 Select patientId from users
 where parentMail = ?;`), email),
+
+    createUser: (data) => query(prepareQuery(`
+        Insert into users (firstName, lastName, age, parentFirstName, parentLastName, parentMail, phoneNumber)
+        values (?,?,?,?,?,?,?),`), data),
 };
 
 

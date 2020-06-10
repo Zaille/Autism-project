@@ -30,7 +30,7 @@ create table users (
     parentLastName varchar(50) not null,
     parentMail varchar(70) not null,
     phoneNumber varchar(20) not null,
-    unique(firstName, lastName)
+    unique(firstName, lastName, parentMail)
 );
 
 create table authentication (

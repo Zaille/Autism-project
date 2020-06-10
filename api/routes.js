@@ -22,6 +22,15 @@ module.exports = function (app) {
                 });
                 res.status(201).send();
             }
+            dbHelper.upload.createUser([
+                req.body.childFirstName,
+                req.body.childLastName,
+                req.body.childAge,
+                req.body.parentFirstName,
+                req.body.parentLastName,
+                req.body.email,
+                req.body.phoneNumber,
+            ]);
         }
         catch (err) {
             res.status(500).send(err);

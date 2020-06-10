@@ -33,7 +33,7 @@ class FormWidgetState extends State<FormWidget> {
   final password1Controller = TextEditingController();
   final password2Controller = TextEditingController();
 
-  final RegExp regExp = new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+  final RegExp phoneRegExp = new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +177,7 @@ class FormWidgetState extends State<FormWidget> {
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
-                  if (!regExp.hasMatch(value)) {
+                  if (!phoneRegExp.hasMatch(value)) {
                     return 'Not a valid phone number';
                   }
                   return null;
@@ -283,21 +283,16 @@ class FormWidgetState extends State<FormWidget> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(50.0),
-            child:
-            loading
-                ? CircularProgressIndicator()
-                : RaisedButton(
-              color: Colors.blue,
-              textColor: Colors.white,
-              shape: RoundedRectangleBorder (
+                padding: const EdgeInsets.all(50.0),
+                child: RaisedButton(
+            color: Colors.blue,
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder (
                 borderRadius: BorderRadius.circular(5.0),
-              ),
-              onPressed: () {
+            ),
+            onPressed: () {
                 if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
                   sendData();
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }
                 else {
                   setState(() {
@@ -306,10 +301,10 @@ class FormWidgetState extends State<FormWidget> {
                         content: new Text("Complete all fields")));
                   });
                 }
-              },
-              child: Text('SEND'),
-            ),
+            },
+            child: Text('SEND'),
           ),
+              ),
         ],
       ),
     );
@@ -336,14 +331,14 @@ class FormWidgetState extends State<FormWidget> {
     String uploadURL = 'http://192.168.1.45:8080/api/upload';
     Dio dio = new Dio();
     FormData formData = FormData.fromMap({
-      "childFirtName": childFirstNameController,
-      "childLastName": childLastNameController,
-      "childAge": childAgeController,
-      "parentFirstName": parentFirstNameController,
-      "parentLastName": parentLastNameController,
-      "phoneNumber": phoneNumberController,
-      "email": emailController,
-      "password": password1Controller,
+      "childFirtName": childFirstNameController.text,
+      "childLastName": childLastNameController.text,
+      "childAge": childAgeController.text,
+      "parentFirstName": parentFirstNameController.text,
+      "parentLastName": parentLastNameController.text,
+      "phoneNumber": phoneNumberController.text,
+      "email": emailController.text,
+      "password": password1Controller.text,
       "files": [
         await MultipartFile.fromFile(files[0].path, filename: files[0].path.split('/').last),
         await MultipartFile.fromFile(files[1].path, filename: files[1].path.split('/').last),
@@ -352,8 +347,8 @@ class FormWidgetState extends State<FormWidget> {
     setState(() {
       loading = !loading;
     });
-    Scaffold.of(context).showSnackBar(new SnackBar(
-      content: new Text("Submission..."), duration: const Duration(seconds: 1),));
+    Scaffold.of(context)
+        .showSnackBar(SnackBar(content: Text('Processing data...')));
     try {
       response = await dio.post(uploadURL, data: formData).timeout(const Duration(seconds: 10));
     }
