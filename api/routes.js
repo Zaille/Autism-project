@@ -10,7 +10,7 @@ module.exports = function (app) {
         let path;
         let i = 1;
         try {
-            if (!req.files) {
+            if (!req.files || !req.body) {
                 res.status(400).send();
             }
             else {
