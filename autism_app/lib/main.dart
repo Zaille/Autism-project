@@ -4,6 +4,8 @@ import 'package:autismtest/home.dart';
 import 'package:autismtest/thank.dart';
 import 'package:autismtest/form.dart';
 
+import 'instructions.dart';
+
 
 void main() => runApp(Index());
 
@@ -44,7 +46,7 @@ class _MyAppState extends State<MyApp> {
           child: AppBar(),
         ),
         body: Center(
-          child: FormWidget(),
+          child: Instructions(),
         ),
       ),
     );
