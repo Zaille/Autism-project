@@ -1,12 +1,24 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:autismtest/home.dart';
 import 'package:autismtest/MyCustomForm.dart';
 
-void main() {
-  runApp(MaterialApp(
-    title: 'Application',
-    home: MyApp(),
-  ));
+import 'MyCustomForm.dart';
+
+void main() => runApp(Index());
+
+class Index extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    return MaterialApp(
+      title: 'M-CHAT-R Test',
+      home: MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -26,13 +38,20 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(0.0), // here the desired height
+          child: AppBar(),
+        ),
         body: Center(
-          child: MyCustomForm(),
+          child: Home(),
         ),
       ),
     );
   }
 }
 
+//Scaffold(
 
-
+//body:
+//)
