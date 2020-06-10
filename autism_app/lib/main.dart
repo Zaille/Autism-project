@@ -26,9 +26,6 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Home'),
-        ),
         body: Center(
           child: MyCustomForm(),
         ),
