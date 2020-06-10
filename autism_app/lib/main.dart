@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
+import 'package:autismtest/thank.dart';
+import 'package:autismtest/MyCustomForm.dart';
 
-import 'MyCustomForm.dart';
 
 void main() => runApp(Index());
 
@@ -49,8 +50,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-//Scaffold(
-
-//body:
-//)

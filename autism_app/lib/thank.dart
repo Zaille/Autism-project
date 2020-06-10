@@ -1,123 +1,73 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:autismtest/MyCustomForm.dart';
 
-class Home extends StatefulWidget {
+class Thank extends StatefulWidget {
   @override
-  HomeState createState() {
-    return HomeState();
+  ThankState createState() {
+    return ThankState();
   }
 }
 
-class HomeState extends State<Home> {
+class ThankState extends State<Thank> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Stack(
-            children: <Widget>[
-              Image.asset(
-                'images/home_pic.jpg',
-              ),
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.only(top: 70.0),
-                  child: Text('M-CHAT-R/F™', style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)
-                  ),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(top: 40.0, bottom: 40.0, left: 40.0),
+          child: Text("Thank You",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+              color: Color(0xffaaaaaa),
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFC9F1FD),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 3,
+                blurRadius: 5,
+                offset: Offset(0, 4), // changes position of shadow
               ),
             ],
           ),
-          Container(
-            transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFFFFF), Color(0xFFC9F1FD)]
-                )
+          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+          child: Text("          Lorem ipsum dolor sit amet, consectetur adipiscing "
+              "elit. Sed non risus. Suspendisse lectus tortor, "
+              "dignissim sit amet, adipiscing nec, ultricies sed, "
+              "dolor. Cras elementum ultrices diam. Maecenas ligula "
+              "massa, varius a, semper congue, euismod non, mi. "
+              "Cras elementum ultrices diam. Maecenas ligula "
+              "massa, varius a, semper congue, euismod non, mi.\n\n\n\n"
+              "          Lorem ipsum dolor sit amet, consectetur adipiscing "
+              "elit. Sed non risus. Suspendisse lectus tortor, "
+              "dignissim sit amet, adipiscing nec, ultricies sed, "
+              "dolor. Cras elementum ultrices diam. Maecenas ligula "
+              "massa, varius a, semper congue, euismod non, mi.",
+            textAlign: TextAlign.justify
+          ),
+        ),
+        Center(
+          child: Container (
+            padding: const EdgeInsets.only(top: 60.0),
+            child: RaisedButton(
+              onPressed: () {}, // TODO : Envoyer vers page Questions
+              textColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
+              color: Colors.blue,
+              child: const Text('Finish', style: TextStyle(fontSize: 20)),
+              shape: RoundedRectangleBorder (
+                borderRadius: BorderRadius.circular(5.0),
+              ),
             ),
-            height: 30,
           ),
-          Container(
-              transform: Matrix4.translationValues(0.0, -30.08, 0.0),
-              color: Color(0xFFC9F1FD),
-              height: 350.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.only(top: 20.0, left: 35),
-                    child: Text("What is M-CHAT-R/F™ ?",
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xffb6c6ca)
-                      ),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text("          Lorem ipsum dolor sit amet, consectetur adipiscing "
-                        "elit. Sed non risus. Suspendisse lectus tortor, "
-                        "dignissim sit amet, adipiscing nec, ultricies sed, "
-                        "dolor. Cras elementum ultrices diam. Maecenas ligula "
-                        "massa, varius a, semper congue, euismod non, mi.\n\n"
-                        "          Lorem ipsum dolor sit amet, consectetur adipiscing "
-                        "elit. Sed non risus. Suspendisse lectus tortor, "
-                        "dignissim sit amet, adipiscing nec, ultricies sed, "
-                        "dolor. Cras elementum ultrices diam. Maecenas ligula "
-                        "massa, varius a, semper congue, euismod non, mi.", textAlign: TextAlign.justify,
-                    ),
-                  ),
-                  Center(
-                    child: Container (
-                      child: RaisedButton(
-                        onPressed: () {}, // TODO : Envoyer vers page Instructions
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
-                        color: Colors.blue,
-                        child: const Text('Start', style: TextStyle(fontSize: 20)),
-                        shape: RoundedRectangleBorder (
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-          ),
-          Container(
-            transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFC9F1FD), Color(0xFFFFFF)]
-                )
-            ),
-            height: 30,
-          ),
-          Center(
-              child: Container(
-                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-                  padding: const EdgeInsets.only( top: 25.0, left: 50.0, right: 50 ),
-                  child: Text("© 2009 Diana Robins, Deborah Fein, & Marianne Barton.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xffaaaaaa)
-                    ),
-                  )
-              )
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
