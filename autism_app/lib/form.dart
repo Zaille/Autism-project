@@ -1,19 +1,18 @@
 import 'dart:io';
 
-import 'package:autismtest/uploadFormWidget.dart';
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class MyCustomForm extends StatefulWidget {
+class FormWidget extends StatefulWidget {
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  FormWidgetState createState() {
+    return FormWidgetState();
   }
 }
 
-class MyCustomFormState extends State<MyCustomForm> {
+class FormWidgetState extends State<FormWidget> {
 
   final _formKey = GlobalKey<FormState>();
   //GlobalKey<UploadFormWidgetState> _keyPictures = GlobalKey();
@@ -43,8 +42,32 @@ class MyCustomFormState extends State<MyCustomForm> {
       key: _formKey,
       child: ListView(
         children: <Widget>[
-          MyContainer(
-            title: "Child information",
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFC9F1FD),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 4), // changes position of shadow
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+            child: Text("          Lorem ipsum dolor sit amet, consectetur adipiscing "
+                "elit. Sed non risus. Suspendisse lectus tortor, "
+                "dignissim sit amet, adipiscing nec, ultricies sed, "
+                "dolor. Cras elementum ultrices diam. Maecenas ligula "
+                "massa, varius a, semper congue, euismod non, mi. "
+                "Cras elementum ultrices diam. Maecenas ligula "
+                "massa, varius a, semper congue, euismod non, mi.",
+                textAlign: TextAlign.justify
+            ),
+          ),
+          FormContainer(
+            title: "Child information:",
+            width: screenWidth(context, coeff: 0.9),
             children: <Widget>[
               TextFormField(
                 controller: childFirstNameController,
@@ -79,7 +102,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               TextFormField(
                 controller: childAgeController,
                 keyboardType: TextInputType.number,
-                maxLength: 50,
+                maxLength: 3,
                 enableInteractiveSelection: true,
                 decoration: InputDecoration(
                   labelText: "Age",
@@ -94,9 +117,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               ),
             ]
           ),
-          MyContainer(
+          FormContainer(
             title: "Parent information:",
-            width: 100.0,
+            width: screenWidth(context, coeff: 0.9),
             children: <Widget>[
               TextFormField(
                 controller: parentFirstNameController,
@@ -162,9 +185,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               ),
             ],
           ),
-          MyContainer(
+          FormContainer(
             title: "Authentication:",
-            width: 100.0,
+            width: screenWidth(context, coeff: 0.9),
             children: <Widget>[
               TextFormField(
                 controller: password1Controller,
@@ -200,8 +223,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               ),
             ],
           ),
-          MyContainer(
+          FormContainer(
             title: "Videos:",
+            width: screenWidth(context, coeff: 0.9),
             children: <Widget> [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -259,13 +283,16 @@ class MyCustomFormState extends State<MyCustomForm> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 50),
+            padding: const EdgeInsets.all(50.0),
             child:
             loading
                 ? CircularProgressIndicator()
                 : RaisedButton(
               color: Colors.blue,
               textColor: Colors.white,
+              shape: RoundedRectangleBorder (
+                borderRadius: BorderRadius.circular(5.0),
+              ),
               onPressed: () {
                 if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
                   sendData();
@@ -287,6 +314,10 @@ class MyCustomFormState extends State<MyCustomForm> {
       ),
     );
   }
+
+  Size screenSize(BuildContext context) {return MediaQuery.of(context).size;}
+  double screenHeight(BuildContext context, {double coeff = 1}) {return screenSize(context).height * coeff;}
+  double screenWidth(BuildContext context, {double coeff = 1}) {return screenSize(context).width * coeff;}
 
   void getFile(index) async {
     final pickedFile = await ImagePicker.pickVideo(source: ImageSource.gallery);
@@ -340,16 +371,12 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 }
 
-class MyContainer extends StatelessWidget {
-  MyContainer({Key key, this.children, this.width, this.title}) : super(key: key);
+class FormContainer extends StatelessWidget {
+  FormContainer({Key key, this.children, this.width, this.title}) : super(key: key);
 
   final children;
   final width;
   final title;
-
-  Size screenSize(BuildContext context) {return MediaQuery.of(context).size;}
-  double screenHeight(BuildContext context, {double coeff = 1}) {return screenSize(context).height * coeff;}
-  double screenWidth(BuildContext context, {double coeff = 1}) {return screenSize(context).width * coeff;}
 
   @override
   Widget build(BuildContext context) {
@@ -368,7 +395,7 @@ class MyContainer extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Center(
             child: Container(
-              width: screenWidth(context, coeff: 0.9),
+              width: this.width,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
