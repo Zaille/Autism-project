@@ -4,6 +4,7 @@ import 'package:autismtest/submitButton.dart';
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:autismtest/RoundedContainer.dart";
 
@@ -289,8 +290,7 @@ class FormWidgetState extends State<FormWidget> {
               else {
                 setState(() {
                   errorMessageColor = Colors.red;
-                  Scaffold.of(context).showSnackBar(new SnackBar(
-                      content: new Text("Complete all fields")));
+                  Fluttertoast.showToast(msg: "Complete all fields");
                 });
               }
             },
@@ -343,12 +343,10 @@ class FormWidgetState extends State<FormWidget> {
       response = await dio.post(uploadURL, data: formData).timeout(const Duration(seconds: 10));
     }
     catch(e) {
-      Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("Upload error")));
+      Fluttertoast.showToast(msg: "Upload error");
     }
     if (response != null && response.statusCode == 201) {
-      Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("Upload done")));
+      Fluttertoast.showToast(msg: "Upload done !");
     }
     setState(() {
       loading = !loading;

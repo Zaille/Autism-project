@@ -5,18 +5,20 @@ class SubmitButton extends StatelessWidget {
   SubmitButton({
     Key key,
     this.text = "SUBMIT",
+    this.padding = const EdgeInsets.all(50.0),
     this.onPressed,
     this.color = Colors.blue,})
       : super(key: key);
 
   final text;
+  final padding;
   final onPressed;
   final color;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(50.0),
+      padding: this.padding,
       child: RaisedButton(
         child: Text(this.text),
         color: this.color,

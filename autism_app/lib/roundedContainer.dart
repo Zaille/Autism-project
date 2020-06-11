@@ -5,12 +5,14 @@ class RoundedContainer extends StatelessWidget {
     Key key,
     this.children,
     this.title,
-    this.color = Colors.white,})
+    this.color = Colors.white,
+    this.height = null})
       : super(key: key);
 
   final children;
   final title;
   final color;
+  final height;
 
   Size screenSize(BuildContext context) {return MediaQuery.of(context).size;}
   double screenHeight(BuildContext context, {double coeff = 1}) {return screenSize(context).height * coeff;}
@@ -37,6 +39,7 @@ class RoundedContainer extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Center(
             child: Container(
+              height: this.height,
               width: screenWidth(context, coeff: 0.9),
               decoration: BoxDecoration(
                 color: color,
