@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
 import 'package:autismtest/thank.dart';
 import 'package:autismtest/form.dart';
+import 'package:autismtest/questions.dart';
 
 import 'instructions.dart';
 
@@ -46,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           child: AppBar(),
         ),
         body: Center(
-          child: Instructions(),
+          child: QuestionWidget(),
         ),
       ),
     );

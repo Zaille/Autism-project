@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:autismtest/submitButton.dart';
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import "package:autismtest/RoundedContainer.dart";
 
 class FormWidget extends StatefulWidget {
   @override
@@ -65,9 +67,8 @@ class FormWidgetState extends State<FormWidget> {
                 textAlign: TextAlign.justify
             ),
           ),
-          FormContainer(
+          RoundedContainer(
             title: "Child information:",
-            width: screenWidth(context, coeff: 0.9),
             children: <Widget>[
               TextFormField(
                 controller: childFirstNameController,
@@ -117,9 +118,8 @@ class FormWidgetState extends State<FormWidget> {
               ),
             ]
           ),
-          FormContainer(
+          RoundedContainer(
             title: "Parent information:",
-            width: screenWidth(context, coeff: 0.9),
             children: <Widget>[
               TextFormField(
                 controller: parentFirstNameController,
@@ -185,9 +185,8 @@ class FormWidgetState extends State<FormWidget> {
               ),
             ],
           ),
-          FormContainer(
+          RoundedContainer(
             title: "Authentication:",
-            width: screenWidth(context, coeff: 0.9),
             children: <Widget>[
               TextFormField(
                 controller: password1Controller,
@@ -223,9 +222,8 @@ class FormWidgetState extends State<FormWidget> {
               ),
             ],
           ),
-          FormContainer(
+          RoundedContainer(
             title: "Videos:",
-            width: screenWidth(context, coeff: 0.9),
             children: <Widget> [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -282,29 +280,21 @@ class FormWidgetState extends State<FormWidget> {
               ),
             ],
           ),
-          Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: RaisedButton(
-            color: Colors.blue,
-            textColor: Colors.white,
-            shape: RoundedRectangleBorder (
-                borderRadius: BorderRadius.circular(5.0),
-            ),
+          SubmitButton(
+            text: "SEND",
             onPressed: () {
-                if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
-                  sendData();
-                }
-                else {
-                  setState(() {
-                    errorMessageColor = Colors.red;
-                    Scaffold.of(context).showSnackBar(new SnackBar(
-                        content: new Text("Complete all fields")));
-                  });
-                }
+              if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
+                sendData();
+              }
+              else {
+                setState(() {
+                  errorMessageColor = Colors.red;
+                  Scaffold.of(context).showSnackBar(new SnackBar(
+                      content: new Text("Complete all fields")));
+                });
+              }
             },
-            child: Text('SEND'),
           ),
-              ),
         ],
       ),
     );
@@ -364,58 +354,4 @@ class FormWidgetState extends State<FormWidget> {
       loading = !loading;
     });
   }
-}
-
-class FormContainer extends StatelessWidget {
-  FormContainer({Key key, this.children, this.width, this.title}) : super(key: key);
-
-  final children;
-  final width;
-  final title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 40, bottom: 15),
-          child: Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20),
-          ),
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Center(
-            child: Container(
-              width: this.width,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
-                child: Column(
-                  children: this.children,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-
-
 }
