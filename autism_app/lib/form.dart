@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:autismtest/submitButton.dart';
+import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -347,9 +348,22 @@ class FormWidgetState extends State<FormWidget> {
     }
     if (response != null && response.statusCode == 201) {
       Fluttertoast.showToast(msg: "Upload done !");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ThanksPage()),
+      );
     }
     setState(() {
       loading = !loading;
     });
+  }
+}
+
+class FormPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FormWidget(),
+    );
   }
 }

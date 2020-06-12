@@ -1,3 +1,4 @@
+import 'package:autismtest/questions.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
 import 'RoundedContainer.dart';
@@ -77,7 +78,10 @@ class InstructionsState extends State<Instructions> {
             text:"ACCEPT",
             onPressed: () {
               if (checkedValue) {
-                acceptTerms();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuestionsPage()),
+                );
               }
               else {
                 Scaffold.of(context).showSnackBar(new SnackBar(
@@ -92,11 +96,13 @@ class InstructionsState extends State<Instructions> {
     );
   }
 
-  acceptTerms() {
-      Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("Go to the next page!"),
-        duration: const Duration(seconds: 2),
-      ));
-  }
+}
 
+class InstructionsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Instructions(),
+    );
+  }
 }

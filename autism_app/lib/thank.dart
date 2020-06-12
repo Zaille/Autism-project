@@ -1,3 +1,4 @@
+import 'package:autismtest/main.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,9 +40,23 @@ class ThankState extends State<Thank> {
         ),
         SubmitButton(
           text: "FINISH",
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyApp()),
+            );
+          },
         ),
       ],
+    );
+  }
+}
+
+class ThanksPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Thank()
     );
   }
 }

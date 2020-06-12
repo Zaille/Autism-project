@@ -1,3 +1,4 @@
+import 'package:autismtest/instructions.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,12 @@ class HomeState extends State<Home> {
           ),
           SubmitButton(
             text: "START",
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InstructionsPage()),
+              );
+            },
           ),
           Center(
               child: Container(

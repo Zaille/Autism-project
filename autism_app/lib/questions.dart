@@ -1,3 +1,4 @@
+import 'package:autismtest/form.dart';
 import 'package:autismtest/submitButton.dart';
 import "package:flutter/material.dart";
 import 'package:autismtest/roundedContainer.dart';
@@ -82,18 +83,21 @@ class QuestionState extends State<QuestionWidget> {
                   ),
                 ),
                 Spacer(),
-                Column(
+                Row(
                   children: <Widget>[
+                    Spacer(),
                     _myRadioButton(
                       title: "Yes",
                       value: 1,
                       onChanged: (newValue) => setState(() => _selected = newValue),
                     ),
+                    Spacer(),
                     _myRadioButton(
                       title: "No",
                       value: 0,
                       onChanged: (newValue) => setState(() => _selected = newValue),
                     ),
+                    Spacer(),
                   ],
                 ),
                 Spacer(),
@@ -110,7 +114,12 @@ class QuestionState extends State<QuestionWidget> {
                     score ++;
                   }
                   else responses.add(false);
-                  if (questionIndex == 19) Fluttertoast.showToast(msg: "End");
+                  if (questionIndex == 19) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FormPage()),
+                    );
+                  }
                   else {
                     setState(() {
                       questionIndex ++;
@@ -135,12 +144,23 @@ class QuestionState extends State<QuestionWidget> {
     );
   }
   Widget _myRadioButton({String title, int value, Function onChanged}) {
-    return RadioListTile(
-      value: value,
-      groupValue: _selected,
-      onChanged: onChanged,
-      title: Text(title),
+    return Container(
+      width: 150,
+      child: RadioListTile(
+        value: value,
+        groupValue: _selected,
+        onChanged: onChanged,
+        title: Text(title),
+      ),
     );
   }
+}
 
+class QuestionsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: QuestionWidget(),
+    );
+  }
 }
