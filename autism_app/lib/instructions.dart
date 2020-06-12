@@ -1,3 +1,4 @@
+import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
 import 'RoundedContainer.dart';
 
@@ -72,26 +73,19 @@ class InstructionsState extends State<Instructions> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50),
-            child: RaisedButton(
-                    child: Text('ACCEPT'),
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      if (checkedValue) {
-                        acceptTerms();
-                      }
-                      else {
-                        setState(() {
-                          Scaffold.of(context).showSnackBar(new SnackBar(
-                              content: new Text("Please accept ToS and PP"),
-                              duration: const Duration(seconds: 2),
-                          ));
-                        });
-                      }
-                    },
-            ),
+          SubmitButton(
+            text:"ACCEPT",
+            onPressed: () {
+              if (checkedValue) {
+                acceptTerms();
+              }
+              else {
+                Scaffold.of(context).showSnackBar(new SnackBar(
+                  content: new Text("Please accept ToS and PP"),
+                  duration: const Duration(seconds: 2),
+                ));
+              }
+            },
           ),
         ],
       ),

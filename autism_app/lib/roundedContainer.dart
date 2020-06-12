@@ -5,12 +5,14 @@ class RoundedContainer extends StatelessWidget {
     Key key,
     this.children,
     this.title,
+    this.titleSize = 24.0,
     this.color = Colors.white,
     this.height = null})
       : super(key: key);
 
   final children;
   final title;
+  final titleSize;
   final color;
   final height;
 
@@ -30,7 +32,7 @@ class RoundedContainer extends StatelessWidget {
               title,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                  fontSize: this.titleSize,
                   color: Colors.blueGrey),
             ),
           ),

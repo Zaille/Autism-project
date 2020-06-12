@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           child: AppBar(),
         ),
         body: Center(
-          child: QuestionWidget(),
+          child: Thank(),
         ),
       ),
     );

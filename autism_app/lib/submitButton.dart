@@ -17,7 +17,7 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: this.padding,
       child: RaisedButton(
         child: Text(this.text),

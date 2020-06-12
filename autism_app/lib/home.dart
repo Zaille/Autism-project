@@ -1,3 +1,4 @@
+import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -73,27 +74,17 @@ class HomeState extends State<Home> {
                         "massa, varius a, semper congue, euismod non, mi.", textAlign: TextAlign.justify,
                     ),
                   ),
-                  Center(
-                    child: Container (
-                      child: RaisedButton(
-                        onPressed: () {}, // TODO : Envoyer vers page Instructions
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
-                        color: Colors.blue,
-                        child: const Text('Start', style: TextStyle(fontSize: 20)),
-                        shape: RoundedRectangleBorder (
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               )
+          ),
+          SubmitButton(
+            text: "START",
+            onPressed: () {},
           ),
           Center(
               child: Container(
 //                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-                  padding: const EdgeInsets.symmetric( vertical: 35.0, horizontal: 50 ),
+                  padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 50 ),
                   child: Text("© 2009 Diana Robins, Deborah Fein, & Marianne Barton.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
