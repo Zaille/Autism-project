@@ -74,6 +74,7 @@ class QuestionState extends State<QuestionWidget> {
               height: 300.0,
               color: Colors.lightBlue.withOpacity(0.2),
               children: [
+                Spacer(),
                 Text(
                   widget.questions[questionIndex],
                   textAlign: TextAlign.justify,
@@ -103,31 +104,53 @@ class QuestionState extends State<QuestionWidget> {
                 Spacer(),
               ],
             ),
-            SubmitButton(
-              text: "   VALIDATE    ",
-              padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 100),
-              onPressed: () {
-                if (_selected == -1) Fluttertoast.showToast(msg: "Select an item");
-                else {
-                  if (_selected == 1) {
-                    responses.add(true);
-                    score ++;
-                  }
-                  else responses.add(false);
-                  if (questionIndex == 19) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FormPage()),
-                    );
-                  }
-                  else {
+            Row(
+              children: <Widget>[
+                Spacer(),
+                questionIndex > 0
+                  ? SubmitButton(
+                  text: "PREVIOUS",
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+                  onPressed: () {
                     setState(() {
-                      questionIndex ++;
-                      _selected = -1;
+                      questionIndex --;
+                      responses.removeLast();
                     });
-                  }
-                }
-              },
+                  },
+                )
+                : Spacer(),
+                Spacer(),
+                SubmitButton(
+                  text: "     NEXT     ",
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+                  onPressed: () {
+                    if (_selected == -1) Fluttertoast.showToast(msg: "Select an item");
+                    else {
+                      if (
+                        ((_selected == 1) & (questionIndex != 2) & (questionIndex != 4) & (questionIndex != 11)) |
+                        ((_selected == 0) & ( (questionIndex == 2) | (questionIndex == 4) | (questionIndex == 11) ))
+                      ) {
+                        responses.add(true);
+                        score ++;
+                      }
+                      else responses.add(false);
+                      if (questionIndex == 19) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FormPage()),
+                        );
+                      }
+                      else {
+                        setState(() {
+                          questionIndex ++;
+                          _selected = -1;
+                        });
+                      }
+                    }
+                  },
+                ),
+                Spacer(),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

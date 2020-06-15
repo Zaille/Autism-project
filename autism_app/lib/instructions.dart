@@ -25,6 +25,7 @@ class InstructionsState extends State<Instructions> {
 
           RoundedContainer(
               title: "Instructions",
+              titleSize: 30.0,
               color: Colors.lightBlue.withOpacity(0.2),
               children: <Widget>[
 //
@@ -56,7 +57,6 @@ class InstructionsState extends State<Instructions> {
                   onChanged: (newValue) {
                   setState(() {
                     checkedValue = newValue;
-                    print(checkedValue);
                   });
                   },
               ),

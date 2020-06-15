@@ -4,7 +4,7 @@ class RoundedContainer extends StatelessWidget {
   RoundedContainer({
     Key key,
     this.children,
-    this.title,
+    this.title = "",
     this.titleSize = 24.0,
     this.color = Colors.white,
     this.height = null})
