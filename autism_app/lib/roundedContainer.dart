@@ -6,6 +6,7 @@ class RoundedContainer extends StatelessWidget {
     this.children,
     this.title = "",
     this.titleSize = 24.0,
+    this.displayTitle = true,
     this.color = Colors.white,
     this.height = null})
       : super(key: key);
@@ -13,6 +14,7 @@ class RoundedContainer extends StatelessWidget {
   final children;
   final title;
   final titleSize;
+  final displayTitle;
   final color;
   final height;
 
@@ -24,6 +26,7 @@ class RoundedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        displayTitle ?
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -36,7 +39,8 @@ class RoundedContainer extends StatelessWidget {
                   color: Colors.blueGrey),
             ),
           ),
-        ),
+        )
+        : Container(padding: EdgeInsets.all(10),),
         Align(
           alignment: Alignment.centerLeft,
           child: Center(

@@ -2,6 +2,7 @@ import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup2 extends StatefulWidget{
   @override
@@ -21,6 +22,7 @@ class Followup2State extends State<Followup2> {
     if (state == 0) return firstElement();
     if (state == 1) return secondElement();
     if (state == 2) return thirdElement();
+    return Spacer();
   }
 
   Widget firstElement() {
@@ -28,7 +30,7 @@ class Followup2State extends State<Followup2> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
       RoundedContainer(
-        title: title,
+        title: "You reported that you have wondered if you child is deaf. What led you to wonder that?",
         children: [
           Container(
               padding: EdgeInsets.all(20),
@@ -43,7 +45,8 @@ class Followup2State extends State<Followup2> {
           text: "VALIDATE",
           onPressed: () {
             setState(() {
-              state = 1;
+              if ((_selected[0] == -1) | (_selected[1] == -1))Fluttertoast.showToast(msg: "No response selected");
+              else state ++;
             });
           },
         ),
@@ -66,7 +69,9 @@ class Followup2State extends State<Followup2> {
           text: "VALIDATE",
           onPressed: () {
             setState(() {
-              state = 2;
+              if (_selected[2] == -1) Fluttertoast.showToast(msg: "No response selected");
+              else if (_selected[2] == 1) state ++;
+              else print(_selected);
             });
           },
         ),
@@ -111,7 +116,8 @@ class Followup2State extends State<Followup2> {
         SubmitButton(
           text: "VALIDATE",
           onPressed: () {
-            print(_selected);
+            if (_selected[3] == -1) Fluttertoast.showToast(msg: "No response selected");
+            else print(_selected);
           },
         ),
       ],
@@ -122,23 +128,26 @@ class Followup2State extends State<Followup2> {
     return Row(
       children: <Widget>[
         Spacer(),
-        Container(
-          width: 150,
-          child: RadioListTile(
-            value: 1,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
-            title: Text("Yes"),
+        Expanded(
+          flex: 4,
+          child: Container(
+            child: RadioListTile(
+              value: 1,
+              groupValue: _selected[index],
+              onChanged: (newValue) => setState(() => _selected[index] = newValue),
+              title: Text("Yes"),
+            ),
           ),
         ),
-        Spacer(),
-        Container(
-          width: 150,
-          child: RadioListTile(
-            value: 0,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
-            title: Text("No"),
+        Expanded(
+          flex: 4,
+          child: Container(
+            child: RadioListTile(
+              value: 0,
+              groupValue: _selected[index],
+              onChanged: (newValue) => setState(() => _selected[index] = newValue),
+              title: Text("No"),
+            ),
           ),
         ),
         Spacer(),
