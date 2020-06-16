@@ -4,6 +4,7 @@ import 'package:autismtest/followup3.dart';
 import 'package:autismtest/followup4.dart';
 import 'package:autismtest/followup5.dart';
 import 'package:autismtest/followup6.dart';
+import 'package:autismtest/followup9.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
@@ -53,7 +54,7 @@ class _MyAppState extends State<MyApp> {
           child: AppBar(),
         ),
         body: Center(
-          child: Home(),
+          child: Followup9(),
         ),
       ),
     );

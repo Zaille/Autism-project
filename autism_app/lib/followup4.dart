@@ -35,7 +35,7 @@ class Followup4State extends State<Followup4> {
           Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Please give me an example of something he/she enjoys climbing on:",
+                "Please give an example of something he/she enjoys climbing on:",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),

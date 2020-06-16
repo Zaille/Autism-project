@@ -4,18 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Followup6 extends StatefulWidget{
+class Followup9 extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return Followup6State();
+    return Followup9State();
   }
 }
 
-class Followup6State extends State<Followup6> {
+class Followup9State extends State<Followup9> {
 
-  List<bool> _selected = new List<bool>.filled(5, null, growable: true);
-  final myTextController = TextEditingController();
-  final String title = "FollowUp 6";
+  List<bool> _selected = new List<bool>.filled(7, null, growable: true);
+  final exampleController = TextEditingController();
+  final describeController = TextEditingController();
+  final String title = "FollowUp 9";
   int state = 0;
 
   @override
@@ -36,13 +37,13 @@ class Followup6State extends State<Followup6> {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "If there is something your child wants that is out of reach, such as a snack or toy that is out of reach, how does he/she get it?",
+                "Please give an example of something he/she might bring to show you or hold up for you to see:",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             ),
             TextField(
-              controller: myTextController,
+              controller: exampleController,
               minLines: 4,
               maxLines: 10,
               decoration: InputDecoration(
@@ -65,8 +66,8 @@ class Followup6State extends State<Followup6> {
           text: "VALIDATE",
           onPressed: () {
             setState(() {
-              if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(myTextController.text);
+              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+              else print(exampleController.text);
             });
           },
         ),
@@ -82,7 +83,7 @@ class Followup6State extends State<Followup6> {
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
               Text(
-                "If you point at something, what does your child typically do?",
+                "Does your child sometimes bring you…",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               )
@@ -91,38 +92,68 @@ class Followup6State extends State<Followup6> {
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Reach for the object with his/her whole hand?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text("A picture or toy just to show you?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Lead you to the object?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text("A drawing he/she has done?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Try to get the object for him/herself?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text("A flower he/she has picked?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Ask for it using words or sounds?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text("A bug he/she has found in the grass?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text("A few blocks he/she has put together?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(4),
+          ],
+        ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(5),
+          ],
+        ),
+        (_selected[5] == true)
+            ? RoundedContainer(
+          displayTitle: false,
+          children: [
+            TextField(
+              controller: describeController,
+              minLines: 2,
+              maxLines: 5,
+              decoration: InputDecoration(
+                labelText: "Describe",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        )
+            : Container(),
         SubmitButton(
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
               //Need responses
-              if (_selected.indexOf(null) != 4) Fluttertoast.showToast(msg: "Need all responses");
+              if (_selected.indexOf(null) != 6) Fluttertoast.showToast(msg: "Need all responses");
               //Respond "Yes" to a any example
               else if (_selected.contains(true)) setState(() {
                 state ++;
@@ -144,11 +175,11 @@ class Followup6State extends State<Followup6> {
             title: title,
             children: [
               Text(
-                "If you said “Show me,” would he/she point at it?",
+                "Is this sometimes just to show you, not to get help?",
                 style: TextStyle(fontSize: 20,),
                 textAlign: TextAlign.center,
               ),
-              _yesOrNoRadio(4),
+              _yesOrNoRadio(6),
             ],
           ),
           Spacer(),
@@ -157,8 +188,8 @@ class Followup6State extends State<Followup6> {
             padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
             onPressed: () {
               setState(() {
-                if (_selected[4] == null) Fluttertoast.showToast(msg: "Complete the field");
-                else print(_selected[4]);
+                if (_selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
+                else print(_selected[6]);
               });
             },
           ),
