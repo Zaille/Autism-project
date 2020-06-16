@@ -55,6 +55,10 @@ module.exports = function (app) {
         res.render('home');
     });
 
+    app.get('/user_profile', function (req, res) {
+        res.render('user_profile')
+    });
+
     app.get('/erreur', function (req, res) {
         res.redirect('/');
     });

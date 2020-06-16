@@ -8,7 +8,7 @@ const path = require('path');
 
 app.use('/', express.static('public'));
 app.use('/api', api);
-app.use('/img',express.static(path.join(__dirname, 'web_app/public/images')));
+app.use('/img',express.static(path.join(__dirname, './web_app/public/images')));
 app.use('/private', require('connect-ensure-login').ensureLoggedIn(),    
     express.static('private'),
 );

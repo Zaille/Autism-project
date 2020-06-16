@@ -1,0 +1,55 @@
+doctype html
+html
+    head
+        style
+            include ../public/css/master.css
+    header
+        div.watermark
+            img(src='img/logo.PNG', alt='logo')
+            h1.uppercase m-chat-r
+                sup.uppercase tm
+        div.menu
+            ul.capitalize
+                li patients list
+                li.selected account
+
+    body.doctor-info
+        div.doctor-profile
+            h2.doctor-profile-title.first-row Profile
+
+            p.first-column.second-row.th First Name
+            p.second-column.second-row.td Christopher
+
+            p.first-column.third-row.th Last Name
+            p.second-column.third-row.td McCord
+
+            p.first-column.fourth-row.th Email
+            p.second-column.fourth-row.td christoper.mccord@st-vincent.uk
+
+            p.third-column.second-row.th Clinic
+            p.fourth-column.second-row.td Nuffield Health Wessex Hospital
+
+            p.third-column.third-row.th City
+            p.fourth-column.third-row.td Eastleigh
+
+            button.gradientBlue.fiveth-column.fourth-row.update Update
+
+        div.doctor-password
+            h2.doctor-password-title.first-row Password
+
+            p.first-column.second-row.th Current Password
+            input.first-column.third-row
+
+            p.second-column.second-row.th New Password
+            input.second-column.third-row
+
+            p.third-column.second-row.th Repeat Password
+            input.third-column.third-row
+
+            button.gradientBlue.fourth-column.third-row.update Update
+
+    footer
+        div.left-footer
+            p C copyright 2020
+        div.right-footer
+            ul.multiBlueItems
