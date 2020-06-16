@@ -2,24 +2,25 @@
 
 const express = require('express');
 const app = express();
+const api = require('./api/api');
 const router = express.Router();
-const api = require('./api.js');
-const auth = require('./auth.js');
-const webAppRouter = require('./Web App/webAppRouter');
+const webAppRouter = require('./web_app/webAppRouter');
 const path = require('path');
 
-const passport = auth(app);
-const port = 3000;
-app.set('views', path.join(__dirname, '/Web App/views'));
-app.set('view engine', 'pug');
-
-app.use('/api', api(passport));
-
-app.use('/img',express.static(path.join(__dirname, 'Web App/public/images')));
-
-app.use('/private', require('connect-ensure-login').ensureLoggedIn(),
+app.use('/', express.static('public'));
+app.use('/api', api);
+app.use('/img',express.static(path.join(__dirname, 'web_app/public/images')));
+app.use('/private', require('connect-ensure-login').ensureLoggedIn(),    
     express.static('private'),
 );
+
+const server = app.listen(8080, function () {
+    let port = server.address().port;
+    console.log('My app is listening at http://127.0.0.1:%s', port);
+});
+
+app.set('views', path.join(__dirname, '/web_app/views'));
+app.set('view engine', 'pug');
 
 app.get('/logout', function (req, res) {
     res.sendFile('public/logout.html', {'root': __dirname});
@@ -30,18 +31,14 @@ app.get('/supprime_session', function (req, res) {
     res.redirect('/');
 });
 
-app.get('/home', function (req, res) {
+app.get('/', function (req, res) {
     res.render('home');
-});
-
-const server = app.listen(port, function () {
-    console.log('My app is listening at http://127.0.0.1:%s', port);
 });
 
 // -----------------------------------------------------------------------------
 
 const runAtExit = function (options, exitCode) {
-    require('./dbhelper.js').atExit(options, exitCode);
+    require('./api/dbhelper.js').atExit(options, exitCode);
 };
 
 const registerAtExit = function () {
@@ -62,3 +59,4 @@ const registerAtExit = function () {
 registerAtExit();
 
 module.exports = router ;
+
