@@ -2,13 +2,20 @@
 
 const express = require('express');
 const app = express();
+const router = express.Router();
 const api = require('./api.js');
 const auth = require('./auth.js');
+const webAppRouter = require('./Web App/webAppRouter');
+const path = require('path');
+
 const passport = auth(app);
+const port = 3000;
+app.set('views', path.join(__dirname, '/Web App/views'));
+app.set('view engine', 'pug');
 
 app.use('/api', api(passport));
 
-app.use('/public', express.static('public'));
+app.use('/img',express.static(path.join(__dirname, 'Web App/public/images')));
 
 app.use('/private', require('connect-ensure-login').ensureLoggedIn(),
     express.static('private'),
@@ -23,12 +30,11 @@ app.get('/supprime_session', function (req, res) {
     res.redirect('/');
 });
 
-app.get('*', function (req, res) {
-    res.sendFile('public/index.html', {'root': __dirname});
+app.get('/home', function (req, res) {
+    res.render('home');
 });
 
-const server = app.listen(8080, function () {
-    let port = server.address().port;
+const server = app.listen(port, function () {
     console.log('My app is listening at http://127.0.0.1:%s', port);
 });
 
@@ -54,3 +60,5 @@ const registerAtExit = function () {
 };
 
 registerAtExit();
+
+module.exports = router ;

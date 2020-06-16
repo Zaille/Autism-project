@@ -1,4 +1,5 @@
 drop database if exists patientDatabase;
+
 create database patientDatabase;
 use patientDatabase;
 
@@ -49,5 +50,5 @@ create table pictures (
 -- Create users --
 
 delete from mysql.user where User = 'admin';
-create user 'admin'@'localhost' IDENTIFIED with mysql_native_password by 'password';
+create user 'admin'@'localhost' IDENTIFIED by 'password';
 grant all privileges on *.* to 'admin'@'localhost';
