@@ -14,7 +14,7 @@ class Followup6 extends StatefulWidget{
 class Followup6State extends State<Followup6> {
 
   List<bool> _selected = new List<bool>.filled(5, null, growable: true);
-  final myTextController = TextEditingController();
+  final exampleController = TextEditingController();
   final String title = "FollowUp 6";
   int state = 0;
 
@@ -42,7 +42,7 @@ class Followup6State extends State<Followup6> {
               ),
             ),
             TextField(
-              controller: myTextController,
+              controller: exampleController,
               minLines: 4,
               maxLines: 10,
               decoration: InputDecoration(
@@ -61,12 +61,14 @@ class Followup6State extends State<Followup6> {
             ),
           ],
         ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
-              if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(myTextController.text);
+              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+              else print(exampleController.text);
             });
           },
         ),

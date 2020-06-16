@@ -41,8 +41,10 @@ class Followup2State extends State<Followup2> {
           _yesOrNoRadio(1),
         ],
       ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
               if ((_selected[0] == -1) | (_selected[1] == -1))Fluttertoast.showToast(msg: "No response selected");

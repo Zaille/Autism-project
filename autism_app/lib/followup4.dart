@@ -60,8 +60,10 @@ class Followup4State extends State<Followup4> {
           ),
         ],
       ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
               if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");

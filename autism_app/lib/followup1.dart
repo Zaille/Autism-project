@@ -37,7 +37,7 @@ class Followup1State extends State<Followup1> {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Please give me an example of how he/she will respond if you point at something:",
+                "Please give an example of how he/she will respond if you point at something:",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -62,8 +62,10 @@ class Followup1State extends State<Followup1> {
             ),
           ],
         ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
               if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");

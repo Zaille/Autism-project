@@ -14,7 +14,7 @@ class Followup5 extends StatefulWidget{
 class Followup5State extends State<Followup5> {
 
   List<bool> _selected = new List<bool>.filled(8, null, growable: true);
-  final myTextController = TextEditingController();
+  final describeController = TextEditingController();
   final String title = "FollowUp 5";
   int state = 0;
 
@@ -89,7 +89,7 @@ class Followup5State extends State<Followup5> {
           displayTitle: false,
           children: [
             TextField(
-              controller: myTextController,
+              controller: describeController,
               minLines: 2,
               maxLines: 5,
               decoration: InputDecoration(
@@ -140,8 +140,8 @@ class Followup5State extends State<Followup5> {
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
-              if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(myTextController.text);
+              if (describeController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+              else print(describeController.text);
             });
           },
         ),

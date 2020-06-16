@@ -1,5 +1,11 @@
 import 'package:autismtest/followup1.dart';
+import 'package:autismtest/followup13.dart';
+import 'package:autismtest/followup14.dart';
+import 'package:autismtest/followup15.dart';
+import 'package:autismtest/followup17.dart';
+import 'package:autismtest/followup19.dart';
 import 'package:autismtest/followup2.dart';
+import 'package:autismtest/followup20.dart';
 import 'package:autismtest/followup3.dart';
 import 'package:autismtest/followup4.dart';
 import 'package:autismtest/followup5.dart';
@@ -54,7 +60,7 @@ class _MyAppState extends State<MyApp> {
           child: AppBar(),
         ),
         body: Center(
-          child: Followup9(),
+          child: Followup20(),
         ),
       ),
     );
