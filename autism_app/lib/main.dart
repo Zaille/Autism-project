@@ -1,7 +1,9 @@
+import 'package:autismtest/followup1.dart';
 import 'package:autismtest/followup2.dart';
 import 'package:autismtest/followup3.dart';
 import 'package:autismtest/followup4.dart';
 import 'package:autismtest/followup5.dart';
+import 'package:autismtest/followup6.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
