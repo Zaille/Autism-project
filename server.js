@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 const api = require('./api/api');
 const router = express.Router();
-const webAppRouter = require('./web_app/webAppRouter');
 const path = require('path');
 
 app.use('/', express.static('public'));

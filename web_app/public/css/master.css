@@ -1,0 +1,133 @@
+/*FONTS*/
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+
+/*GLOBAL*/
+*{
+    font-family: Roboto, serif;
+    padding: 0;
+    margin: 0;
+}
+.uppercase{
+    text-transform: uppercase;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+.outlineBlue{
+    background: #FFFFFF;
+    border: 2px solid #0F66EC;
+    box-sizing: border-box;
+    border-radius: 50px;
+    color: #0F66EC;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.gradientBlue {
+    background: linear-gradient(270deg, #06D3EA 0%, rgba(255, 255, 255, 0) 100%), #0F66EC;
+    border-radius: 50px;
+    color: #FFFFFF;
+    border: none;
+    height: calc(50px + 4px);
+    font-size: 24px;
+}
+.cg{
+    color: #3D3D3D;
+}
+.cg50{
+    color: rgba(61, 61, 61, 0.5);
+}
+sup{
+    font-size: 15px;
+}
+input[type="button"]{
+    cursor: pointer;
+    width: 20vw;
+    height: 5vw;
+    max-width: 160px;
+    max-height: 40px;
+    font-size: min(2.5vw,20px);
+}
+/*HEADER*/
+header {
+    display: flex;
+    position: relative;
+    padding: 10px;
+    justify-content: space-between;
+}
+header::after{
+    content:"";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.5em;
+    border-top: 2px solid rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
+header>div.watermark{
+    display: flex;
+}
+header>div.menu ul{
+    max-width: 1000px;
+}
+header .watermark>h1{
+    color: #08A5DF;
+    font-weight: bolder;
+    font-size: 1.25em;
+}
+header .watermark>img{
+    height: 71px;
+    width: 71px;
+    margin-right: 15px;
+}
+header>div.menu ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+header>div.menu ul>li{
+    color: #828282;
+    font-weight: bold;
+}
+header>div.menu ul>li.selected{
+    color: #0F66EC;
+    position: relative;
+}
+header>div.menu>ul>li.selected::after{
+    content:"";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: #0F66EC;
+    border-radius: 3px;
+    z-index: -1;
+}
+/*FOOTER*/
+
+
+/*FIRST HOME PRESENTATION*/
+div.first-home-presentation{
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+div.first-home-presentation>div.right-fhp img{
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+div.first-home-presentation>div.left-fhp{
+    font-weight: 900;
+    font-size: 2.5vw;
+    line-height: 4vw;
+    padding-left: 60px;
+}
+div.first-home-presentation>div.left-fhp>input:first-of-type{
+    margin: 2vw 20px auto auto;
+}
