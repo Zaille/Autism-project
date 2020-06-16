@@ -55,6 +55,10 @@ module.exports = function (app) {
         res.render('home');
     });
 
+    app.get('/doctor_profile', function (req, res) {
+        res.render('doctor_profile')
+    });
+
     app.get('/user_profile', function (req, res) {
         res.render('user_profile')
     });

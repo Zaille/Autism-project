@@ -31,7 +31,7 @@ app.get('/supprime_session', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-    res.render('home');
+    res.render('user_profile');
 });
 
 // -----------------------------------------------------------------------------
