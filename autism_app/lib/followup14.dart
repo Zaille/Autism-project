@@ -1,3 +1,4 @@
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,6 +74,7 @@ class Followup14State extends State<Followup14> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -153,6 +155,7 @@ class Followup14State extends State<Followup14> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -187,6 +190,7 @@ class Followup14State extends State<Followup14> {
               });
             },
           ),
+          Copyright(),
         ],
       );
     }
@@ -218,6 +222,7 @@ class Followup14State extends State<Followup14> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }

@@ -284,7 +284,7 @@ class FormWidgetState extends State<FormWidget> {
           ),
           SubmitButton(
             text: "SEND",
-            padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
             onPressed: () {
               if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
                 sendData();

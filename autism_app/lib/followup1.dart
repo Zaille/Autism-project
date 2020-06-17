@@ -1,3 +1,6 @@
+import 'package:autismtest/copyright.dart';
+import 'package:autismtest/copyright.dart';
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,6 +76,7 @@ class Followup1State extends State<Followup1> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -142,7 +146,7 @@ class Followup1State extends State<Followup1> {
         ),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               //Need responses
@@ -162,6 +166,7 @@ class Followup1State extends State<Followup1> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -238,6 +243,7 @@ class Followup1State extends State<Followup1> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }

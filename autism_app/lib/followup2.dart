@@ -1,3 +1,6 @@
+import 'package:autismtest/copyright.dart';
+import 'package:autismtest/copyright.dart';
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,25 +29,36 @@ class Followup2State extends State<Followup2> {
   }
 
   Widget firstElement() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-      RoundedContainer(
-        title: "You reported that you have wondered if you child is deaf. What led you to wonder that?",
-        children: [
-          Container(
-              padding: EdgeInsets.all(20),
-              child: Text("Does he/she…", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
-          Text("often ignore sounds?", style: TextStyle(fontSize: 18),),
-          _yesOrNoRadio(0),
-          Text("often ignore people?", style: TextStyle(fontSize: 18),),
-          _yesOrNoRadio(1),
-        ],
-      ),
-        Spacer(),
+    return ListView(
+        children: <Widget>[
+        RoundedContainer(
+          title: title,
+          color: Colors.lightBlue.withOpacity(0.2),
+          children: [
+            Text(
+              "You reported that you have wondered if you child is deaf. What led you to wonder that?\n Does he/she…",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            )
+          ]
+        ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text("Often ignore sounds?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(0),
+          ],
+        ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text("Often ignore people?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(1),
+          ],
+        ),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               if ((_selected[0] == -1) | (_selected[1] == -1))Fluttertoast.showToast(msg: "No response selected");
@@ -52,6 +66,7 @@ class Followup2State extends State<Followup2> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -67,6 +82,7 @@ class Followup2State extends State<Followup2> {
             _yesOrNoRadio(2)
           ],
         ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
           onPressed: () {
@@ -77,6 +93,7 @@ class Followup2State extends State<Followup2> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -88,12 +105,10 @@ class Followup2State extends State<Followup2> {
         RoundedContainer(
           title: title,
           children: [
-            Container(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  "What were the results of the hearing test? (choose one):",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                )
+            Text(
+              "What were the results of the hearing test? (choose one):",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             RadioListTile(
               value: 0,
@@ -115,6 +130,7 @@ class Followup2State extends State<Followup2> {
             ),
           ],
         ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
           onPressed: () {
@@ -122,6 +138,7 @@ class Followup2State extends State<Followup2> {
             else print(_selected);
           },
         ),
+        Copyright(),
       ],
     );
   }

@@ -1,22 +1,5 @@
 import 'package:autismtest/followup1.dart';
-import 'package:autismtest/followup10.dart';
-import 'package:autismtest/followup12.dart';
-import 'package:autismtest/followup13.dart';
-import 'package:autismtest/followup14.dart';
-import 'package:autismtest/followup15.dart';
-import 'package:autismtest/followup16.dart';
-import 'package:autismtest/followup17.dart';
-import 'package:autismtest/followup18.dart';
-import 'package:autismtest/followup19.dart';
 import 'package:autismtest/followup2.dart';
-import 'package:autismtest/followup20.dart';
-import 'package:autismtest/followup3.dart';
-import 'package:autismtest/followup4.dart';
-import 'package:autismtest/followup5.dart';
-import 'package:autismtest/followup6.dart';
-import 'package:autismtest/followup7.dart';
-import 'package:autismtest/followup8.dart';
-import 'package:autismtest/followup9.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
@@ -62,7 +45,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Center(
-          child: Home(),
+          child: Followup2(),
         ),
       ),
     );

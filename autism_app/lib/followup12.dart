@@ -1,3 +1,4 @@
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -134,7 +135,7 @@ class Followup12State extends State<Followup12> {
             : Container(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             int nbYes = 0;
             //Need responses
@@ -148,6 +149,7 @@ class Followup12State extends State<Followup12> {
             }
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -190,7 +192,7 @@ class Followup12State extends State<Followup12> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               if (firstExampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
@@ -198,6 +200,7 @@ class Followup12State extends State<Followup12> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -253,7 +256,7 @@ class Followup12State extends State<Followup12> {
         ),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
             if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
@@ -270,6 +273,7 @@ class Followup12State extends State<Followup12> {
             else print("FAIL");
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -331,6 +335,7 @@ class Followup12State extends State<Followup12> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }

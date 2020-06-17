@@ -1,3 +1,4 @@
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,12 +42,13 @@ class Followup13State extends State<Followup13> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
               if (_selected == null) Fluttertoast.showToast(msg: "Complete the field");
               else print(_selected);
           },
         ),
+        Copyright(),
       ],
     );
   }

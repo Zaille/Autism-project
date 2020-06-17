@@ -1,3 +1,6 @@
+import 'package:autismtest/copyright.dart';
+import 'package:autismtest/copyright.dart';
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,7 +67,7 @@ class Followup6State extends State<Followup6> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
@@ -72,6 +75,7 @@ class Followup6State extends State<Followup6> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -120,7 +124,7 @@ class Followup6State extends State<Followup6> {
         ),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               //Need responses
@@ -134,6 +138,7 @@ class Followup6State extends State<Followup6> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -156,7 +161,7 @@ class Followup6State extends State<Followup6> {
           Spacer(),
           SubmitButton(
             text: "VALIDATE",
-            padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
             onPressed: () {
               setState(() {
                 if (_selected[4] == null) Fluttertoast.showToast(msg: "Complete the field");
@@ -164,6 +169,7 @@ class Followup6State extends State<Followup6> {
               });
             },
           ),
+          Copyright(),
         ],
       );
     }

@@ -1,3 +1,4 @@
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +46,7 @@ class Followup20State extends State<Followup20> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               if (_selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
@@ -56,6 +57,7 @@ class Followup20State extends State<Followup20> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -98,7 +100,7 @@ class Followup20State extends State<Followup20> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
               if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
@@ -106,6 +108,7 @@ class Followup20State extends State<Followup20> {
             });
           },
         ),
+        Copyright(),
       ],
     );
   }
@@ -170,7 +173,7 @@ class Followup20State extends State<Followup20> {
             : Container(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
             if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
@@ -180,6 +183,7 @@ class Followup20State extends State<Followup20> {
             else print("FAIL");
           },
         ),
+        Copyright(),
       ],
     );
   }
