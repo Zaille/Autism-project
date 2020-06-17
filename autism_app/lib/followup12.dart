@@ -137,13 +137,15 @@ class Followup12State extends State<Followup12> {
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             int nbYes = 0;
-            _selected.sublist(0,10).forEach((element) {if(element) nbYes++;});
             //Need responses
             if (_selected.sublist(0,10).contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-            if (nbYes > 1) setState(() {
-              state ++;
-            });
-            else print("PASS");
+            else{
+              _selected.sublist(0,10).forEach((element) {if(element) nbYes++;});
+              if (nbYes > 1) setState(() {
+                state ++;
+              });
+              else print("PASS");
+            }
           },
         ),
       ],

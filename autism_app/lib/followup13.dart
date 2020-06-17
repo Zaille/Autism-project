@@ -43,10 +43,8 @@ class Followup13State extends State<Followup13> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-            setState(() {
               if (_selected == null) Fluttertoast.showToast(msg: "Complete the field");
               else print(_selected);
-            });
           },
         ),
       ],

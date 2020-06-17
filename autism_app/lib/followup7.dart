@@ -4,19 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Followup9 extends StatefulWidget{
+class Followup7 extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return Followup9State();
+    return Followup7State();
   }
 }
 
-class Followup9State extends State<Followup9> {
+class Followup7State extends State<Followup7> {
 
-  List<bool> _selected = new List<bool>.filled(7, null, growable: true);
+  List<bool> _selected = new List<bool>.filled(10, null, growable: true);
+  int thirdChoice = -1;
   final exampleController = TextEditingController();
-  final describeController = TextEditingController();
-  final String title = "FollowUp 9";
+  final String title = "FollowUp 7";
   int state = 0;
 
   @override
@@ -24,9 +24,9 @@ class Followup9State extends State<Followup9> {
     if (state == 0) return firstElement();
     if (state == 1) return secondElement();
     if (state == 2) return thirdElement();
+    if (state == 3) return fourthElement();
     return Spacer();
   }
-
   Widget firstElement() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,7 +37,8 @@ class Followup9State extends State<Followup9> {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Please give an example of something he/she might bring to show you or hold up for you to see:",
+                "Please give an example something "
+                "he/she might point at to show you:",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -85,7 +86,8 @@ class Followup9State extends State<Followup9> {
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
               Text(
-                "Does your child sometimes bring you…",
+                "Does your child sometimes want you to see "
+                "something interesting such as….",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               )
@@ -94,110 +96,119 @@ class Followup9State extends State<Followup9> {
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("A picture or toy just to show you?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text(
+              "An airplane in the sky?",
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
+            ),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("A drawing he/she has done?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text(
+              "A truck on the road?",
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
+            ),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("A flower he/she has picked?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text(
+              "A bug on the ground?",
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
+            ),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("A bug he/she has found in the grass?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text(
+              "An animal in the yard?",
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
+            ),
             _yesOrNoRadio(3),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
-          children: <Widget>[
-            Text("A few blocks he/she has put together?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(4),
-          ],
-        ),
-        RoundedContainer(
-          displayTitle: false,
-          children: <Widget>[
-            Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(5),
-          ],
-        ),
-        (_selected[5] == true)
-            ? RoundedContainer(
-          displayTitle: false,
-          children: [
-            TextField(
-              controller: describeController,
-              minLines: 2,
-              maxLines: 5,
-              decoration: InputDecoration(
-                labelText: "Describe",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ],
-        )
-            : Container(),
         SubmitButton(
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-            setState(() {
-              //Need responses
-              if (_selected.indexOf(null) != 6) Fluttertoast.showToast(msg: "Need all responses");
-              //Respond "Yes" to a any example
-              else if (_selected.contains(true)) setState(() {
-                state ++;
-              });
-              //FAILED
-              else print("FAIL");
+            //Need responses
+            if (_selected.sublist(0,4).contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            else if (_selected.sublist(0,4).contains(true)) setState(() {
+              state ++;
             });
+            else print("FAIL");
           },
         ),
       ],
     );
   }
 
-  Widget thirdElement() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RoundedContainer(
-            title: title,
-            children: [
-              Text(
-                "Is this sometimes just to show you, not to get help?",
-                style: TextStyle(fontSize: 20,),
-                textAlign: TextAlign.center,
-              ),
-              _yesOrNoRadio(6),
-            ],
-          ),
-          Spacer(),
-          SubmitButton(
-            text: "VALIDATE",
-            padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-            onPressed: () {
-                if (_selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-                else if(_selected[6]) print("PASS");
-                else print("FAIL");
-            },
-          ),
-        ],
-      );
-    }
 
+  Widget thirdElement() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RoundedContainer(
+          title: title,
+          children: [
+            Text(
+              "How does your child draw your attention to it? Would he/she point with one finger?",
+              style: TextStyle(fontSize: 20,),
+              textAlign: TextAlign.center,
+            ),
+            _yesOrNoRadio(4),
+          ],
+        ),
+        Spacer(),
+        SubmitButton(
+          text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          onPressed: () {
+              if (_selected[4] == null) Fluttertoast.showToast(msg: "Complete the field");
+              else if (!_selected[4]) print("FAIL");
+              else setState(() {
+                state ++;
+              });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget fourthElement() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RoundedContainer(
+          title: title,
+          children: [
+            Text(
+              "Is this to show their interest, not to get help?",
+              style: TextStyle(fontSize: 20,),
+              textAlign: TextAlign.center,
+            ),
+            _yesOrNoRadio(5),
+          ],
+        ),
+        Spacer(),
+        SubmitButton(
+          text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          onPressed: () {
+              if (_selected[5] == null) Fluttertoast.showToast(msg: "Complete the field");
+              else if (!_selected[5]) print("FAIL");
+              else print("PASS");
+          },
+        ),
+      ],
+    );
+  }
 
   Widget _yesOrNoRadio(index) {
     return Row(

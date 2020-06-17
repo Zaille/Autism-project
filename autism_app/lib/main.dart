@@ -14,6 +14,8 @@ import 'package:autismtest/followup3.dart';
 import 'package:autismtest/followup4.dart';
 import 'package:autismtest/followup5.dart';
 import 'package:autismtest/followup6.dart';
+import 'package:autismtest/followup7.dart';
+import 'package:autismtest/followup8.dart';
 import 'package:autismtest/followup9.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,12 +61,8 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0.0), // here the desired height
-          child: AppBar(),
-        ),
         body: Center(
-          child: Followup12(),
+          child: Home(),
         ),
       ),
     );
