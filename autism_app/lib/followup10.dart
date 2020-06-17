@@ -4,20 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Followup16 extends StatefulWidget{
+class Followup10 extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return Followup16State();
+    return Followup10State();
   }
 }
 
-class Followup16State extends State<Followup16> {
+class Followup10State extends State<Followup10> {
 
-  List<bool> _selected = new List<bool>.filled(5, null, growable: true);
+  List<bool> _selected = new List<bool>.filled(7, null, growable: true);
   int thirdChoice = -1;
-  final exampleController = TextEditingController();
+  final firstExampleController = TextEditingController();
+  final secondExampleController = TextEditingController();
   final describeController = TextEditingController();
-  final String title = "FollowUp 16";
+  final String title = "FollowUp 10";
   int state = 0;
 
   @override
@@ -25,6 +26,7 @@ class Followup16State extends State<Followup16> {
     if (state == 0) return firstElement();
     if (state == 1) return secondElement();
     if (state == 2) return thirdElement();
+    if (state == 3) return fourthElement();
     return Spacer();
   }
 
@@ -38,13 +40,13 @@ class Followup16State extends State<Followup16> {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "What does he/she do when you turn to look at something?",
+                "Please give an example of how he/she responds when you call his/her name",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             ),
             TextField(
-              controller: exampleController,
+              controller: firstExampleController,
               minLines: 4,
               maxLines: 10,
               decoration: InputDecoration(
@@ -57,7 +59,7 @@ class Followup16State extends State<Followup16> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
-                  state = 1;
+                  state  = 2;
                 });
               },
             ),
@@ -69,10 +71,8 @@ class Followup16State extends State<Followup16> {
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else setState(() {
-                state = 1;
-              });
+              if (firstExampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+              else print(firstExampleController.text);
             });
           },
         ),
@@ -81,6 +81,56 @@ class Followup16State extends State<Followup16> {
   }
 
   Widget secondElement() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RoundedContainer(
+          title: title,
+          children: [
+            Container(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "If he/she is not involved in something fun or interesting, what does he/she do when you call his/her name?",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            TextField(
+              controller: secondExampleController,
+              minLines: 4,
+              maxLines: 10,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            FlatButton(
+              child: Text("I don't have any example"),
+              color: Colors.white,
+              textColor: Colors.lightBlue,
+              onPressed: () {
+                setState(() {
+                  state = 2;
+                });
+              },
+            ),
+          ],
+        ),
+        Spacer(),
+        SubmitButton(
+          text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          onPressed: () {
+            setState(() {
+              if (secondExampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+              else print(secondExampleController.text);
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget thirdElement() {
     return ListView(
       children: <Widget>[
         RoundedContainer(
@@ -88,7 +138,7 @@ class Followup16State extends State<Followup16> {
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
               Text(
-                "Does your child…",
+                "Does he/she…",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               )
@@ -97,46 +147,53 @@ class Followup16State extends State<Followup16> {
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Look toward the thing you are looking at?",
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Look up?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Point toward the thing you are looking at?",
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Talk or babble?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Look around to see what you are looking at?",
-                style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Stop what he/she is doing?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Ignore you?",
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Make no response?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Look at your face?",
+            Text("Seem to hear but ignores parent?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(4),
+          ],
+        ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text(
+              "Respond only if parent is right in front of the child’s face?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            _yesOrNoRadio(5),
+          ],
+        ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text("Respond only if touched?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(6),
           ],
         ),
         SubmitButton(
@@ -146,11 +203,11 @@ class Followup16State extends State<Followup16> {
             //Need responses
             if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             //"Yes" in "Pass"
-            else if (_selected.sublist(0,3).contains(true)) {
+            else if (_selected.sublist(0,4).contains(true)) {
               //Both "Pass" and "Fail" contain "Yes
-              if (_selected.sublist(3,5).contains(true)) setState(() {
-                state = 2;
-              });
+              if (_selected.sublist(4,7).contains(true)) setState(() {
+                state = 3;
+                });
               //Only "Pass" contains "Yes"
               else print("PASS");
             }
@@ -162,7 +219,7 @@ class Followup16State extends State<Followup16> {
     );
   }
 
-  Widget thirdElement() {
+  Widget fourthElement() {
     return ListView(
       children: <Widget>[
         RoundedContainer(
@@ -178,35 +235,49 @@ class Followup16State extends State<Followup16> {
               value: 0,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Look toward the thing you are looking at?"),
+              title: Text("Look up?"),
             ) : Container(),
             _selected[1]?
             RadioListTile(
               value: 1,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Point toward the thing you are looking at?"),
+              title: Text("Talk or babble?"),
             ) : Container(),
             _selected[2]?
             RadioListTile(
               value: 2,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Look around to see what you are looking at?"),
+              title: Text("Stop what he/she is doing?"),
             ) : Container(),
             _selected[3]?
             RadioListTile(
               value: 3,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Ignore you?"),
+              title: Text("Make no response?"),
             ) : Container(),
             _selected[4]?
             RadioListTile(
               value: 4,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Look at your face?"),
+              title: Text("Seem to hear but ignores parent?"),
+            ) : Container(),
+            _selected[5]?
+            RadioListTile(
+              value: 5,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Respond only if parent is right in front of the child’s face?"),
+            ) : Container(),
+            _selected[6]?
+            RadioListTile(
+              value: 6,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Respond only if touched?"),
             ) : Container(),
           ],
         ),

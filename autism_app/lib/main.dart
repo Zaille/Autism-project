@@ -1,4 +1,6 @@
 import 'package:autismtest/followup1.dart';
+import 'package:autismtest/followup10.dart';
+import 'package:autismtest/followup12.dart';
 import 'package:autismtest/followup13.dart';
 import 'package:autismtest/followup14.dart';
 import 'package:autismtest/followup15.dart';
@@ -62,7 +64,7 @@ class _MyAppState extends State<MyApp> {
           child: AppBar(),
         ),
         body: Center(
-          child: Home(),
+          child: Followup12(),
         ),
       ),
     );

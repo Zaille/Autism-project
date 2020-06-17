@@ -4,20 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Followup16 extends StatefulWidget{
+class Followup11 extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return Followup16State();
+    return Followup11State();
   }
 }
 
-class Followup16State extends State<Followup16> {
+class Followup11State extends State<Followup11> {
 
-  List<bool> _selected = new List<bool>.filled(5, null, growable: true);
+  List<bool> _selected = new List<bool>.filled(6, null, growable: true);
   int thirdChoice = -1;
   final exampleController = TextEditingController();
   final describeController = TextEditingController();
-  final String title = "FollowUp 16";
+  final String title = "FollowUp 11";
   int state = 0;
 
   @override
@@ -38,7 +38,7 @@ class Followup16State extends State<Followup16> {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "What does he/she do when you turn to look at something?",
+                "What make your child smile?",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -57,7 +57,7 @@ class Followup16State extends State<Followup16> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
-                  state = 1;
+                  state  = 2;
                 });
               },
             ),
@@ -70,9 +70,7 @@ class Followup16State extends State<Followup16> {
           onPressed: () {
             setState(() {
               if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else setState(() {
-                state = 1;
-              });
+              else print(exampleController.text);
             });
           },
         ),
@@ -97,46 +95,46 @@ class Followup16State extends State<Followup16> {
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Look toward the thing you are looking at?",
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Smile when you smile?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Point toward the thing you are looking at?",
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Smile when you enter the room?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Look around to see what you are looking at?",
-                style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Smile when you return from being away?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Ignore you?",
-              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
-            ),
+            Text("Always smile?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
           displayTitle: false,
           children: <Widget>[
-            Text("Look at your face?",
+            Text("Smile at a favorite toy or activity?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            _yesOrNoRadio(4),
+          ],
+        ),
+        RoundedContainer(
+          displayTitle: false,
+          children: <Widget>[
+            Text(
+              "Smile randomly or at nothing in particular?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            _yesOrNoRadio(5),
           ],
         ),
         SubmitButton(
@@ -148,9 +146,9 @@ class Followup16State extends State<Followup16> {
             //"Yes" in "Pass"
             else if (_selected.sublist(0,3).contains(true)) {
               //Both "Pass" and "Fail" contain "Yes
-              if (_selected.sublist(3,5).contains(true)) setState(() {
-                state = 2;
-              });
+              if (_selected.sublist(3,6).contains(true)) setState(() {
+                state ++;
+                });
               //Only "Pass" contains "Yes"
               else print("PASS");
             }
@@ -178,35 +176,42 @@ class Followup16State extends State<Followup16> {
               value: 0,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Look toward the thing you are looking at?"),
+              title: Text("Smile when you smile?"),
             ) : Container(),
             _selected[1]?
             RadioListTile(
               value: 1,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Point toward the thing you are looking at?"),
+              title: Text("Smile when you enter the room?"),
             ) : Container(),
             _selected[2]?
             RadioListTile(
               value: 2,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Look around to see what you are looking at?"),
+              title: Text("Smile when you return from being away?"),
             ) : Container(),
             _selected[3]?
             RadioListTile(
               value: 3,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Ignore you?"),
+              title: Text("Always smile?"),
             ) : Container(),
             _selected[4]?
             RadioListTile(
               value: 4,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
-              title: Text("Look at your face?"),
+              title: Text("Smile at a favorite toy or activity?"),
+            ) : Container(),
+            _selected[5]?
+            RadioListTile(
+              value: 5,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Smile randomly or at nothing in particular?"),
             ) : Container(),
           ],
         ),
