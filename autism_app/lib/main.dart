@@ -1,3 +1,4 @@
+import 'package:autismtest/followup.dart';
 import 'package:autismtest/followup1.dart';
 import 'package:autismtest/followup2.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Center(
-          child: Followup2(),
+          child: FollowUp(responses: [true, false, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, false, false, true]),
         ),
       ),
     );

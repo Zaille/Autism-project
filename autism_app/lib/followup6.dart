@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup6 extends StatefulWidget{
+  Followup6({Key key, this.nextPage}) : super(key: key);
+
+  final nextPage;
+
   @override
   State<StatefulWidget> createState() {
     return Followup6State();

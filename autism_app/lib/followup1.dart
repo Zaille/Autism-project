@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup1 extends StatefulWidget{
+  Followup1({Key key, this.nextPage}) : super(key: key);
+
+  final nextPage;
+
   @override
   State<StatefulWidget> createState() {
     return Followup1State();
@@ -234,14 +238,15 @@ class Followup1State extends State<Followup1> {
               ) : Container(),
           ],
         ),
+        Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          onPressed: () {
-            setState(() {
-              if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-              else print(thirdChoice);
-            });
-          },
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
+          onPressed: widget.nextPage,/*() {
+            if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
+            else print(thirdChoice);
+            widget.nextPage;
+          },*/
         ),
         Copyright(),
       ],
