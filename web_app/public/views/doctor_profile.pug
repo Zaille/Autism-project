@@ -1,9 +1,9 @@
-include index.pug
+include index
 include header_doctor.pug
 
-body.doctor-info
-    div.doctor-profile
-        h2.doctor-profile-title.first-row Profile
+body(onload="initDoctorProfile()")
+    div#doctor-profile
+        h2#doctor-profile-title.first-row Profile
 
         p.first-column.second-row.th First Name
         p.second-column.second-row.td #{firstName}
@@ -20,20 +20,20 @@ body.doctor-info
         p.third-column.third-row.th City
         p.fourth-column.third-row.td #{city}
 
-        button.gradientBlue.fiveth-column.fourth-row.update(onclick='/user_profile') Update
+        input(type='button' value="Update").gradientBlue.fiveth-column.fourth-row.update
 
-    div.doctor-password
-        h2.doctor-password-title.first-row Password
+    div#doctor-password
+        h2#doctor-password-title.first-row Password
 
         p.first-column.second-row.th Current Password
-        input.first-column.third-row
+        input.first-column.third-row.input-password
 
         p.second-column.second-row.th New Password
-        input.second-column.third-row
+        input.second-column.third-row.input-password
 
         p.third-column.second-row.th Repeat Password
-        input.third-column.third-row
+        input.third-column.third-row.input-password
 
-        button.gradientBlue.fourth-column.third-row.update Update
+        input(type='button' value="Update").gradientBlue.fourth-column.third-row.update
 
 include footer.pug

@@ -173,13 +173,13 @@ div.first-home-presentation>div.left-fhp>input:first-of-type{
 
 /*DOCTOR PROFILE*/
 
-div.doctor-profile {
+div#doctor-profile {
     display: grid;
     grid-template-rows: auto 20% 20% 20%;
     grid-template-columns: 20% 20% 20% 20% auto;
 }
 
-h2.doctor-profile-title {
+h2#doctor-profile-title {
     grid-column: 1 / 3;
     background-color: #CEEDF9;
     border-radius: 0 50px 50px 0;
@@ -208,13 +208,13 @@ h2.doctor-profile-title {
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-div.doctor-password {
+div#doctor-password {
     display: grid;
     grid-template-rows: auto 30% 30%;
     grid-template-columns: 30% 30% 30% auto;
 }
 
-h2.doctor-password-title {
+h2#doctor-password-title {
     grid-column: 1 / 3;
     background-color: #CEEDF9;
     border-radius: 0 50px 50px 0;
@@ -224,7 +224,7 @@ h2.doctor-password-title {
     color: #3D3D3D;
 }
 
-div.doctor-password>input {
+div#doctor-password>.input-password {
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
@@ -239,13 +239,13 @@ div.doctor-password>input {
 
 /*USER PROFILE*/
 
-div.child-profile {
+div#child-profile {
     display: grid;
     grid-template-rows: auto 30% 30%;
     grid-template-columns: 20% 20% 20% 20% auto;
 }
 
-h2.child-profile-title {
+h2#child-profile-title {
     grid-column: 1 / 3;
     background-color: #CEEDF9;
     border-radius: 0 50px 50px 0;
@@ -255,13 +255,13 @@ h2.child-profile-title {
     color: #3D3D3D;
 }
 
-div.parent-profile {
+div#parent-profile {
     display: grid;
     grid-template-rows: auto 20% 20% 20%;
     grid-template-columns: 20% 20% 20% 20% auto;
 }
 
-h2.parent-profile-title {
+h2#parent-profile-title {
     grid-column: 1 / 3;
     background-color: #CEEDF9;
     border-radius: 0 50px 50px 0;
@@ -271,13 +271,13 @@ h2.parent-profile-title {
     color: #3D3D3D;
 }
 
-div.user-password {
+div#user-password {
     display: grid;
     grid-template-rows: auto 30% 30%;
     grid-template-columns: 30% 30% 30% auto;
 }
 
-h2.user-password-title {
+h2#user-password-title {
     grid-column: 1 / 3;
     background-color: #CEEDF9;
     border-radius: 0 50px 50px 0;
@@ -287,7 +287,7 @@ h2.user-password-title {
     color: #3D3D3D;
 }
 
-div.user-password>input {
+div#user-password>.input-password {
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;

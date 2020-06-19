@@ -52,12 +52,21 @@ where
 }
 
 module.exports.patient = {
+
+    profile: (id) => query(prepareQuery(`
+SELECT
+    a.mail, p.firstName, p.lastName, p.age, p.parentFirstName, p.parentLastName, p.city, p.phoneNumber
+FROM
+    authentication a, patients p 
+WHERE
+    a.userId = p.patientId AND a.userId = ?;`, [id])),
+
     byUserId: (id) => query(prepareQuery(`
-select
+SELECT
     *
-from
+FROM
     authentication
-where
+WHERE
     patientId = ?;`, [id])),
 
     scores: () => query(`

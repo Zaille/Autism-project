@@ -3,7 +3,7 @@ create database patientDatabase;
 use patientDatabase;
 
 
- -- Create tables --
+-- Create tables --
 
 create table questions (
     groupId int(10) not null,
@@ -21,55 +21,65 @@ create table links (
     foreign key (group2) references questions(groupId)
 );
 
-create table users (
+create table authentication (
+    userId int(10) auto_increment primary key,
+    mail char(100) unique not null,
+    password char(100) not null,
+    type int(3) not null
+);
+
+create table patients (
     patientId int(10) primary key,
     firstName varchar(50) not null,
     lastName varchar(50) not null,
     age int(10) not null,
     parentFirstName varchar(50) not null,
     parentLastName varchar(50) not null,
-    parentMail varchar(70) not null,
+    city varchar(70) not null,
     phoneNumber varchar(20) not null,
-    unique(firstName, lastName, parentMail)
+    foreign key (patientId) references authentication(userId),
+    unique(firstName, lastName)
 );
 
-create table authentication (
-    patientId int(10) primary key,
-    mail char(100) unique not null,
-    password char(100) not null,
-    type int(3) not null,
-    foreign key (patientId) references users(patientId)
+create table doctors (
+    doctorId int(10) primary key,
+    firstName varchar(50) not null,
+    lastName varchar(50) not null,
+    city varchar(70) not null,
+    clinic varchar(100) not null,
+    unique(firstName, lastName),
+    foreign key (doctorId) references authentication(userId)
 );
 
 create table success (
-    patientId int(10) primary key,
+    userId int(10) primary key,
     groupId int(10) not null,
     success BIT(1) not null,
-    foreign key (patientId) references users(patientId),
+    foreign key (userId) references authentication(userId),
     foreign key (groupId) references questions(groupId)
 );
 
 create table answers (
-    patientId int(10) primary key,
+    userId int(10) primary key,
     groupId int(10) not null,
     questionId int(10) not null,
     answer BIT(1) not null,
-    foreign key (patientId) references users(patientId)
+    foreign key (userId) references authentication(userId)
 );
 
 create table scores (
-    patientId int(10) primary key,
+    userId int(10) primary key,
     score int(10) not null,
-    foreign key (patientId) references users(patientId)
+    foreign key (userId) references authentication(userId)
 );
 
 create table pictures (
-    patientId int(10) primary key,
+    userId int(10) primary key,
     picture1Id int(10) not null,
     picture2Id int(10) not null,
     picture1Name int(10) not null,
     picture2Name int(10) not null,
-    foreign key (patientId) references users(patientId)
+    foreign key (userId) references authentication(userId)
 );
 
 -- Create users --

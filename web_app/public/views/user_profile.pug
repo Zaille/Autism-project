@@ -1,53 +1,54 @@
 include index.pug
-include header_user.pug
 
-body.child-info
-    div.child-profile
-        h2.child-profile-title.first-row Child
+body(onload="initPatientProfile()")
+    include header_user.pug
+
+    div#child-profile
+        h2#child-profile-title.first-row Child
 
         p.first-column.second-row.th First Name
-        p.second-column.second-row.td Timothy
+        p#chidlFirstName.second-column.second-row.td Timothy
 
         p.first-column.third-row.th Last Name
-        p.second-column.third-row.td Leibowitz
+        p#childLastName.second-column.third-row.td Leibowitz
 
         p.third-column.second-row.th Age
-        p.fourth-column.second-row.td 14 months
+        p#childAge.fourth-column.second-row.td 14 months
 
-        button.gradientBlue.fiveth-column.third-row.update Update
+        input(type='button' value='Update')#childUpdateInfo.gradientBlue.fiveth-column.third-row.update
 
-    div.parent-profile
-        h2.parent-profile-title.first-row Parent
+    div#parent-profile
+        h2#parent-profile-title.first-row Parent
 
         p.first-column.second-row.th First Name
-        p.second-column.second-row.td John
+        p#parentFirstName.second-column.second-row.td John
 
         p.first-column.third-row.th Last Name
-        p.second-column.third-row.td Leibowitz
+        p#parentLastName.second-column.third-row.td Leibowitz
 
         p.first-column.fourth-row.th Email
-        p.second-column.fourth-row.td john.leibowitz@protonmail.com
+        p#parentMail.second-column.fourth-row.td john.leibowitz@protonmail.com
 
         p.third-column.second-row.th Phone
-        p.fourth-column.second-row.td +44 (0)203 250 0145
+        p#parentPhone.fourth-column.second-row.td +44 (0)203 250 0145
 
         p.third-column.third-row.th City
-        p.fourth-column.third-row.td Eastleigh
+        p#parentCity.fourth-column.third-row.td Eastleigh
 
-        button.gradientBlue.fiveth-column.fourth-row.update Update
+        input(type='button' value="Update")#parentUpdateInfo.gradientBlue.fiveth-column.fourth-row.update
 
-    div.user-password
-        h2.user-password-title.first-row Password
+    div#user-password
+        h2#user-password-title.first-row Password
 
         p.first-column.second-row.th Current Password
-        input.first-column.third-row
+        input.first-column.third-row.input-password
 
         p.second-column.second-row.th New Password
-        input.second-column.third-row
+        input.second-column.third-row.input-password
 
         p.third-column.second-row.th Repeat Password
-        input.third-column.third-row
+        input.third-column.third-row.input-password
 
-        button.gradientBlue.fourth-column.third-row.update Update
+        input(type='button' value="Update").gradientBlue.fourth-column.third-row.update
 
 include footer.pug

@@ -433,6 +433,18 @@ INSERT INTO links VALUE (63, NULL, 1, 1);
 INSERT INTO links VALUE (64, NULL, 0, 0);
 INSERT INTO links VALUE (64, NULL, 1, 1);
 
+/* Data */
+
+INSERT INTO authentication VALUE ( null, 'john.leibowitz@protonmail.com', 'password1', 0 );
+INSERT INTO authentication VALUE ( null, 'patrick.guajardo@protonmail.com', 'password2', 0 );
+INSERT INTO authentication VALUE ( null, 'Christopher.mccord@protonmail.com', 'password3', 1 );
+INSERT INTO authentication VALUE ( null, 'dennis.moore@protonmail.com', 'password4', 1 );
+
+INSERT INTO patients VALUE ( 1, 'Timothy', 'Leibowitz', 14, 'John', 'Leibowitz', 'Eastleigh', '+44 (0)203 250 0145' );
+INSERT INTO patients VALUE ( 2, 'John', 'Guajardo', 24, 'Patrick', 'Guajardo', 'London', '+44 (0)406 340 8421' );
+
+INSERT INTO doctors VALUE ( 3, 'Christopher', 'McCord', 'Eastleigh', 'Nuffield Health Wessex Hospital' );
+INSERT INTO doctors VALUE ( 4, 'Dennis', 'Moore', 'London', 'The London Clinic' );
 /*
 -- POST /api/answers --
 

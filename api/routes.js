@@ -63,6 +63,13 @@ module.exports = function (app) {
         }
     });
 
+    /* Get patient profile */
+    app.get('/api/patient/profile/:id', function (req, res) {
+        dbHelper.patient.profile(req.params.id)
+            .then((rows) => res.json(rows.result))
+            .catch((err) => res.status(400).json({ err }));
+    });
+
     /* Get all scores */
     app.get('/api/scores', function (req, res) {
         dbHelper.patient.scores()
@@ -72,7 +79,7 @@ module.exports = function (app) {
 
     /* Get all information of a patient */
     app.get('/api/info/:id', function (req, res) {
-        dbHelper.patient.scores()
+        dbHelper.patient.profile()
             .then((rows) => res.json(rows.result))
             .catch((err) => res.status(400).json({ err }));
     });

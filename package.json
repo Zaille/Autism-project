@@ -32,5 +32,8 @@
     "passport-local": "^1.0.0",
     "password-hash": "^1.2.2",
     "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-react-pug": "^7.0.1"
   }
 }
