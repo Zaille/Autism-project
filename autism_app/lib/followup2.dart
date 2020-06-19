@@ -65,11 +65,9 @@ class Followup2State extends State<Followup2> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if ((selected.sublist(0,3).contains(null)))Fluttertoast.showToast(msg: "No response selected");
-              else setState(() {
-                state ++;
-              });
+            if ((selected.sublist(0,2).contains(null)))Fluttertoast.showToast(msg: "No response selected");
+            else setState(() {
+              state ++;
             });
           },
         ),
@@ -118,7 +116,7 @@ class Followup2State extends State<Followup2> {
               textAlign: TextAlign.center,
             ),
             RadioListTile(
-              value: "Hearing below normal",
+              value: "Hearing in normal range",
               groupValue: description,
               onChanged: (newValue) => setState(() => description = newValue),
               title: Text("Hearing in normal range"),

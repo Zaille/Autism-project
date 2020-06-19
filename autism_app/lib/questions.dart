@@ -1,4 +1,4 @@
-import 'package:autismtest/form.dart';
+import 'package:autismtest/followup.dart';
 import 'package:autismtest/submitButton.dart';
 import "package:flutter/material.dart";
 import 'package:autismtest/roundedContainer.dart';
@@ -127,8 +127,8 @@ class QuestionState extends State<QuestionWidget> {
                     if (_selected == -1) Fluttertoast.showToast(msg: "Select an item");
                     else {
                       if (
-                        ((_selected == 1) & (questionIndex != 2) & (questionIndex != 4) & (questionIndex != 11)) |
-                        ((_selected == 0) & ( (questionIndex == 2) | (questionIndex == 4) | (questionIndex == 11) ))
+                        ((_selected == 1) & (questionIndex != 1) & (questionIndex != 4) & (questionIndex != 11)) |
+                        ((_selected == 0) & ( (questionIndex == 1) | (questionIndex == 4) | (questionIndex == 11) ))
                       ) {
                         responses.add(true);
                         score ++;
@@ -137,7 +137,7 @@ class QuestionState extends State<QuestionWidget> {
                       if (questionIndex == 19) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FormPage()),
+                          MaterialPageRoute(builder: (context) => FollowupPage(responses: this.responses,)),
                         );
                       }
                       else {
