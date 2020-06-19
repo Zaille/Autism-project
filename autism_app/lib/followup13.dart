@@ -57,29 +57,28 @@ class Followup13State extends State<Followup13> {
   }
 
   Widget _yesOrNoRadio() {
-    return Row(
-      children: <Widget>[
-        Spacer(),
-        Expanded(
-          flex: 4,
-          child: RadioListTile(
-            value: true,
-            groupValue: selected,
-            onChanged: (newValue) => setState(() => selected = newValue),
-            title: Text("Yes"),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
+            child: RadioListTile(
+              value: true,
+              groupValue: selected,
+              onChanged: (newValue) => setState(() => selected = newValue),
+              title: Text("Yes"),
+            ),
           ),
-        ),
-        Expanded(
-          flex: 4,
-          child: RadioListTile(
-            value: false,
-            groupValue: selected,
-            onChanged: (newValue) => setState(() => selected = newValue),
-            title: Text("No"),
+          Expanded(
+            child: RadioListTile(
+              value: false,
+              groupValue: selected,
+              onChanged: (newValue) => setState(() => selected = newValue),
+              title: Text("No"),
+            ),
           ),
-        ),
-        Spacer(),
-      ],
+        ],
+      ),
     );
   }
 }

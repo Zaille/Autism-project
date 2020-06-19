@@ -84,73 +84,77 @@ class QuestionState extends State<QuestionWidget> {
                   ),
                 ),
                 Spacer(),
-                Row(
-                  children: <Widget>[
-                    Spacer(),
-                    _myRadioButton(
-                      title: "Yes",
-                      value: 1,
-                      onChanged: (newValue) => setState(() => _selected = newValue),
-                    ),
-                    Spacer(),
-                    _myRadioButton(
-                      title: "No",
-                      value: 0,
-                      onChanged: (newValue) => setState(() => _selected = newValue),
-                    ),
-                    Spacer(),
-                  ],
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      myRadioButton(
+                        title: "Yes",
+                        value: 1,
+                        onChanged: (newValue) => setState(() => _selected = newValue),
+                      ),
+                      myRadioButton(
+                        title: "No",
+                        value: 0,
+                        onChanged: (newValue) => setState(() => _selected = newValue),
+                      ),
+                    ],
+                  ),
                 ),
                 Spacer(),
               ],
             ),
-            Row(
-              children: <Widget>[
-                Spacer(),
-                questionIndex > 0
-                  ? SubmitButton(
-                  text: "PREVIOUS",
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
-                  onPressed: () {
-                    setState(() {
-                      questionIndex --;
-                      responses.removeLast();
-                    });
-                  },
-                )
-                : Spacer(),
-                Spacer(),
-                SubmitButton(
-                  text: "     NEXT     ",
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
-                  onPressed: () {
-                    if (_selected == -1) Fluttertoast.showToast(msg: "Select an item");
-                    else {
-                      if (
-                        ((_selected == 1) & (questionIndex != 1) & (questionIndex != 4) & (questionIndex != 11)) |
-                        ((_selected == 0) & ( (questionIndex == 1) | (questionIndex == 4) | (questionIndex == 11) ))
-                      ) {
-                        responses.add(true);
-                        score ++;
-                      }
-                      else responses.add(false);
-                      if (questionIndex == 19) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FollowupPage(responses: this.responses,)),
-                        );
-                      }
-                      else {
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Expanded(
+                    child:
+                    questionIndex > 0
+                      ? SubmitButton(
+                      text: "PREVIOUS",
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+                      onPressed: () {
                         setState(() {
-                          questionIndex ++;
-                          _selected = -1;
+                          questionIndex --;
+                          responses.removeLast();
                         });
-                      }
-                    }
-                  },
-                ),
-                Spacer(),
-              ],
+                      },
+                    )
+                    : Container(),),
+                  Expanded(
+                    child: SubmitButton(
+                      text: "     NEXT     ",
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+                      onPressed: () {
+                        if (_selected == -1) Fluttertoast.showToast(msg: "Select an item");
+                        else {
+                          if (
+                            ((_selected == 1) & (questionIndex != 1) & (questionIndex != 4) & (questionIndex != 11)) |
+                            ((_selected == 0) & ( (questionIndex == 1) | (questionIndex == 4) | (questionIndex == 11) ))
+                          ) {
+                            responses.add(true);
+                            score ++;
+                          }
+                          else responses.add(false);
+                          if (questionIndex == 19) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => FollowupPage(responses: this.responses,)),
+                            );
+                          }
+                          else {
+                            setState(() {
+                              questionIndex ++;
+                              _selected = -1;
+                            });
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -166,9 +170,8 @@ class QuestionState extends State<QuestionWidget> {
         ),
     );
   }
-  Widget _myRadioButton({String title, int value, Function onChanged}) {
-    return Container(
-      width: 150,
+  Widget myRadioButton({String title, int value, Function onChanged}) {
+    return Expanded(
       child: RadioListTile(
         value: value,
         groupValue: _selected,

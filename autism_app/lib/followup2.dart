@@ -149,12 +149,11 @@ class Followup2State extends State<Followup2> {
   }
 
   Widget _yesOrNoRadio(index) {
-    return Row(
-      children: <Widget>[
-        Spacer(),
-        Expanded(
-          flex: 4,
-          child: Container(
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(
             child: RadioListTile(
               value: true,
               groupValue: selected[index],
@@ -162,10 +161,7 @@ class Followup2State extends State<Followup2> {
               title: Text("Yes"),
             ),
           ),
-        ),
-        Expanded(
-          flex: 4,
-          child: Container(
+          Expanded(
             child: RadioListTile(
               value: false,
               groupValue: selected[index],
@@ -173,9 +169,8 @@ class Followup2State extends State<Followup2> {
               title: Text("No"),
             ),
           ),
-        ),
-        Spacer(),
-      ],
+        ],
+      ),
     );
   }
 }
