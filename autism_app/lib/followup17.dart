@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -18,7 +17,9 @@ class Followup17 extends StatefulWidget{
 
 class Followup17State extends State<Followup17> {
 
-  List<bool> _selected = new List<bool>.filled(5, null, growable: true);
+  List<bool> selected = new List<bool>.filled(5, null, growable: true);
+  String example;
+  String description;
   final exampleController = TextEditingController();
   final describeController = TextEditingController();
   final String title = "FollowUp 17";
@@ -69,12 +70,15 @@ class Followup17State extends State<Followup17> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(exampleController.text);
-            });
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -131,7 +135,7 @@ class Followup17State extends State<Followup17> {
             _yesOrNoRadio(4),
           ],
         ),
-        (_selected[4] == true)
+        (selected[4] == true)
             ? RoundedContainer(
           displayTitle: false,
           children: [
@@ -149,88 +153,22 @@ class Followup17State extends State<Followup17> {
             : Container(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
-            if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-            //Not enough "Yes"
-            else if (_selected.contains(true)) print("PASS");
-            //More than 2 "Yes" = PASS
-            else print("FAIL");
+            if (selected.contains(null) | (selected[4] & (describeController.text == "")))
+              Fluttertoast.showToast(msg: "Need all responses");
+            //Send data
+            else {
+              if (selected[4]) description = describeController.text;
+              widget.nextPage(selected, null, example, description, selected.contains(true));
+            }
           },
         ),
         Copyright(),
       ],
     );
   }
-
-  Widget thirdElement() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RoundedContainer(
-            title: title,
-            children: [
-              Text(
-                "Does your child look you in the eye every day?",
-                style: TextStyle(fontSize: 20,),
-                textAlign: TextAlign.center,
-              ),
-              _yesOrNoRadio(6),
-            ],
-          ),
-          Spacer(),
-          SubmitButton(
-            text: "VALIDATE",
-            padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-            onPressed: () {
-              setState(() {
-                if (_selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-                else if (_selected[6] == true)
-                  setState(() {
-                    state ++;
-                  });
-                else print("FAILED");
-              });
-            },
-          ),
-          Copyright(),
-        ],
-      );
-    }
-
-  Widget forthElement() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        RoundedContainer(
-          title: title,
-          children: [
-            Text(
-              "On a day when you are together all day, does he/she look you in the eye at least 5 times?",
-              style: TextStyle(fontSize: 20,),
-              textAlign: TextAlign.center,
-            ),
-            _yesOrNoRadio(6),
-          ],
-        ),
-        Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-          onPressed: () {
-            setState(() {
-              if (_selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (_selected[6] == true) print("PASS");
-              else print("FAILED");
-            });
-          },
-        ),
-        Copyright(),
-      ],
-    );
-  }
-
 
   Widget _yesOrNoRadio(index) {
     return Row(
@@ -240,8 +178,8 @@ class Followup17State extends State<Followup17> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -249,8 +187,8 @@ class Followup17State extends State<Followup17> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

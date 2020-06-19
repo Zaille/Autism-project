@@ -2,8 +2,8 @@ dbHelper = require("./dbhelper");
 
 module.exports = function (app) {
 
-    app.post('/upload', function (req,res) {
-        console.log("Upload !");
+    app.post('/uploadFiles', function (req,res) {
+        console.log("Uploading files !");
         console.dir(req.body);
         console.dir(req.files);
         let splitPath;
@@ -35,6 +35,12 @@ module.exports = function (app) {
         catch (err) {
             res.status(500).send(err);
         }
+    });
+
+    app.post('/uploadResponses', function (req, res) {
+        console.log("Uploading responses !");
+        console.dir(req.body);
+        res.status(201).send();
     });
 
     /* Get all scores */

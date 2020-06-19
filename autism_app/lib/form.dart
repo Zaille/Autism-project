@@ -320,7 +320,7 @@ class FormWidgetState extends State<FormWidget> {
 
   Future sendData() async {
     Response response;
-    String uploadURL = 'http://192.168.1.45:8080/api/upload';
+    String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
     Dio dio = new Dio();
     FormData formData = FormData.fromMap({
       "childFirtName": childFirstNameController.text,

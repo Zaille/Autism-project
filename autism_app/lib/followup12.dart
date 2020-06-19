@@ -18,10 +18,11 @@ class Followup12 extends StatefulWidget{
 
 class Followup12State extends State<Followup12> {
 
-  List<bool> _selected = new List<bool>.filled(15, null, growable: true);
+  List<bool> selected = new List<bool>.filled(15, null, growable: true);
+  String example;
+  String description;
   int thirdChoice = -1;
-  final firstExampleController = TextEditingController();
-  final secondExampleController = TextEditingController();
+  final exampleController = TextEditingController();
   final describeController = TextEditingController();
   final String title = "FollowUp 12";
   int state = 0;
@@ -121,7 +122,7 @@ class Followup12State extends State<Followup12> {
             _yesOrNoRadio(9),
           ],
         ),
-        (_selected[9] == true)
+        (selected[9] == true)
             ? RoundedContainer(
           displayTitle: false,
           children: [
@@ -143,13 +144,17 @@ class Followup12State extends State<Followup12> {
           onPressed: () {
             int nbYes = 0;
             //Need responses
-            if (_selected.sublist(0,10).contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-            else{
-              _selected.sublist(0,10).forEach((element) {if(element) nbYes++;});
+            if (selected.sublist(0,10).contains(null) | (selected[9] & (describeController.text == "")))
+              Fluttertoast.showToast(msg: "Need all responses");
+            else {
+              if (selected[9]) description = describeController.text;
+              selected.sublist(0,10).forEach((element) {if(element) nbYes++;});
+              //Too much "Yes" => Next question
               if (nbYes > 1) setState(() {
                 state ++;
               });
-              else print("PASS");
+              //PASS
+              else widget.nextPage(selected, null, example, description, true);
             }
           },
         ),
@@ -174,7 +179,7 @@ class Followup12State extends State<Followup12> {
               ),
             ),
             TextField(
-              controller: firstExampleController,
+              controller: exampleController,
               minLines: 4,
               maxLines: 10,
               decoration: InputDecoration(
@@ -187,7 +192,7 @@ class Followup12State extends State<Followup12> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
-                  state  = 2;
+                  state ++;
                 });
               },
             ),
@@ -198,10 +203,13 @@ class Followup12State extends State<Followup12> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (firstExampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(firstExampleController.text);
-            });
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -263,18 +271,18 @@ class Followup12State extends State<Followup12> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
-            if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             //"Yes" in "Pass"
-            else if (_selected.sublist(10,12).contains(true)) {
+            else if (selected.sublist(10,12).contains(true)) {
               //Both "Pass" and "Fail" contain "Yes
-              if (_selected.sublist(12,15).contains(true)) setState(() {
+              if (selected.sublist(12,15).contains(true)) setState(() {
                 state ++;
-                });
-              //Only "Pass" contains "Yes"
-              else print("PASS");
+              });
+              //Only "Pass" contains "Yes" => PASS
+              else widget.nextPage(selected, null, example, description, true);
             }
-            //"Yes" only in "Fail"
-            else print("FAIL");
+            //"Yes" only in "Fail" => FAIL
+            else  widget.nextPage(selected, null, example, description, false);
           },
         ),
         Copyright(),
@@ -293,35 +301,35 @@ class Followup12State extends State<Followup12> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _selected[10]?
+            selected[10]?
             RadioListTile(
               value: 10,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Calmly cover his/her ears?"),
             ) : Container(),
-            _selected[11]?
+            selected[11]?
             RadioListTile(
               value: 11,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Tell you that he/she does not like the noise?"),
             ) : Container(),
-            _selected[12]?
+            selected[12]?
             RadioListTile(
               value: 12,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Scream?"),
             ) : Container(),
-            _selected[13]?
+            selected[13]?
             RadioListTile(
               value: 13,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Cry?"),
             ) : Container(),
-            _selected[14]?
+            selected[14]?
             RadioListTile(
               value: 14,
               groupValue: thirdChoice,
@@ -335,7 +343,7 @@ class Followup12State extends State<Followup12> {
           onPressed: () {
             setState(() {
               if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-              else print(thirdChoice);
+              else  widget.nextPage(selected, null, example, description, thirdChoice < 2);
             });
           },
         ),
@@ -352,8 +360,8 @@ class Followup12State extends State<Followup12> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -361,8 +369,8 @@ class Followup12State extends State<Followup12> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

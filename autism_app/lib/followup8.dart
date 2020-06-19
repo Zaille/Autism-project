@@ -1,11 +1,6 @@
 import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -22,8 +17,8 @@ class Followup8 extends StatefulWidget{
 
 class Followup8State extends State<Followup8> {
 
-  List<bool> _selected = new List<bool>.filled(10, null, growable: true);
-  int thirdChoice = -1;
+  List<bool> selected = new List<bool>.filled(10, null, growable: true);
+  String example;
   final exampleController = TextEditingController();
   final String title = "FollowUp 8";
   int state = 0;
@@ -58,8 +53,8 @@ class Followup8State extends State<Followup8> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-              if (_selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (_selected[0]) print("PASS");
+              if (selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
+              else if (selected[0]) widget.nextPage(selected, null, );
               else setState(() {
                 state ++;
               });
@@ -91,11 +86,14 @@ class Followup8State extends State<Followup8> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-              if (_selected[1] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (!_selected[1]) print("FAIL");
-              else setState(() {
-                  state ++;
-                });
+            //Need response
+            if (selected[1] == null) Fluttertoast.showToast(msg: "Complete the field");
+            //FAIL
+            else if (!selected[1]) widget.nextPage(selected, null, example, null, false);
+            //Next question
+            else setState(() {
+                state ++;
+              });
           },
         ),
         Copyright(),
@@ -143,10 +141,13 @@ class Followup8State extends State<Followup8> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-            setState(() {
               if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(exampleController.text);
-            });
+              else {
+                example = exampleController.text;
+                setState(() {
+                  state ++;
+                });
+              }
           },
         ),
         Copyright(),
@@ -240,11 +241,14 @@ class Followup8State extends State<Followup8> {
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             //Need responses
-            if (_selected.sublist(2,9).contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-            else if (_selected.sublist(2,9).contains(true)) setState(() {
+            if (selected.sublist(2,9).contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            //Next question
+            else if (selected.sublist(2,9).contains(true))
+              setState(() {
                 state ++;
               });
-            else print("FAIL");
+            //FAIL
+            else widget.nextPage(selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -273,9 +277,12 @@ class Followup8State extends State<Followup8> {
             text: "VALIDATE",
             padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
             onPressed: () {
-                if (_selected[9] == null) Fluttertoast.showToast(msg: "Complete the field");
-                else if (_selected[9]) print("PASS");
-                else print("FAIL");
+              //Need a response
+              if (selected[9] == null) Fluttertoast.showToast(msg: "Complete the field");
+              //PASS
+              else if (selected[9]) widget.nextPage(selected, null, example, null, true);
+              //FAIL
+              else widget.nextPage(selected, null, example, null, false);
             },
           ),
           Copyright(),
@@ -291,8 +298,8 @@ class Followup8State extends State<Followup8> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -300,8 +307,8 @@ class Followup8State extends State<Followup8> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

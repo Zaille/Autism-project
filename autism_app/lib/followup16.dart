@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -18,10 +17,10 @@ class Followup16 extends StatefulWidget{
 
 class Followup16State extends State<Followup16> {
 
-  List<bool> _selected = new List<bool>.filled(5, null, growable: true);
+  List<bool> selected = new List<bool>.filled(5, null, growable: true);
+  String example;
   int thirdChoice = -1;
   final exampleController = TextEditingController();
-  final describeController = TextEditingController();
   final String title = "FollowUp 16";
   int state = 0;
 
@@ -62,7 +61,7 @@ class Followup16State extends State<Followup16> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
-                  state = 1;
+                  state ++;
                 });
               },
             ),
@@ -73,11 +72,11 @@ class Followup16State extends State<Followup16> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else setState(() {
-                state = 1;
-              });
+            //Need a response
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            //Next question
+            else setState(() {
+              state ++;
             });
           },
         ),
@@ -122,7 +121,7 @@ class Followup16State extends State<Followup16> {
           displayTitle: false,
           children: <Widget>[
             Text("Look around to see what you are looking at?",
-                style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
             _yesOrNoRadio(2),
           ],
@@ -150,18 +149,18 @@ class Followup16State extends State<Followup16> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
-            if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             //"Yes" in "Pass"
-            else if (_selected.sublist(0,3).contains(true)) {
-              //Both "Pass" and "Fail" contain "Yes
-              if (_selected.sublist(3,5).contains(true)) setState(() {
-                state = 2;
+            else if (selected.sublist(0,3).contains(true)) {
+              //Both "Pass" and "Fail" contain "Yes => Next question
+              if (selected.sublist(3,5).contains(true)) setState(() {
+                state ++;
               });
-              //Only "Pass" contains "Yes"
-              else print("PASS");
+              //Only "Pass" contains "Yes" => PASS
+              else widget.nextPage(selected, null, example, null, true);
             }
-            //"Yes" only in "Fail"
-            else print("FAIL");
+            //"Yes" only in "Fail" => FAIL
+            else widget.nextPage(selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -180,35 +179,35 @@ class Followup16State extends State<Followup16> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _selected[0]?
+            selected[0]?
             RadioListTile(
               value: 0,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Look toward the thing you are looking at?"),
             ) : Container(),
-            _selected[1]?
+            selected[1]?
             RadioListTile(
               value: 1,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Point toward the thing you are looking at?"),
             ) : Container(),
-            _selected[2]?
+            selected[2]?
             RadioListTile(
               value: 2,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Look around to see what you are looking at?"),
             ) : Container(),
-            _selected[3]?
+            selected[3]?
             RadioListTile(
               value: 3,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Ignore you?"),
             ) : Container(),
-            _selected[4]?
+            selected[4]?
             RadioListTile(
               value: 4,
               groupValue: thirdChoice,
@@ -220,10 +219,8 @@ class Followup16State extends State<Followup16> {
         SubmitButton(
           text: "VALIDATE",
           onPressed: () {
-            setState(() {
-              if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-              else print(thirdChoice);
-            });
+            if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
+            else widget.nextPage(selected, thirdChoice, example, null, thirdChoice < 3);
           },
         ),
         Copyright(),
@@ -239,8 +236,8 @@ class Followup16State extends State<Followup16> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -248,8 +245,8 @@ class Followup16State extends State<Followup16> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

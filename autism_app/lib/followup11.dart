@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -18,10 +17,10 @@ class Followup11 extends StatefulWidget{
 
 class Followup11State extends State<Followup11> {
 
-  List<bool> _selected = new List<bool>.filled(6, null, growable: true);
+  List<bool> selected = new List<bool>.filled(6, null, growable: true);
+  String example;
   int thirdChoice = -1;
   final exampleController = TextEditingController();
-  final describeController = TextEditingController();
   final String title = "FollowUp 11";
   int state = 0;
 
@@ -62,7 +61,7 @@ class Followup11State extends State<Followup11> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
-                  state  = 2;
+                  state ++;
                 });
               },
             ),
@@ -73,10 +72,13 @@ class Followup11State extends State<Followup11> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(exampleController.text);
-            });
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -148,18 +150,18 @@ class Followup11State extends State<Followup11> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
-            if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             //"Yes" in "Pass"
-            else if (_selected.sublist(0,3).contains(true)) {
+            else if (selected.sublist(0,3).contains(true)) {
               //Both "Pass" and "Fail" contain "Yes
-              if (_selected.sublist(3,6).contains(true)) setState(() {
+              if (selected.sublist(3,6).contains(true)) setState(() {
                 state ++;
-                });
-              //Only "Pass" contains "Yes"
-              else print("PASS");
+              });
+              //Only "Pass" contains "Yes" => PASS
+              else widget.nextPage(selected, null, example, null, true);
             }
-            //"Yes" only in "Fail"
-            else print("FAIL");
+            //"Yes" only in "Fail" => FAIL
+            else widget.nextPage(selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -178,42 +180,42 @@ class Followup11State extends State<Followup11> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _selected[0]?
+            selected[0]?
             RadioListTile(
               value: 0,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Smile when you smile?"),
             ) : Container(),
-            _selected[1]?
+            selected[1]?
             RadioListTile(
               value: 1,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Smile when you enter the room?"),
             ) : Container(),
-            _selected[2]?
+            selected[2]?
             RadioListTile(
               value: 2,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Smile when you return from being away?"),
             ) : Container(),
-            _selected[3]?
+            selected[3]?
             RadioListTile(
               value: 3,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Always smile?"),
             ) : Container(),
-            _selected[4]?
+            selected[4]?
             RadioListTile(
               value: 4,
               groupValue: thirdChoice,
               onChanged: (newValue) => setState(() => thirdChoice = newValue),
               title: Text("Smile at a favorite toy or activity?"),
             ) : Container(),
-            _selected[5]?
+            selected[5]?
             RadioListTile(
               value: 5,
               groupValue: thirdChoice,
@@ -227,7 +229,7 @@ class Followup11State extends State<Followup11> {
           onPressed: () {
             setState(() {
               if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-              else print(thirdChoice);
+              else widget.nextPage(selected, thirdChoice, example, null, thirdChoice < 3);
             });
           },
         ),
@@ -244,8 +246,8 @@ class Followup11State extends State<Followup11> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -253,8 +255,8 @@ class Followup11State extends State<Followup11> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

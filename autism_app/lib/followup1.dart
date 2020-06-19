@@ -1,6 +1,4 @@
 import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,9 +18,10 @@ class Followup1 extends StatefulWidget{
 
 class Followup1State extends State<Followup1> {
 
-  List<bool> _selected = new List<bool>.filled(7, null, growable: true);
+  List<bool> selected = new List<bool>.filled(7, null, growable: true);
+  String example;
   int thirdChoice = -1;
-  final myTextController = TextEditingController();
+  final exampleController = TextEditingController();
   final String title = "FollowUp 1";
   int state = 0;
 
@@ -50,7 +49,7 @@ class Followup1State extends State<Followup1> {
               ),
             ),
             TextField(
-              controller: myTextController,
+              controller: exampleController,
               minLines: 4,
               maxLines: 10,
               decoration: InputDecoration(
@@ -74,8 +73,13 @@ class Followup1State extends State<Followup1> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-              if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(myTextController.text);
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -152,19 +156,20 @@ class Followup1State extends State<Followup1> {
           onPressed: () {
             setState(() {
               //Need responses
-              if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+              if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
               //Respond "Yes" to a "FAIL" example
-              else if (_selected.sublist(4, 7).contains(true)) {
+              else if (selected.sublist(4, 7).contains(true)) {
                 //And "Yes" to "PASS"
-                if (_selected.sublist(0, 4).contains(true))
+                if (selected.sublist(0, 4).contains(true))
                   setState(() {
                     state ++;
                   });
-                //FAILED
-                else print("FAILED");
+                //FAIL
+                else widget.nextPage(selected, null, example, null, false);
               }
               //PASS
-              else if (!_selected.sublist(4, 7).contains(true)) print(_selected);
+              else if (!selected.sublist(4, 7).contains(true))
+                widget.nextPage(selected, null, example, null, true);
             });
           },
         ),
@@ -184,64 +189,65 @@ class Followup1State extends State<Followup1> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _selected[0]?
-              RadioListTile(
-                value: 0,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Look at object?"),
-              ) : Container(),
-            _selected[1]?
-              RadioListTile(
-                value: 1,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Point to object?"),
-              ) : Container(),
-            _selected[2]?
-              RadioListTile(
-                value: 2,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Look and comment on object?"),
-              ) : Container(),
-            _selected[3]?
-              RadioListTile(
-                value: 3,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Look if you point and say “look!”?"),
-              ) : Container(),
-            _selected[4]?
-              RadioListTile(
-                value: 4,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Ignores you?"),
-              ) : Container(),
-            _selected[5]?
-              RadioListTile(
-                value: 5,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Look around room randomly?"),
-              ) : Container(),
-            _selected[6]?
-              RadioListTile(
-                value: 6,
-                groupValue: thirdChoice,
-                onChanged: (newValue) => setState(() => thirdChoice = newValue),
-                title: Text("Look at your finger?"),
-              ) : Container(),
+            selected[0]?
+            RadioListTile(
+              value: 0,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Look at object?"),
+            ) : Container(),
+            selected[1]?
+            RadioListTile(
+              value: 1,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Point to object?"),
+            ) : Container(),
+            selected[2]?
+            RadioListTile(
+              value: 2,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Look and comment on object?"),
+            ) : Container(),
+            selected[3]?
+            RadioListTile(
+              value: 3,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Look if you point and say “look!”?"),
+            ) : Container(),
+            selected[4]?
+            RadioListTile(
+              value: 4,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Ignores you?"),
+            ) : Container(),
+            selected[5]?
+            RadioListTile(
+              value: 5,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Look around room randomly?"),
+            ) : Container(),
+            selected[6]?
+            RadioListTile(
+              value: 6,
+              groupValue: thirdChoice,
+              onChanged: (newValue) => setState(() => thirdChoice = newValue),
+              title: Text("Look at your finger?"),
+            ) : Container(),
           ],
         ),
         SubmitButton(
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
+            //Need response
             if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-            else print(thirdChoice);
-            widget.nextPage(_selected, thirdChoice, null, null);
+            //Send data
+            else widget.nextPage(selected, thirdChoice, example, null, thirdChoice < 4);
           },
         ),
         Copyright(),
@@ -258,8 +264,8 @@ class Followup1State extends State<Followup1> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -267,8 +273,8 @@ class Followup1State extends State<Followup1> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

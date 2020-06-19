@@ -90,7 +90,7 @@ class FollowUpState extends State<FollowUp> {
     return Container();
   }
 
-  sendData(List<bool> responses, int index, String example, String description) async {
+  sendData(List<bool> responses, int index, String example, String description, bool success) async {
     Response response;
     Dio dio = new Dio();
     String uploadURL = 'http://192.168.1.45:8080/api/uploadResponses';
@@ -100,7 +100,9 @@ class FollowUpState extends State<FollowUp> {
         "yesNoAnswers": responses,
         "answerChoice": index,
         "example": example,
-        "description": description},
+        "description": description,
+        "success": success,
+      },
       ).timeout(const Duration(seconds: 10));
     }
     catch(e) {

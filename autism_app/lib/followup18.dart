@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -18,9 +17,9 @@ class Followup18 extends StatefulWidget{
 
 class Followup18State extends State<Followup18> {
 
-  List<bool> _selected = new List<bool>.filled(5, null, growable: true);
+  List<bool> selected = new List<bool>.filled(5, null, growable: true);
+  String example;
   final exampleController = TextEditingController();
-  final describeController = TextEditingController();
   final String title = "FollowUp 18";
   int state = 0;
 
@@ -43,7 +42,7 @@ class Followup18State extends State<Followup18> {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                "Please give me an example of how you know he/she understands you:",
+                "Please give an example of how you know he/she understands you:",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -62,7 +61,7 @@ class Followup18State extends State<Followup18> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
-                  state = 1;
+                  state ++;
                 });
               },
             ),
@@ -73,12 +72,13 @@ class Followup18State extends State<Followup18> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else setState(() {
-                state = 1;
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
               });
-            });
+            }
           },
         ),
         Copyright(),
@@ -95,7 +95,7 @@ class Followup18State extends State<Followup18> {
           children: [
             Text(
               "When the situation gives him/her a clue, can he/she follow a command?\nFor example "
-              "when you are dressed to go out and you tell him/her to get his/her shoes, does he/she understand?",
+                  "when you are dressed to go out and you tell him/her to get his/her shoes, does he/she understand?",
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
@@ -107,15 +107,13 @@ class Followup18State extends State<Followup18> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (_selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (_selected[0]) setState(() {
-                state = 3;
-              });
-              else setState(() {
+            if (selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
+            else if (selected[0]) setState(() {
+              state = 3;
+            });
+            else setState(() {
                 state = 2;
               });
-            });
           },
         ),
         Copyright(),
@@ -132,7 +130,7 @@ class Followup18State extends State<Followup18> {
           children: [
             Text(
               "If it is dinnertime and food is on the table, and "
-              "you tell the child to sit down, will he/she come sit at the table?",
+                  "you tell the child to sit down, will he/she come sit at the table?",
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
@@ -144,19 +142,21 @@ class Followup18State extends State<Followup18> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (_selected[1] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (_selected[1]) setState(() {
-                state = 3;
-              });
-              else print("FAIL");
+            //Need a response
+            if (selected[1] == null) Fluttertoast.showToast(msg: "Complete the field");
+            //Next question
+            else if (selected[1]) setState(() {
+              state = 3;
             });
+            //FAIL
+            else widget.nextPage(selected, null, example, null, false);
           },
         ),
         Copyright(),
       ],
     );
   }
+
   Widget forthElement() {
     return ListView(
       children: <Widget>[
@@ -166,7 +166,7 @@ class Followup18State extends State<Followup18> {
             children: [
               Text(
                 "When the situation does not give any clues, "
-                "can he/she follow a command? For example… ",
+                    "can he/she follow a command? For example… ",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               )
@@ -191,7 +191,7 @@ class Followup18State extends State<Followup18> {
                 "for another object without pointing, making "
                 "gestures, or giving hints, does your child bring "
                 "it to you?",
-                style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
             _yesOrNoRadio(3),
           ],
@@ -213,11 +213,9 @@ class Followup18State extends State<Followup18> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
-            if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-            //At least 1 "Yes" = PASS
-            else if (_selected.sublist(2,5).contains(true)) print("PASS");
-            //Not enough "Yes"
-            else print("FAIL");
+            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            //Send data
+            else widget.nextPage(selected, null, example, null, selected.sublist(2,5).contains(true));
           },
         ),
         Copyright(),
@@ -234,8 +232,8 @@ class Followup18State extends State<Followup18> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -243,8 +241,8 @@ class Followup18State extends State<Followup18> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

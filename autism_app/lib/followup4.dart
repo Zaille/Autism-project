@@ -1,8 +1,6 @@
 import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -19,8 +17,9 @@ class Followup4 extends StatefulWidget{
 
 class Followup4State extends State<Followup4> {
 
-  List<bool> _selected = new List<bool>.filled(11, null, growable: true);
-  final myTextController = TextEditingController();
+  List<bool> selected = new List<bool>.filled(4, null, growable: true);
+  String example;
+  final exampleController = TextEditingController();
   final String title = "FollowUp 4";
   int state = 0;
 
@@ -35,45 +34,50 @@ class Followup4State extends State<Followup4> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-      RoundedContainer(
-        title: title,
-        children: [
-          Container(
+        RoundedContainer(
+          title: title,
+          children: [
+            Container(
               padding: EdgeInsets.all(20),
               child: Text(
                 "Please give an example of something he/she enjoys climbing on:",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-          ),
-          TextField(
-            controller: myTextController,
-            minLines: 4,
-            maxLines: 10,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
             ),
-          ),
-          FlatButton(
-            child: Text("I don't have any example"),
-            color: Colors.white,
-            textColor: Colors.lightBlue,
-            onPressed: () {
-              setState(() {
-                state ++;
-              });
-            },
-          ),
-        ],
-      ),
+            TextField(
+              controller: exampleController,
+              minLines: 4,
+              maxLines: 10,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+            ),
+            FlatButton(
+              child: Text("I don't have any example"),
+              color: Colors.white,
+              textColor: Colors.lightBlue,
+              onPressed: () {
+                setState(() {
+                  state ++;
+                });
+              },
+            ),
+          ],
+        ),
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
-              if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(myTextController.text);
+              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+              else {
+                example = exampleController.text;
+                setState(() {
+                  state ++;
+                });
+              }
             });
           },
         ),
@@ -86,11 +90,11 @@ class Followup4State extends State<Followup4> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
-          title: title,
-          color: Colors.lightBlue.withOpacity(0.2),
-          children: [
-            Text("Does he/she enjoy climbing on…", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
-          ]
+            title: title,
+            color: Colors.lightBlue.withOpacity(0.2),
+            children: [
+              Text("Does he/she enjoy climbing on…", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
+            ]
         ),
         RoundedContainer(
           displayTitle: false,
@@ -124,10 +128,8 @@ class Followup4State extends State<Followup4> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-              else print(_selected);
-            });
+            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            else widget.nextPage(selected, null, example, null, selected.contains(true));
           },
         ),
         Copyright(),
@@ -143,8 +145,8 @@ class Followup4State extends State<Followup4> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -152,8 +154,8 @@ class Followup4State extends State<Followup4> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

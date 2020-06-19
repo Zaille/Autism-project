@@ -20,7 +20,8 @@ class Followup2 extends StatefulWidget{
 
 class Followup2State extends State<Followup2> {
 
-  List<int> _selected = [-1, -1, -1, -1];
+  List<bool> selected = new List<bool>.filled(3, null, growable: true);
+  String description;
   final String title = "FollowUp 2";
   int state = 0;
 
@@ -34,17 +35,17 @@ class Followup2State extends State<Followup2> {
 
   Widget firstElement() {
     return ListView(
-        children: <Widget>[
+      children: <Widget>[
         RoundedContainer(
-          title: title,
-          color: Colors.lightBlue.withOpacity(0.2),
-          children: [
-            Text(
-              "You reported that you have wondered if you child is deaf. What led you to wonder that?\n Does he/she…",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            )
-          ]
+            title: title,
+            color: Colors.lightBlue.withOpacity(0.2),
+            children: [
+              Text(
+                "You reported that you have wondered if you child is deaf. What led you to wonder that?\n Does he/she…",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              )
+            ]
         ),
         RoundedContainer(
           displayTitle: false,
@@ -65,8 +66,10 @@ class Followup2State extends State<Followup2> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             setState(() {
-              if ((_selected[0] == -1) | (_selected[1] == -1))Fluttertoast.showToast(msg: "No response selected");
-              else state ++;
+              if ((selected.sublist(0,3).contains(null)))Fluttertoast.showToast(msg: "No response selected");
+              else setState(() {
+                state ++;
+              });
             });
           },
         ),
@@ -90,11 +93,11 @@ class Followup2State extends State<Followup2> {
         SubmitButton(
           text: "VALIDATE",
           onPressed: () {
-            setState(() {
-              if (_selected[2] == -1) Fluttertoast.showToast(msg: "No response selected");
-              else if (_selected[2] == 1) state ++;
-              else print(_selected);
+            if (selected[2] == null) Fluttertoast.showToast(msg: "No response selected");
+            else if (selected[2]) setState(() {
+              state ++;
             });
+            else widget.nextPage(selected, null, null, null, !selected.sublist(0,3).contains(true));
           },
         ),
         Copyright(),
@@ -110,26 +113,26 @@ class Followup2State extends State<Followup2> {
           title: title,
           children: [
             Text(
-              "What were the results of the hearing test? (choose one):",
+              "What were the results of the hearing test?",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             RadioListTile(
-              value: 0,
-              groupValue: _selected[3],
-              onChanged: (newValue) => setState(() => _selected[3] = newValue),
+              value: "Hearing below normal",
+              groupValue: description,
+              onChanged: (newValue) => setState(() => description = newValue),
               title: Text("Hearing in normal range"),
             ),
             RadioListTile(
-              value: 1,
-              groupValue: _selected[3],
-              onChanged: (newValue) => setState(() => _selected[3] = newValue),
+              value: "Hearing below normal",
+              groupValue: description,
+              onChanged: (newValue) => setState(() => description = newValue),
               title: Text("Hearing below normal"),
             ),
             RadioListTile(
-              value: 2,
-              groupValue: _selected[3],
-              onChanged: (newValue) => setState(() => _selected[3] = newValue),
+              value: "Results inconclusive or not definitive",
+              groupValue: description,
+              onChanged: (newValue) => setState(() => description = newValue),
               title: Text("Results inconclusive or not definitive"),
             ),
           ],
@@ -138,8 +141,8 @@ class Followup2State extends State<Followup2> {
         SubmitButton(
           text: "VALIDATE",
           onPressed: () {
-            if (_selected[3] == -1) Fluttertoast.showToast(msg: "No response selected");
-            else print(_selected);
+            if (description == null) Fluttertoast.showToast(msg: "No response selected");
+            else widget.nextPage(selected, null, null, description, !selected.sublist(0,3).contains(true));
           },
         ),
         Copyright(),
@@ -155,9 +158,9 @@ class Followup2State extends State<Followup2> {
           flex: 4,
           child: Container(
             child: RadioListTile(
-              value: 1,
-              groupValue: _selected[index],
-              onChanged: (newValue) => setState(() => _selected[index] = newValue),
+              value: true,
+              groupValue: selected[index],
+              onChanged: (newValue) => setState(() => selected[index] = newValue),
               title: Text("Yes"),
             ),
           ),
@@ -166,9 +169,9 @@ class Followup2State extends State<Followup2> {
           flex: 4,
           child: Container(
             child: RadioListTile(
-              value: 0,
-              groupValue: _selected[index],
-              onChanged: (newValue) => setState(() => _selected[index] = newValue),
+              value: false,
+              groupValue: selected[index],
+              onChanged: (newValue) => setState(() => selected[index] = newValue),
               title: Text("No"),
             ),
           ),

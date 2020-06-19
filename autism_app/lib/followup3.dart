@@ -1,8 +1,6 @@
 import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -19,8 +17,11 @@ class Followup3 extends StatefulWidget{
 
 class Followup3State extends State<Followup3> {
 
-  List<bool> _selected = new List<bool>.filled(11, null, growable: true);
-  final myTextController = TextEditingController();
+  List<bool> selected = new List<bool>.filled(11, null, growable: true);
+  String example;
+  String description;
+  final exampleController = TextEditingController();
+  final describeController = TextEditingController();
   final String title = "FollowUp 3";
   int state = 0;
 
@@ -47,7 +48,7 @@ class Followup3State extends State<Followup3> {
               ),
             ),
             TextField(
-              controller: myTextController,
+              controller: exampleController,
               minLines: 4,
               maxLines: 10,
               decoration: InputDecoration(
@@ -71,10 +72,15 @@ class Followup3State extends State<Followup3> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(myTextController.text);
-            });
+            //Need a response
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            //Next question
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -169,14 +175,32 @@ class Followup3State extends State<Followup3> {
             _yesOrNoRadio(10),
           ],
         ),
+        (selected[10] == true)
+            ? RoundedContainer(
+          displayTitle: false,
+          children: [
+            TextField(
+              controller: describeController,
+              minLines: 2,
+              maxLines: 5,
+              decoration: InputDecoration(
+                labelText: "Describe",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        )
+            : Container(),
         SubmitButton(
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (_selected.contains(null)) Fluttertoast.showToast(msg: "No response selected");
-              else print(_selected);
-            });
+            if (selected.contains(null) | (selected[10] & (describeController.text == "")))
+              Fluttertoast.showToast(msg: "Complete all fields");
+            else {
+              if (selected[10]) description = describeController.text;
+              widget.nextPage(selected, null, example, description, selected.contains(true));
+            }
           },
         ),
         Copyright(),
@@ -192,8 +216,8 @@ class Followup3State extends State<Followup3> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -201,8 +225,8 @@ class Followup3State extends State<Followup3> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),

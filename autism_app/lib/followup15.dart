@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -18,7 +17,9 @@ class Followup15 extends StatefulWidget{
 
 class Followup15State extends State<Followup15> {
 
-  List<bool> _selected = new List<bool>.filled(8, null, growable: true);
+  List<bool> selected = new List<bool>.filled(8, null, growable: true);
+  String example;
+  String description;
   final exampleController = TextEditingController();
   final describeController = TextEditingController();
   final String title = "FollowUp 15";
@@ -71,10 +72,13 @@ class Followup15State extends State<Followup15> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-            setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else print(exampleController.text);
-            });
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -145,7 +149,7 @@ class Followup15State extends State<Followup15> {
             _yesOrNoRadio(6),
           ],
         ),
-        (_selected[6] == true)
+        (selected[6] == true)
             ? RoundedContainer(
           displayTitle: false,
           children: [
@@ -165,16 +169,16 @@ class Followup15State extends State<Followup15> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-            setState(() {
-              int nbYes = 0;
-              _selected.forEach((element) { if (element == true) nbYes++;});
-              //Need responses
-              if (_selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-              //Not enough "Yes"
-              else if (nbYes <= 1) print("FAIL");
-              //More than 2 "Yes" = PASS
-              else if (nbYes > 1) print("PASS");
-            });
+            int nbYes = 0;
+            selected.forEach((element) { if (element == true) nbYes++;});
+            //Need responses
+            if (selected.contains(null) | (selected[6] & (describeController.text == "")))
+              Fluttertoast.showToast(msg: "Need all responses");
+            //Send data
+            else {
+              if (selected[6]) description = describeController.text;
+              widget.nextPage(selected, null, example, description, nbYes > 1);
+            }
           },
         ),
         Copyright(),
@@ -183,39 +187,40 @@ class Followup15State extends State<Followup15> {
   }
 
   Widget thirdElement() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RoundedContainer(
-            title: title,
-            children: [
-              Text(
-                "Does your child look you in the eye every day?",
-                style: TextStyle(fontSize: 20,),
-                textAlign: TextAlign.center,
-              ),
-              _yesOrNoRadio(6),
-            ],
-          ),
-          Spacer(),
-          SubmitButton(
-            text: "VALIDATE",
-            padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-            onPressed: () {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RoundedContainer(
+          title: title,
+          children: [
+            Text(
+              "Does your child look you in the eye every day?",
+              style: TextStyle(fontSize: 20,),
+              textAlign: TextAlign.center,
+            ),
+            _yesOrNoRadio(6),
+          ],
+        ),
+        Spacer(),
+        SubmitButton(
+          text: "VALIDATE",
+          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          onPressed: () {
+            //Need a response
+            if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
+            //NExt question
+            else if (selected[6] == true)
               setState(() {
-                if (_selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-                else if (_selected[6] == true)
-                  setState(() {
-                    state ++;
-                  });
-                else print("FAILED");
+                state ++;
               });
-            },
-          ),
-          Copyright(),
-        ],
-      );
-    }
+            //FAIL
+            else widget.nextPage(selected, null, example, description, false);
+          },
+        ),
+        Copyright(),
+      ],
+    );
+  }
 
   Widget forthElement() {
     return Column(
@@ -238,9 +243,8 @@ class Followup15State extends State<Followup15> {
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             setState(() {
-              if (_selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (_selected[6] == true) print("PASS");
-              else print("FAILED");
+              if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
+              else widget.nextPage(selected, null, example, description, selected[6]);
             });
           },
         ),
@@ -258,8 +262,8 @@ class Followup15State extends State<Followup15> {
           flex: 4,
           child: RadioListTile(
             value: true,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("Yes"),
           ),
         ),
@@ -267,8 +271,8 @@ class Followup15State extends State<Followup15> {
           flex: 4,
           child: RadioListTile(
             value: false,
-            groupValue: _selected[index],
-            onChanged: (newValue) => setState(() => _selected[index] = newValue),
+            groupValue: selected[index],
+            onChanged: (newValue) => setState(() => selected[index] = newValue),
             title: Text("No"),
           ),
         ),
