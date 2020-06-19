@@ -74,10 +74,8 @@ class Followup1State extends State<Followup1> {
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
-            setState(() {
               if (myTextController.text == "") Fluttertoast.showToast(msg: "Complete the field");
               else print(myTextController.text);
-            });
           },
         ),
         Copyright(),
@@ -176,8 +174,7 @@ class Followup1State extends State<Followup1> {
   }
 
   Widget thirdElement() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    return ListView(
       children: <Widget>[
         RoundedContainer(
           title: title,
@@ -238,15 +235,14 @@ class Followup1State extends State<Followup1> {
               ) : Container(),
           ],
         ),
-        Spacer(),
         SubmitButton(
           text: "VALIDATE",
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: widget.nextPage,/*() {
+          onPressed: () {
             if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
             else print(thirdChoice);
-            widget.nextPage;
-          },*/
+            widget.nextPage(_selected, thirdChoice, null, null);
+          },
         ),
         Copyright(),
       ],

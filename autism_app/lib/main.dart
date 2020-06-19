@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Center(
-          child: FollowUp(responses: [true, false, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, false, false, true]),
+          child: FollowUp(responses: [false, true, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, false, false, true]),
         ),
       ),
     );
