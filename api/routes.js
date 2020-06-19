@@ -1,8 +1,34 @@
-dbHelper = require("./dbhelper");
+const dbHelper = require("./dbhelper");
 
 module.exports = function (app) {
 
-    app.post('/upload', function (req,res) {
+    /************ PAGES ************/
+
+    app.get('/', function (req, res) {
+        res.render('home');
+    });
+
+    app.get('/doctor_profile', function (req, res) {
+        res.render('doctor_profile', {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            clinic: req.body.clinic,
+            city: req.body.city,
+        });
+    });
+
+    app.get('/user_profile', function (req, res) {
+        res.render('user_profile');
+    });
+
+    app.get('/erreur', function (req, res) {
+        res.redirect('/');
+    });
+
+    /************ API ************/
+
+    app.post('/api/upload', function (req,res) {
         console.log("Upload !");
         console.dir(req.body);
         console.dir(req.files);
@@ -38,32 +64,17 @@ module.exports = function (app) {
     });
 
     /* Get all scores */
-    app.get('/scores', function (req, res) {
+    app.get('/api/scores', function (req, res) {
         dbHelper.patient.scores()
             .then((rows) => res.json(rows.result))
             .catch((err) => res.status(400).json({ err }));
     });
 
     /* Get all information of a patient */
-    app.get('/info/:id', function (req, res) {
+    app.get('/api/info/:id', function (req, res) {
         dbHelper.patient.scores()
             .then((rows) => res.json(rows.result))
             .catch((err) => res.status(400).json({ err }));
     });
 
-    app.get('/home', function (req, res) {
-        res.render('home');
-    });
-
-    app.get('/doctor_profile', function (req, res) {
-        res.render('doctor_profile')
-    });
-
-    app.get('/user_profile', function (req, res) {
-        res.render('user_profile')
-    });
-
-    app.get('/erreur', function (req, res) {
-        res.redirect('/');
-    });
 };

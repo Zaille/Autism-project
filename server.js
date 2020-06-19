@@ -2,36 +2,15 @@
 
 const express = require('express');
 const app = express();
-const api = require('./api/api');
-const router = express.Router();
-const path = require('path');
+const api = require('./api/api.js');
 
-app.use('/', express.static('public'));
-app.use('/api', api);
-app.use('/img',express.static(path.join(__dirname, './web_app/public/images')));
-app.use('/private', require('connect-ensure-login').ensureLoggedIn(),    
-    express.static('private'),
-);
+app.use('/', api);
+app.use('/img',express.static('./web_app/public/images'));
+app.use('/web_app/public', express.static('public'));
 
 const server = app.listen(8080, function () {
     let port = server.address().port;
     console.log('My app is listening at http://127.0.0.1:%s', port);
-});
-
-app.set('views', path.join(__dirname, '/web_app/views'));
-app.set('view engine', 'pug');
-
-app.get('/logout', function (req, res) {
-    res.sendFile('public/logout.html', {'root': __dirname});
-});
-
-app.get('/supprime_session', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
-app.get('/', function (req, res) {
-    res.render('user_profile');
 });
 
 // -----------------------------------------------------------------------------
@@ -56,6 +35,3 @@ const registerAtExit = function () {
 };
 
 registerAtExit();
-
-module.exports = router ;
-

@@ -1,0 +1,27 @@
+include index.pug
+include header_home
+
+div.first-home-presentation
+    div.left-fhp
+        span.uppercase.cg m-chat-r
+        sup.uppercase tm
+        h3.capitalize.cg is a medical protocol who help you detect autism
+        input(type='button' value="test my child").outlineBlue.uppercase
+        input(type='button' value="login").gradientBlue.uppercase
+    div.right-fhp
+        img(src='img/doctor.png', alt='doctor')
+
+div.second-home-presentation
+    div.left-shp
+        img(src='img/screen.png' alt='app screenshot')
+    div.right-shp
+        h3.capitalize dowload the m-chat-r tm app
+        p.cg50 m-chat-r tm is a medical application who allow you to test your child for autism. Parents often notice signs during the first three years of their child's life, so if you hesitate, take a test with our application to be sure.
+        ul.itemsCheckedList
+            li Test your child
+            li Get guidance
+            li Send videos
+            li Ask deeper analysis
+        button.gradientBlue.uppercase download
+
+include footer.pug

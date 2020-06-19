@@ -205,6 +205,7 @@ h2.doctor-profile-title {
     max-height: 40px;
     font-size: 15px;
     font-weight: bold;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 div.doctor-password {
