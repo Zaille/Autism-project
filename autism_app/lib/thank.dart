@@ -1,7 +1,6 @@
 import 'package:autismtest/main.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Thank extends StatefulWidget {
