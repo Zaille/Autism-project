@@ -70,6 +70,13 @@ module.exports = function (app) {
             .catch((err) => res.status(400).json({ err }));
     });
 
+    /* Get doctor profile */
+    app.get('/api/doctor/profile/:id', function (req, res) {
+        dbHelper.doctor.profile(req.params.id)
+            .then((rows) => res.json(rows.result))
+            .catch((err) => res.status(400).json({ err }));
+    });
+
     /* Get all scores */
     app.get('/api/scores', function (req, res) {
         dbHelper.patient.scores()

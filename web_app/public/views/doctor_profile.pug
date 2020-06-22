@@ -1,38 +1,23 @@
 include index
-include header_doctor.pug
+
+script( type="text/jsx" )
+    include ../js/profile.js
 
 body(onload="initDoctorProfile()")
-    div#doctor-profile
-        h2#doctor-profile-title.first-row Profile
+    include header_doctor.pug
 
-        p.first-column.second-row.th First Name
-        p.second-column.second-row.td #{firstName}
-
-        p.first-column.third-row.th Last Name
-        p.second-column.third-row.td #{lastName}
-
-        p.first-column.fourth-row.th Email
-        p.second-column.fourth-row.td #{email}
-
-        p.third-column.second-row.th Clinic
-        p.fourth-column.second-row.td #{clinic}
-
-        p.third-column.third-row.th City
-        p.fourth-column.third-row.td #{city}
-
-        input(type='button' value="Update").gradientBlue.fiveth-column.fourth-row.update
-
+    div#doctor-profile-content
     div#doctor-password
         h2#doctor-password-title.first-row Password
 
         p.first-column.second-row.th Current Password
-        input.first-column.third-row.input-password
+        input.first-column.third-row.input-text
 
         p.second-column.second-row.th New Password
-        input.second-column.third-row.input-password
+        input.second-column.third-row.input-text
 
         p.third-column.second-row.th Repeat Password
-        input.third-column.third-row.input-password
+        input.third-column.third-row.input-text
 
         input(type='button' value="Update").gradientBlue.fourth-column.third-row.update
 

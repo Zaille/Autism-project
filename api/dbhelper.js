@@ -86,6 +86,16 @@ AND u.patientId = p.patientId
 AND u.patientId  = ?;`), [id])
 }
 
+module.exports.doctor = {
+    profile: (id) => query(prepareQuery(`
+SELECT
+    a.mail, d.firstName, d.lastName, d.city, d.clinic
+FROM
+    authentication a, doctors d
+WHERE
+    a.userId = d.doctorId AND a.userId = ?;`, [id]))
+}
+
 module.exports.upload =  {
     file: (data) => query(prepareQuery(`
 Insert into pictures

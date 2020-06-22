@@ -1,50 +1,23 @@
 'use strict';
 
 async function initPatientProfile() {
-    const response = await fetch('/api/patient/profile/2');
+    const response = await fetch('/api/patient/profile/1');
     const json = await response.json();
     const data = json[0];
 
-    console.log(data);
+    const childProfile = new ChildProfile({firstName: data.firstName, lastName: data.lastName, age: data.age});
+    const parentProfile = new ParentProfile({firstName: data.parentFirstName, lastName: data.parentLastName, email: data.mail, phone: data.phoneNumber, city: data.city});
 
-    ReactDOM.render( data.firstName, document.getElementById('chidlFirstName') );
-    ReactDOM.render( data.lastName, document.getElementById('childLastName') );
-    ReactDOM.render( data.age, document.getElementById('childAge') );
-    ReactDOM.render( data.parentFirstName, document.getElementById('parentFirstName') );
-    ReactDOM.render( data.parentLastName, document.getElementById('parentLastName') );
-    ReactDOM.render( data.mail, document.getElementById('parentMail') );
-    ReactDOM.render( data.phoneNumber, document.getElementById('parentPhone') );
-    ReactDOM.render( data.city, document.getElementById('parentCity') );
-
-    // document.getElementById('childUpdateInfo').addEventListener( 'click', () => {
-    //     console.log('ici');
-    //     ReactDOM.render( <input type='text'>{data.firstName}</input>, document.getElementById('chidlFirstName') );
-    //     ReactDOM.render( <input type='text'>{data.lastName}</input>, document.getElementById('childLastName') );
-    //     ReactDOM.render( <input type='text'>{data.age}</input>, document.getElementById('childAge') );
-    // });
-    //
-    // document.getElementById('parentUpdateInfo').addEventListener( 'click', () => {
-    //     console.log('la');
-    //     ReactDOM.render(<input type='text'>{data.parentFirstName}</input>, document.getElementById('parentFirstName'));
-    //     ReactDOM.render(<input type='text'>{data.parentLastName}</input>, document.getElementById('parentLastName'));
-    //     ReactDOM.render(<input type='text'>{data.mail}</input>, document.getElementById('parentMail'));
-    //     ReactDOM.render(<input type='text'>{data.phoneNumber}</input>, document.getElementById('parentPhone'));
-    //     ReactDOM.render(<input type='text'>{data.city}</input>, document.getElementById('parentCity'));
-    // });
+    ReactDOM.render( childProfile.render(), document.getElementById('child-profile-content') );
+    ReactDOM.render( parentProfile.render(), document.getElementById('parent-profile-content') );
 }
 
 async function initDoctorProfile() {
-    const response = await fetch('/api/doctor/profile/2');
+    const response = await fetch('/api/doctor/profile/3');
     const json = await response.json();
     const data = json[0];
 
-    console.log(data);
+    const doctorProfile = new DoctorProfile({firstName: data.firstName, lastName: data.lastName, email: data.mail, clinic: data.clinic, city: data.city});
 
-    // const name = 'Josh Perez';
-    // const element = <h1>Hello, {name}</h1>;
-    //
-    // ReactDOM.render(
-    //     element,
-    //     document.getElementById('root')
-    // );
+    ReactDOM.render( doctorProfile.render(), document.getElementById('doctor-profile-content') );
 }
