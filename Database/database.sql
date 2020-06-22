@@ -8,14 +8,28 @@ use patientDatabase;
 create table questions (
     groupId int(10) not null,
     questionId int(10) not null,
+    type int(1) not null,
     question varchar(500) not null,
     constraint PK_groupQuestion PRIMARY KEY (groupId, questionId)
+);
+
+create table answers (
+    patientId int(10) primary key,
+    groupId int(10) not null,
+    questionId int(10) not null,
+    yesNoAnswer BIT(1) not null,
+    answerChoice INTEGER(10),
+    example VARCHAR(500),
+    description VARCHAR(500),
+    foreign key (patientId) references users(patientId),
+    foreign key (groupId) references questions(groupId),
+    foreign key (questionId) references questions(questionId)
 );
 
 create table links (
     group1 int(10) not null,
     group2 int(10),
-    answer BIT(2),
+    yesNoAnswer BIT(1),
     success BIT(1),
     foreign key (group1) references questions(groupId),
     foreign key (group2) references questions(groupId)
@@ -49,13 +63,6 @@ create table success (
     foreign key (groupId) references questions(groupId)
 );
 
-create table answers (
-    patientId int(10) primary key,
-    groupId int(10) not null,
-    questionId int(10) not null,
-    answer BIT(1) not null,
-    foreign key (patientId) references users(patientId)
-);
 
 create table scores (
     patientId int(10) primary key,
