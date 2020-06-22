@@ -10,27 +10,41 @@ module.exports = function (app) {
         let path;
         let i = 1;
         try {
-            if (!req.files || !req.body) {
+            if (/*!req.files ||*/ !req.body) {
                 res.status(400).send();
             }
             else {
-                req.files['files[]'].forEach(elem => {
+                /*req.files['files[]'].forEach(elem => {
                     splitPath = elem.name.split('.');
                     path = req.body.email + '_video' + i + '.' + splitPath[splitPath.length - 1];
                     elem.mv('./api/videos/' + path);
                     i = i + 1;
-                });
-                res.status(201).send();
+                });*/
+                /*dbHelper.formUpload.createUser([
+                    req.body.childFirstName,
+                    req.body.childLastName,
+                    req.body.childAge,
+                    req.body.parentFirstName,
+                    req.body.parentLastName,
+                    req.body.email,
+                    req.body.phoneNumber,
+                ], function (err, rows) {
+                    if (err) throw err;
+                });*/
+                dbHelper.formUpload.createUser([
+                    req.body.childFirstName,
+                    req.body.childLastName,
+                    parseInt(req.body.childAge),
+                    req.body.parentFirstName,
+                    req.body.parentLastName,
+                    req.body.email,
+                    parseInt(req.body.phoneNumber),
+                ]).catch((err) => res.status(400).json({ err }));//if (err["errno"] == 1062)
+                dbHelper.formUpload.getIdByMail(req.body.email)
+                    .then((rows) => res.status(201).json(rows.result[0]))
+                    .catch((err) => res.status(400).json({err}));
+
             }
-            dbHelper.upload.createUser([
-                req.body.childFirstName,
-                req.body.childLastName,
-                req.body.childAge,
-                req.body.parentFirstName,
-                req.body.parentLastName,
-                req.body.email,
-                req.body.phoneNumber,
-            ]);
         }
         catch (err) {
             res.status(500).send(err);

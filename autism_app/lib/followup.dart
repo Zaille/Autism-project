@@ -1,4 +1,5 @@
 import 'package:autismtest/form.dart';
+import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +26,10 @@ import 'package:autismtest/followup20.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class FollowUpWidget extends StatefulWidget {
-  FollowUpWidget({Key key, this.responses,}) : super(key: key);
+  FollowUpWidget({Key key, this.responses, this.patientId}) : super(key: key);
 
   final List<bool> responses;
+  final int patientId;
 
   @override
   State<StatefulWidget> createState() {
@@ -90,7 +92,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
       case 20:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormPage()),
+          MaterialPageRoute(builder: (context) => ThanksPage()),
         );
         return null;
     }
@@ -105,6 +107,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
     Fluttertoast.showToast(msg:'Processing data...', toastLength: Toast.LENGTH_SHORT);
     try {
       response = await dio.post(uploadURL, data: {
+        "patientId": widget.patientId,
         "yesNoAnswers": responses,
         "answerChoice": index,
         "example": example,
@@ -133,9 +136,10 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
 }
 
 class FollowupPage extends StatelessWidget {
-  FollowupPage({Key key, this.responses,}) : super(key: key);
+  FollowupPage({Key key, this.responses, this.patientId}) : super(key: key);
 
   final List<bool> responses;
+  final int patientId;
 
   @override
   Widget build(BuildContext context) {

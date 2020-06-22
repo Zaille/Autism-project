@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Center(
-          child: Home(),
+          child: FormPage(),
         ),
       ),
     );

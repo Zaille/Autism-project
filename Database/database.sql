@@ -6,7 +6,7 @@ use patientDatabase;
  -- Create tables --
 
 create table users (
-    patientId int primary key,
+    patientId int primary key auto_increment,
     firstName varchar(50) not null,
     lastName varchar(50) not null,
     age int not null,

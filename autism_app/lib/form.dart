@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:autismtest/followup.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
@@ -9,23 +10,27 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:autismtest/RoundedContainer.dart";
 
-class FormWidget extends StatefulWidget {
+class FormPage extends StatefulWidget {
+  FormPage({Key key, this.responses}) : super(key: key);
+
+  final List<bool> responses;
+
   @override
-  FormWidgetState createState() {
-    return FormWidgetState();
+  FormPageState createState() {
+    return FormPageState();
   }
 }
 
-class FormWidgetState extends State<FormWidget> {
+class FormPageState extends State<FormPage> {
 
   final _formKey = GlobalKey<FormState>();
-  //GlobalKey<UploadFormWidgetState> _keyPictures = GlobalKey();
 
   bool loading = false;
   List<File> files = [null, null];
   Color errorMessageColor = Colors.black;
   List<String> textButton = ["Add a video", "Add a video"];
   final picker = ImagePicker();
+  Widget nextPage;
 
   final childLastNameController = TextEditingController();
   final childFirstNameController = TextEditingController();
@@ -39,265 +44,267 @@ class FormWidgetState extends State<FormWidget> {
 
   final RegExp phoneRegExp = new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
+
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: ListView(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFC9F1FD),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 3,
-                  blurRadius: 5,
-                  offset: Offset(0, 4), // changes position of shadow
+    return Scaffold(
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xFFC9F1FD),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: Offset(0, 4), // changes position of shadow
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
+              child: Text("          Lorem ipsum dolor sit amet, consectetur adipiscing "
+                  "elit. Sed non risus. Suspendisse lectus tortor, "
+                  "dignissim sit amet, adipiscing nec, ultricies sed, "
+                  "dolor. Cras elementum ultrices diam. Maecenas ligula "
+                  "massa, varius a, semper congue, euismod non, mi. "
+                  "Cras elementum ultrices diam. Maecenas ligula "
+                  "massa, varius a, semper congue, euismod non, mi.",
+                  textAlign: TextAlign.justify
+              ),
+            ),
+            RoundedContainer(
+              title: "Child information:",
+              children: <Widget>[
+                TextFormField(
+                  controller: childFirstNameController,
+                  maxLength: 50,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "First Name",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter his/her first name';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: childLastNameController,
+                  maxLength: 50,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter his/her name';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: childAgeController,
+                  keyboardType: TextInputType.number,
+                  maxLength: 3,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Age",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter his/her age';
+                    }
+                    return null;
+                  },
+                ),
+              ]
+            ),
+            RoundedContainer(
+              title: "Parent information:",
+              children: <Widget>[
+                TextFormField(
+                  controller: parentFirstNameController,
+                  maxLength: 50,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "First Name",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter your first name';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: parentLastNameController,
+                  maxLength: 50,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Name",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Enter your name';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                maxLength: 50,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (!EmailValidator.validate(value)) {
+                    return 'Not a valid email';
+                  }
+                  return null;
+                },
+              ),
+                TextFormField(
+                  controller: phoneNumberController,
+                  keyboardType: TextInputType.phone,
+                  maxLength: 12,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Phone number",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (!phoneRegExp.hasMatch(value)) {
+                      return 'Not a valid phone number';
+                    }
+                    return null;
+                  },
                 ),
               ],
             ),
-            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-            child: Text("          Lorem ipsum dolor sit amet, consectetur adipiscing "
-                "elit. Sed non risus. Suspendisse lectus tortor, "
-                "dignissim sit amet, adipiscing nec, ultricies sed, "
-                "dolor. Cras elementum ultrices diam. Maecenas ligula "
-                "massa, varius a, semper congue, euismod non, mi. "
-                "Cras elementum ultrices diam. Maecenas ligula "
-                "massa, varius a, semper congue, euismod non, mi.",
-                textAlign: TextAlign.justify
+            RoundedContainer(
+              title: "Authentication:",
+              children: <Widget>[
+                TextFormField(
+                  controller: password1Controller,
+                  obscureText: true,
+                  maxLength: 30,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Choose a password';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: password2Controller,
+                  obscureText: true,
+                  maxLength: 30,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Confirm password",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Choose a password';
+                    }
+                    return null;
+                  },
+                ),
+              ],
             ),
-          ),
-          RoundedContainer(
-            title: "Child information:",
-            children: <Widget>[
-              TextFormField(
-                controller: childFirstNameController,
-                maxLength: 50,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "First Name",
-                  border: OutlineInputBorder(),
+            RoundedContainer(
+              title: "Videos:",
+              children: <Widget> [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Spacer(),
+                    files[0] == null
+                        ? Text('No file selected.', style: new TextStyle(color: errorMessageColor),)
+                        : Row(
+                      children: <Widget>[
+                        Icon(Icons.check, color: Colors.green,),
+                        Text('  Selected.', style: new TextStyle(color: Colors.green),)
+                      ],
+                    ),
+                    Spacer(),
+                    RaisedButton(
+                      child: Text(textButton[0]),
+                      onPressed: () {
+                        getFile(0);
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                    ),
+                    Spacer(),
+                  ],
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter his/her first name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: childLastNameController,
-                maxLength: 50,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  border: OutlineInputBorder(),
+                Container(
+                  width: screenWidth(context, coeff:1),
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter his/her name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: childAgeController,
-                keyboardType: TextInputType.number,
-                maxLength: 3,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Age",
-                  border: OutlineInputBorder(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Spacer(),
+                    files[1] == null
+                        ? Text('No file selected.', style: new TextStyle(color: errorMessageColor),)
+                        : Row(
+                      children: <Widget>[
+                        Icon(Icons.check, color: Colors.green,),
+                        Text('  Selected.', style: new TextStyle(color: Colors.green),)
+                      ],
+                    ),
+                    Spacer(),
+                    RaisedButton(
+                      child: Text(textButton[1]),
+                      onPressed: () {
+                        getFile(1);
+                      },
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                    ),
+                    Spacer(),
+                  ],
                 ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter his/her age';
-                  }
-                  return null;
-                },
-              ),
-            ]
-          ),
-          RoundedContainer(
-            title: "Parent information:",
-            children: <Widget>[
-              TextFormField(
-                controller: parentFirstNameController,
-                maxLength: 50,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "First Name",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter your first name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: parentLastNameController,
-                maxLength: 50,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Enter your name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              maxLength: 50,
-              enableInteractiveSelection: true,
-              decoration: InputDecoration(
-                labelText: "Email",
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (!EmailValidator.validate(value)) {
-                  return 'Not a valid email';
+              ],
+            ),
+            SubmitButton(
+              text: "SEND",
+              padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
+              onPressed: () {
+                if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
+                  sendData();
                 }
-                return null;
+                else {
+                  setState(() {
+                    errorMessageColor = Colors.red;
+                    Fluttertoast.showToast(msg: "Complete all fields");
+                  });
+                }
               },
             ),
-              TextFormField(
-                controller: phoneNumberController,
-                keyboardType: TextInputType.phone,
-                maxLength: 12,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Phone number",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (!phoneRegExp.hasMatch(value)) {
-                    return 'Not a valid phone number';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-          RoundedContainer(
-            title: "Authentication:",
-            children: <Widget>[
-              TextFormField(
-                controller: password1Controller,
-                obscureText: true,
-                maxLength: 30,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Choose a password';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: password2Controller,
-                obscureText: true,
-                maxLength: 30,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Confirm password",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Choose a password';
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-          RoundedContainer(
-            title: "Videos:",
-            children: <Widget> [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(),
-                  files[0] == null
-                      ? Text('No file selected.', style: new TextStyle(color: errorMessageColor),)
-                      : Row(
-                    children: <Widget>[
-                      Icon(Icons.check, color: Colors.green,),
-                      Text('  Selected.', style: new TextStyle(color: Colors.green),)
-                    ],
-                  ),
-                  Spacer(),
-                  RaisedButton(
-                    child: Text(textButton[0]),
-                    onPressed: () {
-                      getFile(0);
-                    },
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                  ),
-                  Spacer(),
-                ],
-              ),
-              Container(
-                width: screenWidth(context, coeff:1),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(),
-                  files[1] == null
-                      ? Text('No file selected.', style: new TextStyle(color: errorMessageColor),)
-                      : Row(
-                    children: <Widget>[
-                      Icon(Icons.check, color: Colors.green,),
-                      Text('  Selected.', style: new TextStyle(color: Colors.green),)
-                    ],
-                  ),
-                  Spacer(),
-                  RaisedButton(
-                    child: Text(textButton[1]),
-                    onPressed: () {
-                      getFile(1);
-                    },
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ],
-          ),
-          SubmitButton(
-            text: "SEND",
-            padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-            onPressed: () {
-              if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
-                sendData();
-              }
-              else {
-                setState(() {
-                  errorMessageColor = Colors.red;
-                  Fluttertoast.showToast(msg: "Complete all fields");
-                });
-              }
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -323,7 +330,7 @@ class FormWidgetState extends State<FormWidget> {
     String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
     Dio dio = new Dio();
     FormData formData = FormData.fromMap({
-      "childFirtName": childFirstNameController.text,
+      "childFirstName": childFirstNameController.text,
       "childLastName": childLastNameController.text,
       "childAge": childAgeController.text,
       "parentFirstName": parentFirstNameController.text,
@@ -346,25 +353,20 @@ class FormWidgetState extends State<FormWidget> {
     }
     catch(e) {
       Fluttertoast.showToast(msg: "Upload error");
+      print(e);
+      print();
     }
     if (response != null && response.statusCode == 201) {
       Fluttertoast.showToast(msg: "Upload done !");
+      if(widget.responses == null) nextPage = ThanksPage();
+      else nextPage = FollowupPage(responses: widget.responses, patientId: response.data["patientId"]);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ThanksPage()),
+        MaterialPageRoute(builder: (context) => nextPage),
       );
     }
     setState(() {
       loading = !loading;
     });
-  }
-}
-
-class FormPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FormWidget(),
-    );
   }
 }

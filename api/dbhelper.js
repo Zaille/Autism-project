@@ -29,11 +29,13 @@ const cbToPromise = function (fn, ...args) {
     });
 };
 
-const prepareQuery = function (unformated_query, inserts) {
-    return mysql.format(unformated_query, inserts);
+const prepareQuery = function (unformatted_query, inserts) {
+    console.log(inserts);
+    return mysql.format(unformatted_query, inserts);
 };
 
 const query = function (sql_query) {
+    console.log(sql_query);
     return cbToPromise(dbCon.query.bind(dbCon), sql_query);
 };
 
@@ -77,18 +79,30 @@ AND u.patientId = p.patientId
 AND u.patientId  = ?;`), [id])
 }
 
-module.exports.upload =  {
+module.exports.formUpload =  {
     file: (data) => query(prepareQuery(`
 Insert into pictures
 values (?,?,?,?,?);`), data),
 
     getIdByMail: (email) => query(prepareQuery(`
-Select patientId from users
-where parentMail = ?;`), email),
+select
+    patientId
+from
+    users
+where
+    parentMail = ?;`, [email])),
 
     createUser: (data) => query(prepareQuery(`
-        Insert into users (firstName, lastName, age, parentFirstName, parentLastName, parentMail, phoneNumber)
-        values (?,?,?,?,?,?,?),`), data),
+insert into
+    users (firstName, lastName, age, parentFirstName, parentLastName, parentMail, phoneNumber)
+values
+    (?);`, [data])),
+};
+
+module.exports.responseUpload = {
+    byQuestionId: (data) => query(prepareQuery(`
+Insert into answers (patientId, groupId, questionId, yesNoAnswer, answerChoice, example, description)
+values (?);`), data)
 };
 
 

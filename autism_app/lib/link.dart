@@ -1,5 +1,4 @@
 import 'package:autismtest/copyright.dart';
-import 'package:autismtest/followup.dart';
 import 'package:autismtest/form.dart';
 import 'package:autismtest/main.dart';
 import 'package:autismtest/roundedContainer.dart';
@@ -36,7 +35,7 @@ class LinkPageState extends State<LinkPage> {
           "surveillance indicates risk for ASD.";
     }
     else if(widget.score < 8) {
-      nextPage = FollowupPage(responses: widget.responses,);
+      nextPage = FormPage(responses: widget.responses,);
       text = "There is a Medium-risk."
           "\n\n     You will be administer a Follow-Up interview. "
           "Some of your responses might present a risk, "
