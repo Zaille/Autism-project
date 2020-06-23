@@ -30,7 +30,6 @@ const cbToPromise = function (fn, ...args) {
 };
 
 const prepareQuery = function (unformatted_query, inserts) {
-    console.log(inserts);
     return mysql.format(unformatted_query, inserts);
 };
 
@@ -100,9 +99,17 @@ values
 };
 
 module.exports.responseUpload = {
-    byQuestionId: (data) => query(prepareQuery(`
+    createAnswer: (data) => query(prepareQuery(`
 Insert into answers (patientId, groupId, questionId, yesNoAnswer, answerChoice, example, description)
-values (?);`), data)
+values (?);`, [data])),
+
+    getQuestionsByGroup: (id) => query(prepareQuery(`
+select
+    questionId, type
+from
+    questions
+where
+    groupId = ?;`, [id])),
 };
 
 

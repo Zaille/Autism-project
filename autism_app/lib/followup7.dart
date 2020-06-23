@@ -156,7 +156,7 @@ class Followup7State extends State<Followup7> {
             else if (selected.sublist(0,4).contains(true)) setState(() {
               state ++;
             });
-            else widget.nextPage(selected, null, example, null, false);
+            else widget.nextPage(7, selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -188,7 +188,7 @@ class Followup7State extends State<Followup7> {
             if (selected[4] == null) Fluttertoast.showToast(msg: "Complete the field");
             //FAIL
             else if (!selected[4])
-              widget.nextPage(selected, null, example, null, false);
+              widget.nextPage(7, selected, null, example, null, false);
             //Next Question
             else setState(() {
                 state ++;
@@ -221,8 +221,8 @@ class Followup7State extends State<Followup7> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             if (selected[5] == null) Fluttertoast.showToast(msg: "Complete the field");
-            else if (!selected[5]) widget.nextPage(selected, null, example, null, false);
-            else widget.nextPage(selected, null, example, null, true);
+            else if (!selected[5]) widget.nextPage(7, selected, null, example, null, false);
+            else widget.nextPage(7, selected, null, example, null, true);
           },
         ),
         Copyright(),

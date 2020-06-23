@@ -99,7 +99,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
     return Container();
   }
 
-  sendData(List<bool> responses, int index, String example, String description, bool success) async {
+  sendData(int groupId, List<bool> responses, int index, String example, String description, bool success) async {
     int oldIdx = this.questionIdx;
     Response response;
     Dio dio = new Dio();
@@ -108,6 +108,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
     try {
       response = await dio.post(uploadURL, data: {
         "patientId": widget.patientId,
+        "groupId": groupId,
         "yesNoAnswers": responses,
         "answerChoice": index,
         "example": example,

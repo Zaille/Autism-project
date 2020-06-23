@@ -177,7 +177,7 @@ class Followup15State extends State<Followup15> {
             //Send data
             else {
               if (selected[6]) description = describeController.text;
-              widget.nextPage(selected, null, example, description, nbYes > 1);
+              widget.nextPage(15, selected, null, example, description, nbYes > 1);
             }
           },
         ),
@@ -214,7 +214,7 @@ class Followup15State extends State<Followup15> {
                 state ++;
               });
             //FAIL
-            else widget.nextPage(selected, null, example, description, false);
+            else widget.nextPage(15, selected, null, example, description, false);
           },
         ),
         Copyright(),
@@ -244,7 +244,7 @@ class Followup15State extends State<Followup15> {
           onPressed: () {
             setState(() {
               if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else widget.nextPage(selected, null, example, description, selected[6]);
+              else widget.nextPage(15, selected, null, example, description, selected[6]);
             });
           },
         ),

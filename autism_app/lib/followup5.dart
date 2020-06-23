@@ -122,7 +122,7 @@ class Followup5State extends State<Followup5> {
               //No to all "fail" responses => PASS
               else {
                 if (selected[6]) description = describeController.text;
-                widget.nextPage(selected, null, example, description, true);
+                widget.nextPage(5, selected, null, example, description, true);
               }
             });
           },
@@ -154,7 +154,7 @@ class Followup5State extends State<Followup5> {
             if (selected[7] == null)
               Fluttertoast.showToast(msg: "Complete all fields");
             else
-              widget.nextPage(selected, null, example, description, !selected[7]);
+              widget.nextPage(5, selected, null, example, description, !selected[7]);
           },
         ),
         Copyright(),

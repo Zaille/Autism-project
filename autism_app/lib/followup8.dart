@@ -51,10 +51,10 @@ class Followup8State extends State<Followup8> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
               if (selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else if (selected[0]) widget.nextPage(selected, null, );
+              else if (selected[0]) widget.nextPage(8, selected, null, example, null, true);
               else setState(() {
                 state ++;
               });
@@ -84,12 +84,12 @@ class Followup8State extends State<Followup8> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need response
             if (selected[1] == null) Fluttertoast.showToast(msg: "Complete the field");
             //FAIL
-            else if (!selected[1]) widget.nextPage(selected, null, example, null, false);
+            else if (!selected[1]) widget.nextPage(8, selected, null, example, null, false);
             //Next question
             else setState(() {
                 state ++;
@@ -139,7 +139,7 @@ class Followup8State extends State<Followup8> {
         Spacer(),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
               if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
               else {
@@ -238,7 +238,7 @@ class Followup8State extends State<Followup8> {
         ),
         SubmitButton(
           text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             //Need responses
             if (selected.sublist(2,9).contains(null)) Fluttertoast.showToast(msg: "Need all responses");
@@ -248,7 +248,7 @@ class Followup8State extends State<Followup8> {
                 state ++;
               });
             //FAIL
-            else widget.nextPage(selected, null, example, null, false);
+            else widget.nextPage(8, selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -275,14 +275,14 @@ class Followup8State extends State<Followup8> {
           Spacer(),
           SubmitButton(
             text: "VALIDATE",
-            padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
             onPressed: () {
               //Need a response
               if (selected[9] == null) Fluttertoast.showToast(msg: "Complete the field");
               //PASS
-              else if (selected[9]) widget.nextPage(selected, null, example, null, true);
+              else if (selected[9]) widget.nextPage(8, selected, null, example, null, true);
               //FAIL
-              else widget.nextPage(selected, null, example, null, false);
+              else widget.nextPage(8, selected, null, example, null, false);
             },
           ),
           Copyright(),

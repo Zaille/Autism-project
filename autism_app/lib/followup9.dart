@@ -172,7 +172,7 @@ class Followup9State extends State<Followup9> {
                 state ++;
               });
             //FAIL
-            else widget.nextPage(selected, null, example, description, false);
+            else widget.nextPage(9, selected, null, example, description, false);
           },
         ),
         Copyright(),
@@ -202,9 +202,9 @@ class Followup9State extends State<Followup9> {
           onPressed: () {
             if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
             //PASS
-            else if(selected[6]) widget.nextPage(selected, null, example, description, true);
+            else if(selected[6]) widget.nextPage(9, selected, null, example, description, true);
             //FAIL
-            else widget.nextPage(selected, null, example, description, false);
+            else widget.nextPage(9, selected, null, example, description, false);
           },
         ),
         Copyright(),

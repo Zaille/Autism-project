@@ -149,7 +149,7 @@ class Followup18State extends State<Followup18> {
               state = 3;
             });
             //FAIL
-            else widget.nextPage(selected, null, example, null, false);
+            else widget.nextPage(18, selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -215,7 +215,7 @@ class Followup18State extends State<Followup18> {
             //Need responses
             if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             //Send data
-            else widget.nextPage(selected, null, example, null, selected.sublist(2,5).contains(true));
+            else widget.nextPage(18, selected, null, example, null, selected.sublist(2,5).contains(true));
           },
         ),
         Copyright(),

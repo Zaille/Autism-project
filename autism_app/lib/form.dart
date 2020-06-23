@@ -354,7 +354,6 @@ class FormPageState extends State<FormPage> {
     catch(e) {
       Fluttertoast.showToast(msg: "Upload error");
       print(e);
-      print();
     }
     if (response != null && response.statusCode == 201) {
       Fluttertoast.showToast(msg: "Upload done !");

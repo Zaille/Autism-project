@@ -129,7 +129,7 @@ class Followup4State extends State<Followup4> {
           padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
           onPressed: () {
             if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
-            else widget.nextPage(selected, null, example, null, selected.contains(true));
+            else widget.nextPage(4, selected, null, example, null, selected.contains(true));
           },
         ),
         Copyright(),

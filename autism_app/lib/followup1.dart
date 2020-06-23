@@ -165,11 +165,11 @@ class Followup1State extends State<Followup1> {
                     state ++;
                   });
                 //FAIL
-                else widget.nextPage(selected, null, example, null, false);
+                else widget.nextPage(1, selected, null, example, null, false);
               }
               //PASS
               else if (!selected.sublist(4, 7).contains(true))
-                widget.nextPage(selected, null, example, null, true);
+                widget.nextPage(1, selected, null, example, null, true);
             });
           },
         ),
@@ -247,7 +247,7 @@ class Followup1State extends State<Followup1> {
             //Need response
             if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
             //Send data
-            else widget.nextPage(selected, thirdChoice, example, null, thirdChoice < 4);
+            else widget.nextPage(1, selected, thirdChoice, example, null, thirdChoice < 4);
           },
         ),
         Copyright(),

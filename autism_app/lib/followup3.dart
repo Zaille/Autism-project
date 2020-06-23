@@ -199,7 +199,7 @@ class Followup3State extends State<Followup3> {
               Fluttertoast.showToast(msg: "Complete all fields");
             else {
               if (selected[10]) description = describeController.text;
-              widget.nextPage(selected, null, example, description, selected.contains(true));
+              widget.nextPage(3, selected, null, example, description, selected.contains(true));
             }
           },
         ),

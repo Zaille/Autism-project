@@ -221,10 +221,10 @@ class Followup10State extends State<Followup10> {
                 state = 3;
               });
               //Only "Pass" contains "Yes" => PASS
-              else widget.nextPage(selected, null, example, null, true);
+              else widget.nextPage(10, selected, null, example, null, true);
             }
             //"Yes" only in "Fail" => FAIL
-            else widget.nextPage(selected, null, example, null, false);
+            else widget.nextPage(10, selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -298,7 +298,7 @@ class Followup10State extends State<Followup10> {
           text: "VALIDATE",
           onPressed: () {
             if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-            else widget.nextPage(selected, thirdChoice, example, null, thirdChoice < 3);
+            else widget.nextPage(10, selected, thirdChoice, example, null, thirdChoice < 3);
           },
         ),
       ],

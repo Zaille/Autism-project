@@ -56,7 +56,7 @@ class Followup19State extends State<Followup19> {
               state ++;
             });
             //PASS
-            else widget.nextPage(selected, null, null, null, true);
+            else widget.nextPage(19, selected, null, null, null, true);
           },
         ),
         Copyright(),
@@ -91,7 +91,7 @@ class Followup19State extends State<Followup19> {
               state ++;
             });
             //PASS
-            else widget.nextPage(selected, null, null, null, true);
+            else widget.nextPage(19, selected, null, null, null, true);
           },
         ),
         Copyright(),
@@ -121,7 +121,7 @@ class Followup19State extends State<Followup19> {
           onPressed: () {
             setState(() {
               if (selected[2] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else widget.nextPage(selected, null, null, null, selected[2]);
+              else widget.nextPage(19, selected, null, null, null, selected[2]);
             });
           },
         ),

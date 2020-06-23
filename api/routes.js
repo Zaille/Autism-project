@@ -54,7 +54,61 @@ module.exports = function (app) {
     app.post('/uploadResponses', function (req, res) {
         console.log("Uploading responses !");
         console.dir(req.body);
-        res.status(201).send();
+        let yesNoIdx = 0;
+        dbHelper.responseUpload.getQuestionsByGroup(req.body.groupId)
+            .then((rows) => rows.result.forEach( function(elem, index) {
+                switch (elem["type"]) {
+                    case 1: //YesNoQuestion Type
+                        dbHelper.responseUpload.createAnswer([
+                            req.body.patientId,
+                            req.body.groupId,
+                            index + 1,
+                            req.body.yesNoAnswers[yesNoIdx],
+                            null,
+                            null,
+                            null,
+                        ]).catch((err) => console.log(err));
+                        yesNoIdx++;
+                        return;
+                    case 2: //Index of a previous YesNoAnswers
+                        dbHelper.responseUpload.createAnswer([
+                            req.body.patientId,
+                            req.body.groupId,
+                            index + 1,
+                            null,
+                            req.body.answerChoice,
+                            null,
+                            null,
+                        ]).catch((err) => console.log(err));
+                        return;
+                    case 3: //Example give by the parent
+                        dbHelper.responseUpload.createAnswer([
+                            req.body.patientId,
+                            req.body.groupId,
+                            index + 1,
+                            null,
+                            null,
+                            req.body.example,
+                            null,
+                        ]).catch((err) => console.log(err));
+                        return;
+                    case 4: //Description ask to the parent
+                        dbHelper.responseUpload.createAnswer([
+                            req.body.patientId,
+                            req.body.groupId,
+                            index + 1,
+                            true,
+                            null,
+                            null,
+                            req.body.description,
+                        ]).catch((err) => console.log(err));
+                        yesNoIdx++;
+                        return;
+                }
+            }))
+            .then((rows) => res.status(201).send())
+            .catch((err) => res.status(400).json({err}));
+        //res.status(201).send();
     });
 
     /* Get all scores */

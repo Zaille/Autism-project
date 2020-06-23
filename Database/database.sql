@@ -26,13 +26,14 @@ create table questions (
 );
 
 create table answers (
-    patientId int primary key,
+    patientId int not null,
     groupId int not null,
     questionId int not null,
-    yesNoAnswer BIT(1) not null,
+    yesNoAnswer BIT(1),
     answerChoice int,
     example varchar(500),
     description varchar(500),
+    primary key (patientId, groupId, questionId),
     foreign key (patientId) references users(patientId),
     foreign key (groupId, questionId) references questions(groupId, questionId)
 );

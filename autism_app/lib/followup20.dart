@@ -60,7 +60,7 @@ class Followup20State extends State<Followup20> {
               state ++;
             });
             //PASS
-            else widget.nextPage(selected, null, example, description, true);
+            else widget.nextPage(20, selected, null, example, description, true);
           },
         ),
         Copyright(),
@@ -191,7 +191,7 @@ class Followup20State extends State<Followup20> {
               Fluttertoast.showToast(msg: "Complete all fields");
             else {
               if (selected[4]) description = describeController.text;
-              widget.nextPage(selected, null, example, description, selected.contains(true));
+              widget.nextPage(20, selected, null, example, description, selected.contains(true));
             }
           },
         ),

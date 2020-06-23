@@ -139,7 +139,7 @@ class Followup6State extends State<Followup6> {
                 state ++;
               });
               //FAIL
-              else widget.nextPage(selected, null, example, null, false);
+              else widget.nextPage(6, selected, null, example, null, false);
             });
           },
         ),
@@ -170,7 +170,7 @@ class Followup6State extends State<Followup6> {
           onPressed: () {
             setState(() {
               if (selected[4] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else widget.nextPage(selected, null, example, null, selected[4]);
+              else widget.nextPage(6, selected, null, example, null, selected[4]);
             });
           },
         ),

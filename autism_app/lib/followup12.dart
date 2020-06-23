@@ -154,7 +154,7 @@ class Followup12State extends State<Followup12> {
                 state ++;
               });
               //PASS
-              else widget.nextPage(selected, null, example, description, true);
+              else widget.nextPage(12, selected, null, example, description, true);
             }
           },
         ),
@@ -279,10 +279,10 @@ class Followup12State extends State<Followup12> {
                 state ++;
               });
               //Only "Pass" contains "Yes" => PASS
-              else widget.nextPage(selected, null, example, description, true);
+              else widget.nextPage(12, selected, null, example, description, true);
             }
             //"Yes" only in "Fail" => FAIL
-            else  widget.nextPage(selected, null, example, description, false);
+            else  widget.nextPage(12, selected, null, example, description, false);
           },
         ),
         Copyright(),
@@ -343,7 +343,7 @@ class Followup12State extends State<Followup12> {
           onPressed: () {
             setState(() {
               if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-              else  widget.nextPage(selected, null, example, description, thirdChoice < 2);
+              else  widget.nextPage(12, selected, null, example, description, thirdChoice < 2);
             });
           },
         ),

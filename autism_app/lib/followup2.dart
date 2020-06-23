@@ -95,7 +95,7 @@ class Followup2State extends State<Followup2> {
             else if (selected[2]) setState(() {
               state ++;
             });
-            else widget.nextPage(selected, null, null, null, !selected.sublist(0,3).contains(true));
+            else widget.nextPage(2, selected, null, null, null, !selected.sublist(0,3).contains(true));
           },
         ),
         Copyright(),
@@ -140,7 +140,7 @@ class Followup2State extends State<Followup2> {
           text: "VALIDATE",
           onPressed: () {
             if (description == null) Fluttertoast.showToast(msg: "No response selected");
-            else widget.nextPage(selected, null, null, description, !selected.sublist(0,3).contains(true));
+            else widget.nextPage(2, selected, null, null, description, !selected.sublist(0,3).contains(true));
           },
         ),
         Copyright(),

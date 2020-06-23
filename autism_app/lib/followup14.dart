@@ -157,9 +157,9 @@ class Followup14State extends State<Followup14> {
                 state ++;
               });
             //More than 2 "Yes" => PASS
-            else if (nbYes > 1) widget.nextPage(selected, null, example, null, true);
+            else if (nbYes > 1) widget.nextPage(14, selected, null, example, null, true);
             //FAIL
-            else widget.nextPage(selected, null, example, null, false);
+            else widget.nextPage(14, selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -195,7 +195,7 @@ class Followup14State extends State<Followup14> {
                 state ++;
               });
             //FAIL
-            else widget.nextPage(selected, null, example, null, false);
+            else widget.nextPage(14, selected, null, example, null, false);
           },
         ),
         Copyright(),
@@ -224,7 +224,7 @@ class Followup14State extends State<Followup14> {
           padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
           onPressed: () {
             if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-            else widget.nextPage(selected, null, example, null, selected[6]);
+            else widget.nextPage(14, selected, null, example, null, selected[6]);
           },
         ),
         Copyright(),
