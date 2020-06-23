@@ -346,8 +346,7 @@ class FormPageState extends State<FormPage> {
     setState(() {
       loading = !loading;
     });
-    Scaffold.of(context)
-        .showSnackBar(SnackBar(content: Text('Processing data...')));
+    Fluttertoast.showToast(msg: 'Processing data...', toastLength: Toast.LENGTH_SHORT);
     try {
       response = await dio.post(uploadURL, data: formData).timeout(const Duration(seconds: 10));
     }
@@ -356,7 +355,6 @@ class FormPageState extends State<FormPage> {
       print(e);
     }
     if (response != null && response.statusCode == 201) {
-      Fluttertoast.showToast(msg: "Upload done !");
       if(widget.responses == null) nextPage = ThanksPage();
       else nextPage = FollowupPage(responses: widget.responses, patientId: response.data["patientId"]);
       Navigator.push(

@@ -1,4 +1,3 @@
-import 'package:autismtest/form.dart';
 import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +49,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
   Widget build(BuildContext context) {
     switch(this.questionIdx) {
       case 0:
+        //sendData(0, widget.responses, null, null, null, null);
         return Followup1(nextPage: sendData,);
       case 1:
         return Followup2(nextPage: sendData,);
@@ -126,12 +126,11 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
       setState(() {
         this.questionIdx = widget.responses.sublist(this.questionIdx + 1).indexOf(false) + 1 + this.questionIdx;
       });
-      print(questionIdx);
     }
     if (this.questionIdx == oldIdx)
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => FormPage()),
+        MaterialPageRoute(builder: (context) => ThanksPage()),
       );
   }
 }
@@ -145,7 +144,7 @@ class FollowupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FollowUpWidget(responses: this.responses,),
+      body: FollowUpWidget(responses: this.responses, patientId: patientId,),
     );
   }
 }
