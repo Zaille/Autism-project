@@ -40,26 +40,40 @@ const query = function (sql_query) {
 // --------------------------------------------------------------------------
 
 module.exports.users = {
+
     byUsername: (mail) => query(prepareQuery(`
-select
-    mail,
-    password,
-    type
-from
-    authentication
-where
-    mail = ?;`, [mail])),
+select mail, password, type
+from authentication
+where mail = ?;`, [mail])),
+
+    password: (id) => query(prepareQuery(`
+SELECT password
+FROM authentication
+WHERE userId = ?`, [id])),
+
+    newPassword: (password, id) => query(prepareQuery(`
+UPDATE authentication
+SET password = ?
+WHERE userId = ?`, [password, id]))
+
 }
 
 module.exports.patient = {
 
     profile: (id) => query(prepareQuery(`
-SELECT
-    a.mail, p.firstName, p.lastName, p.age, p.parentFirstName, p.parentLastName, p.city, p.phoneNumber
-FROM
-    authentication a, patients p 
-WHERE
-    a.userId = p.patientId AND a.userId = ?;`, [id])),
+SELECT a.mail, p.firstName, p.lastName, p.age, p.parentFirstName, p.parentLastName, p.city, p.phoneNumber
+FROM authentication a, patients p 
+WHERE a.userId = p.patientId AND a.userId = ?;`, [id])),
+
+    updateChild: (firstName, lastName, age, id) => query(prepareQuery(`
+UPDATE patients 
+SET firstName = ?, lastName = ?, age = ? 
+WHERE patientId = ?;`, [firstName, lastName, age, id] )),
+
+    updateParent: (firstName, lastName, city, mail, phone, id) => query(prepareQuery(`
+UPDATE patients p, authentication a
+SET p.parentFirstName = ?, p.parentLastName = ?, p.city = ?, p.phoneNumber = ?, a.mail = ?
+WHERE p.patientId = a.userId AND a.userId = ?;`, [firstName, lastName, city, phone, mail, id] )),
 
     byUserId: (id) => query(prepareQuery(`
 SELECT

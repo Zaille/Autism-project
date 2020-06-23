@@ -3,7 +3,7 @@ include index.pug
 script( type="text/jsx" )
     include ../js/profile.js
 
-body(onload="initPatientProfile()")#user-profile
+body(onload='initPatientProfile()')#user-profile
     include header_user.pug
 
     div#child-profile-content
@@ -12,14 +12,14 @@ body(onload="initPatientProfile()")#user-profile
         h2#user-password-title.first-row Password
 
         p.first-column.second-row.th Current Password
-        input.first-column.third-row.input-text
+        input(type='password')#current-password.first-column.third-row.input-password
 
         p.second-column.second-row.th New Password
-        input.second-column.third-row.input-text
+        input(type='password')#new-password.second-column.third-row.input-password
 
         p.third-column.second-row.th Repeat Password
-        input.third-column.third-row.input-text
+        input(type='password')#repeat-password.third-column.third-row.input-password
 
-        input(type='button' value="Update").gradientBlue.fourth-column.third-row.update
+        input(type='button' value="Update" onClick='updatePassword()').gradientBlue.fourth-column.third-row.update
 
 include footer.pug

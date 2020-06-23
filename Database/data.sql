@@ -445,6 +445,10 @@ INSERT INTO patients VALUE ( 2, 'John', 'Guajardo', 24, 'Patrick', 'Guajardo', '
 
 INSERT INTO doctors VALUE ( 3, 'Christopher', 'McCord', 'Eastleigh', 'Nuffield Health Wessex Hospital' );
 INSERT INTO doctors VALUE ( 4, 'Dennis', 'Moore', 'London', 'The London Clinic' );
+
+UPDATE patients
+SET firstName = 'Timothy', lastName = 'Leibowitz', age = 14
+WHERE patientId = 1;
 /*
 -- POST /api/answers --
 
