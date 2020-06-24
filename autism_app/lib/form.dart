@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:autismtest/followup.dart';
+import 'package:autismtest/main.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
@@ -25,7 +26,6 @@ class FormPageState extends State<FormPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  bool loading = false;
   List<File> files = [null, null];
   Color errorMessageColor = Colors.black;
   List<String> textButton = ["Add a video", "Add a video"];
@@ -47,7 +47,28 @@ class FormPageState extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom==0.0;
     return Scaffold(
+      floatingActionButton: Container(
+        padding: EdgeInsets.symmetric(vertical: 80),
+        width: 300,
+        child: showFab?FloatingActionButton.extended(
+          onPressed: () {
+            if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
+              sendData();
+            }
+            else {
+              setState(() {
+                errorMessageColor = Colors.red;
+                Fluttertoast.showToast(msg: "Complete all fields");
+              });
+            }
+          },
+          label: Text("SEND"),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0)),),
+        ):Container(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Form(
         key: _formKey,
         child: ListView(
@@ -288,9 +309,8 @@ class FormPageState extends State<FormPage> {
                 ),
               ],
             ),
-            SubmitButton(
+            !showFab?SubmitButton(
               text: "SEND",
-              padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
               onPressed: () {
                 if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
                   sendData();
@@ -302,6 +322,9 @@ class FormPageState extends State<FormPage> {
                   });
                 }
               },
+            ):Container(),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 100,),
             ),
           ],
         ),
@@ -343,16 +366,35 @@ class FormPageState extends State<FormPage> {
         await MultipartFile.fromFile(files[1].path, filename: files[1].path.split('/').last),
       ]
     });
-    setState(() {
-      loading = !loading;
-    });
     Fluttertoast.showToast(msg: 'Processing data...', toastLength: Toast.LENGTH_SHORT);
     try {
       response = await dio.post(uploadURL, data: formData).timeout(const Duration(seconds: 10));
     }
+    on DioError catch(e) {
+      if (e.response.data["errno"] == 1062)
+        Fluttertoast.showToast(msg: "Email adress already taken.");
+    }
     catch(e) {
-      Fluttertoast.showToast(msg: "Upload error");
-      print(e);
+      await showDialog(
+        context: context,
+        builder:(_) => AlertDialog(
+          title: Text("Server error"),
+          content: Text("The server is unavailable, try again later."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Go back to the main page"),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyApp()),
+                );
+              },
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
     }
     if (response != null && response.statusCode == 201) {
       if(widget.responses == null) nextPage = ThanksPage();
@@ -362,8 +404,5 @@ class FormPageState extends State<FormPage> {
         MaterialPageRoute(builder: (context) => nextPage),
       );
     }
-    setState(() {
-      loading = !loading;
-    });
   }
 }

@@ -12,9 +12,8 @@ create table users (
     age int not null,
     parentFirstName varchar(50) not null,
     parentLastName varchar(50) not null,
-    parentMail varchar(70) not null,
-    phoneNumber varchar(20) not null,
-    unique(firstName, lastName, parentMail)
+    parentMail varchar(70) not null UNIQUE,
+    phoneNumber varchar(20) not null
 );
 
 create table questions (

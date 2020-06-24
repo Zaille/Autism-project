@@ -101,7 +101,13 @@ values
 module.exports.responseUpload = {
     createAnswer: (data) => query(prepareQuery(`
 Insert into answers (patientId, groupId, questionId, yesNoAnswer, answerChoice, example, description)
-values (?);`, [data])),
+values (?)
+on duplicate key update
+questionId = ?,
+yesNoANswer = ?,
+answerChoice = ?,
+example = ?,
+description = ?;`, [data, data[2], data[3], data[4], data[5], data[6]])),
 
     getQuestionsByGroup: (id) => query(prepareQuery(`
 select

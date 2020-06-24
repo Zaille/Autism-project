@@ -60,6 +60,21 @@ class LinkPageState extends State<LinkPage> {
     }
 
     return Scaffold(
+      floatingActionButton: Container(
+        padding: EdgeInsets.symmetric(vertical: 50),
+        width: 300,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => nextPage),
+            );
+          },
+          label: Text("NEXT"),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0)),),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -77,16 +92,6 @@ class LinkPageState extends State<LinkPage> {
                 ),
               ),
             ]
-          ),
-          Spacer(),
-          SubmitButton(
-            text: "NEXT",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => nextPage),
-              );
-            },
           ),
           Spacer(),
           Copyright(),

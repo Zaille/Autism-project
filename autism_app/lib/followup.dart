@@ -1,3 +1,4 @@
+import 'package:autismtest/main.dart';
 import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
   }
 
   sendData(int groupId, List<bool> responses, int index, String example, String description, bool success) async {
+    bool error = false;
     int oldIdx = this.questionIdx;
     Response response;
     Dio dio = new Dio();
@@ -118,16 +120,32 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
       ).timeout(const Duration(seconds: 10));
     }
     catch(e) {
-      print(e);
-      Fluttertoast.showToast(msg: "Upload error");
+      error = true;
+      await showDialog(
+        context: context,
+        builder:(_) => AlertDialog(
+            title: Text("Server error"),
+            content: Text("The server is unavailable, try again later."),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text("Go back to the main page"),
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop('dialog');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                  );
+                },
+              ),
+            ],
+        ),
+        barrierDismissible: false,
+      );
     }
-    if (response != null && response.statusCode == 201) {
-      Fluttertoast.showToast(msg: "Upload done !");
-      setState(() {
-        this.questionIdx = widget.responses.sublist(this.questionIdx + 1).indexOf(false) + 1 + this.questionIdx;
-      });
-    }
-    if (this.questionIdx == oldIdx)
+    if (!error && response != null && response.statusCode == 200) setState(() {
+          this.questionIdx = widget.responses.sublist(this.questionIdx + 1).indexOf(false) + 1 + this.questionIdx;
+        });
+    if (!error & (this.questionIdx == oldIdx))
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ThanksPage()),

@@ -1,6 +1,7 @@
 import 'package:autismtest/followup.dart';
 import 'package:autismtest/followup1.dart';
 import 'package:autismtest/followup2.dart';
+import 'package:autismtest/link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
@@ -46,10 +47,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Center(
-          child: FollowupPage(
-            responses: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-            patientId: 13,
-          ),
+          child: Home(),
         ),
       ),
     );

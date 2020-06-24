@@ -4,14 +4,14 @@ module.exports = function (app) {
 
     app.post('/uploadFiles', function (req,res) {
         console.log("Uploading files !");
-        console.dir(req.body);
-        console.dir(req.files);
+        // console.dir(req.body);
+        // console.dir(req.files);
         let splitPath;
         let path;
         let i = 1;
         try {
             if (/*!req.files ||*/ !req.body) {
-                res.status(400).send();
+                res.status(400).json({error: "emptyRequest"});
             }
             else {
                 /*req.files['files[]'].forEach(elem => {
@@ -19,17 +19,6 @@ module.exports = function (app) {
                     path = req.body.email + '_video' + i + '.' + splitPath[splitPath.length - 1];
                     elem.mv('./api/videos/' + path);
                     i = i + 1;
-                });*/
-                /*dbHelper.formUpload.createUser([
-                    req.body.childFirstName,
-                    req.body.childLastName,
-                    req.body.childAge,
-                    req.body.parentFirstName,
-                    req.body.parentLastName,
-                    req.body.email,
-                    req.body.phoneNumber,
-                ], function (err, rows) {
-                    if (err) throw err;
                 });*/
                 dbHelper.formUpload.createUser([
                     req.body.childFirstName,
@@ -39,11 +28,13 @@ module.exports = function (app) {
                     req.body.parentLastName,
                     req.body.email,
                     parseInt(req.body.phoneNumber),
-                ]).catch((err) => res.status(400).json({ err }));//if (err["errno"] == 1062)
+                ]).catch((err) => {
+                    error = true;
+                    res.status(400).json(err);
+                });
                 dbHelper.formUpload.getIdByMail(req.body.email)
                     .then((rows) => res.status(201).json(rows.result[0]))
-                    .catch((err) => res.status(400).json({err}));
-
+                    .catch((err) => res.status(400).json(err));
             }
         }
         catch (err) {
@@ -53,10 +44,11 @@ module.exports = function (app) {
 
     app.post('/uploadResponses', function (req, res) {
         console.log("Uploading responses !");
-        console.dir(req.body);
+        //console.dir(req.body);
         let yesNoIdx = 0;
         dbHelper.responseUpload.getQuestionsByGroup(req.body.groupId)
             .then((rows) => rows.result.forEach( function(elem, index) {
+                console.log(elem);
                 switch (elem["type"]) {
                     case 1: //YesNoQuestion Type
                         dbHelper.responseUpload.createAnswer([
@@ -67,7 +59,9 @@ module.exports = function (app) {
                             null,
                             null,
                             null,
-                        ]).catch((err) => console.log(err));
+                        ]).catch((err) => {
+                            res.status(400).json(err);
+                        });
                         yesNoIdx++;
                         return;
                     case 2: //Index of a previous YesNoAnswers
@@ -79,7 +73,9 @@ module.exports = function (app) {
                             req.body.answerChoice,
                             null,
                             null,
-                        ]).catch((err) => console.log(err));
+                        ]).catch((err) => {
+                            res.status(400).json(err);
+                        });
                         return;
                     case 3: //Example give by the parent
                         dbHelper.responseUpload.createAnswer([
@@ -90,7 +86,9 @@ module.exports = function (app) {
                             null,
                             req.body.example,
                             null,
-                        ]).catch((err) => console.log(err));
+                        ]).catch((err) => {
+                            res.status(400).json(err);
+                        });
                         return;
                     case 4: //Description ask to the parent
                         dbHelper.responseUpload.createAnswer([
@@ -101,14 +99,18 @@ module.exports = function (app) {
                             null,
                             null,
                             req.body.description,
-                        ]).catch((err) => console.log(err));
+                        ]).catch((err) => {
+                            res.status(400).json(err);
+                        });
                         yesNoIdx++;
                         return;
                 }
             }))
-            .then((rows) => res.status(201).send())
-            .catch((err) => res.status(400).json({err}));
-        //res.status(201).send();
+            .then((rows) => res.status(200).send())
+            .catch((err) => {
+                console.log(err);
+                res.status(400).json(err);
+            });
     });
 
     /* Get all scores */

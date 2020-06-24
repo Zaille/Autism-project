@@ -18,6 +18,8 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 150,
+      width: 300,
       padding: this.padding,
       child: RaisedButton(
         child: Text(this.text),
