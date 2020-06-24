@@ -1,4 +1,5 @@
 import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class Followup11State extends State<Followup11> {
   }
 
   Widget firstElement() {
+    if(example != null) exampleController.text = example;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -61,6 +63,7 @@ class Followup11State extends State<Followup11> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
+                  example = "";
                   state ++;
                 });
               },
@@ -68,10 +71,10 @@ class Followup11State extends State<Followup11> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
             if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
             else {
               example = exampleController.text;
@@ -145,10 +148,12 @@ class Followup11State extends State<Followup11> {
             _yesOrNoRadio(5),
           ],
         ),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             //Need responses
             if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             //"Yes" in "Pass"
@@ -224,13 +229,14 @@ class Followup11State extends State<Followup11> {
             ) : Container(),
           ],
         ),
-        SubmitButton(
-          text: "VALIDATE",
-          onPressed: () {
-            setState(() {
-              if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
-              else widget.nextPage(11, selected, thirdChoice, example, null, thirdChoice < 3);
-            });
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
+            if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
+            else widget.nextPage(11, selected, thirdChoice, example, null, thirdChoice < 3);
           },
         ),
         Copyright(),

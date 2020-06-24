@@ -1,6 +1,6 @@
 import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -33,6 +33,7 @@ class Followup5State extends State<Followup5> {
   }
 
   Widget firstElement() {
+    if(description != null) describeController.text = description;
     return ListView(
       children: <Widget>[
         RoundedContainer(
@@ -107,24 +108,22 @@ class Followup5State extends State<Followup5> {
           ],
         )
             : Container(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
-            setState(() {
-              //Need responses
-              if ((selected.indexOf(null) != 7) | (selected[6] & (describeController.text == "")))
-                Fluttertoast.showToast(msg: "Need all responses");
-              //Respond "Yes" to a "fail" example => Next question
-              else if (selected.sublist(2, 7).contains(true)) setState(() {
-                state ++;
-              });
-              //No to all "fail" responses => PASS
-              else {
-                if (selected[6]) description = describeController.text;
-                widget.nextPage(5, selected, null, example, description, true);
-              }
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
+            //Need responses
+            if ((selected.indexOf(null) != 7) | (selected[6] & (describeController.text == "")))
+              Fluttertoast.showToast(msg: "Need all responses");
+            //Respond "Yes" to a "fail" example => Next question
+            else if (selected.sublist(2, 7).contains(true)) setState(() {
+              state ++;
             });
+            //No to all "fail" responses => PASS
+            else {
+              if (selected[6]) description = describeController.text;
+              widget.nextPage(5, selected, null, example, description, true);
+            }
           },
         ),
         Copyright(),
@@ -147,10 +146,12 @@ class Followup5State extends State<Followup5> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             if (selected[7] == null)
               Fluttertoast.showToast(msg: "Complete all fields");
             else

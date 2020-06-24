@@ -1,4 +1,5 @@
 import 'package:autismtest/link.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/submitButton.dart';
 import "package:flutter/material.dart";
 import 'package:autismtest/roundedContainer.dart';
@@ -106,7 +107,43 @@ class QuestionState extends State<QuestionWidget> {
               ),
             ),
             Spacer(),
-            IntrinsicHeight(
+            NavigationButtons(
+              prevCondition: questionIndex > 0,
+              previousFunction: () {
+                setState(() {
+                  questionIndex --;
+                  if (!responses[questionIndex]) score --;
+                  responses.removeLast();
+                  selected = null;
+                });
+              },
+              nextFunction: () {
+                if (selected == null) Fluttertoast.showToast(msg: "Select an item");
+                else {
+                  if (
+                  (selected & (questionIndex != 1) & (questionIndex != 4) & (questionIndex != 11)) |
+                  (!selected & ( (questionIndex == 1) | (questionIndex == 4) | (questionIndex == 11) ))
+                  ) setState(() => responses.add(true));
+                  else {
+                    setState(() => score ++);
+                    responses.add(false);
+                  }
+                  if (questionIndex == 19) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LinkPage(responses: this.responses, score: this.score)),
+                    );
+                  }
+                  else {
+                    setState(() {
+                      questionIndex ++;
+                      selected = null;
+                    });
+                  }
+                }
+              },
+            ),
+            /*IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -125,7 +162,8 @@ class QuestionState extends State<QuestionWidget> {
                         });
                       },
                     )
-                    : Container(),),
+                    : Container(),
+                  ),
                   Expanded(
                     child: SubmitButton(
                       text: "     NEXT     ",
@@ -159,7 +197,7 @@ class QuestionState extends State<QuestionWidget> {
                   ),
                 ],
               ),
-            ),
+            ),*/
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("© 2009 Diana Robins, Deborah Fein, & Marianne Barton.",

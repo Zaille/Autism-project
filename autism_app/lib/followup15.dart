@@ -1,4 +1,5 @@
 import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class Followup15State extends State<Followup15> {
   }
 
   Widget firstElement() {
+    if(example != null) exampleController.text = example;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -61,6 +63,7 @@ class Followup15State extends State<Followup15> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
+                  example = "";
                   state ++;
                 });
               },
@@ -68,10 +71,10 @@ class Followup15State extends State<Followup15> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
             if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
             else {
               example = exampleController.text;
@@ -87,6 +90,7 @@ class Followup15State extends State<Followup15> {
   }
 
   Widget secondElement() {
+    if(description != null) describeController.text = description;
     return ListView(
       children: <Widget>[
         RoundedContainer(
@@ -165,10 +169,12 @@ class Followup15State extends State<Followup15> {
           ],
         )
             : Container(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             int nbYes = 0;
             selected.forEach((element) { if (element == true) nbYes++;});
             //Need responses
@@ -202,10 +208,12 @@ class Followup15State extends State<Followup15> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             //Need a response
             if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
             //NExt question
@@ -238,14 +246,14 @@ class Followup15State extends State<Followup15> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 120, horizontal: 50),
-          onPressed: () {
-            setState(() {
-              if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
-              else widget.nextPage(15, selected, null, example, description, selected[6]);
-            });
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
+            if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
+            else widget.nextPage(15, selected, null, example, description, selected[6]);
           },
         ),
         Copyright(),

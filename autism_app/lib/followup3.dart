@@ -1,4 +1,5 @@
 import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class Followup3State extends State<Followup3> {
   }
 
   Widget firstElement() {
+    if(example != null) exampleController.text = example;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -61,6 +63,7 @@ class Followup3State extends State<Followup3> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
+                  example = "";
                   state ++;
                 });
               },
@@ -68,10 +71,10 @@ class Followup3State extends State<Followup3> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
             //Need a response
             if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
             //Next question
@@ -89,6 +92,7 @@ class Followup3State extends State<Followup3> {
   }
 
   Widget secondElement() {
+    if(description != null) describeController.text = description;
     return ListView(
       children: <Widget>[
         RoundedContainer(
@@ -191,10 +195,12 @@ class Followup3State extends State<Followup3> {
           ],
         )
             : Container(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             if (selected.contains(null) | (selected[10] & (describeController.text == "")))
               Fluttertoast.showToast(msg: "Complete all fields");
             else {

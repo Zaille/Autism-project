@@ -37,6 +37,7 @@ class ThankState extends State<Thank> {
             ),
           ]
         ),
+        Spacer(),
         SubmitButton(
           text: "FINISH",
           onPressed: () {

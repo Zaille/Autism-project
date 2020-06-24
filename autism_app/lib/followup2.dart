@@ -1,6 +1,5 @@
 import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
-import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,10 +60,10 @@ class Followup2State extends State<Followup2> {
             _yesOrNoRadio(1),
           ],
         ),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
             if ((selected.sublist(0,2).contains(null)))Fluttertoast.showToast(msg: "No response selected");
             else setState(() {
               state ++;
@@ -88,9 +87,12 @@ class Followup2State extends State<Followup2> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             if (selected[2] == null) Fluttertoast.showToast(msg: "No response selected");
             else if (selected[2]) setState(() {
               state ++;
@@ -136,9 +138,12 @@ class Followup2State extends State<Followup2> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             if (description == null) Fluttertoast.showToast(msg: "No response selected");
             else widget.nextPage(2, selected, null, null, description, !selected.sublist(0,3).contains(true));
           },

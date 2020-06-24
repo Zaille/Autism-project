@@ -1,4 +1,5 @@
 import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
@@ -45,10 +46,10 @@ class Followup19State extends State<Followup19> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
             //Need a response
             if (selected[0] == null) Fluttertoast.showToast(msg: "Complete the field");
             //Next question
@@ -80,10 +81,12 @@ class Followup19State extends State<Followup19> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             //Need a response
             if (selected[1] == null) Fluttertoast.showToast(msg: "Complete the field");
             //Next question
@@ -115,10 +118,12 @@ class Followup19State extends State<Followup19> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             setState(() {
               if (selected[2] == null) Fluttertoast.showToast(msg: "Complete the field");
               else widget.nextPage(19, selected, null, null, null, selected[2]);

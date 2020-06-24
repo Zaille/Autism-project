@@ -46,7 +46,10 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Center(
-          child: Home(),
+          child: FollowupPage(
+            responses: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+            patientId: 13,
+          ),
         ),
       ),
     );

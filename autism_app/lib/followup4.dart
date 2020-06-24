@@ -1,4 +1,5 @@
 import 'package:autismtest/copyright.dart';
+import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class Followup4State extends State<Followup4> {
   }
 
   Widget firstElement() {
+    if(example != null) exampleController.text = example;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -59,6 +61,7 @@ class Followup4State extends State<Followup4> {
               textColor: Colors.lightBlue,
               onPressed: () {
                 setState(() {
+                  example = "";
                   state ++;
                 });
               },
@@ -66,19 +69,17 @@ class Followup4State extends State<Followup4> {
           ],
         ),
         Spacer(),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
-            setState(() {
-              if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
-              else {
-                example = exampleController.text;
-                setState(() {
-                  state ++;
-                });
-              }
-            });
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {},
+          nextFunction: () {
+            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            else {
+              example = exampleController.text;
+              setState(() {
+                state ++;
+              });
+            }
           },
         ),
         Copyright(),
@@ -124,10 +125,12 @@ class Followup4State extends State<Followup4> {
             _yesOrNoRadio(3),
           ],
         ),
-        SubmitButton(
-          text: "VALIDATE",
-          padding: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-          onPressed: () {
+        NavigationButtons(
+          prevCondition: state > 0,
+          previousFunction: () {
+            setState(() => state --);
+          },
+          nextFunction: () {
             if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
             else widget.nextPage(4, selected, null, example, null, selected.contains(true));
           },
