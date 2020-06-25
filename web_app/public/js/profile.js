@@ -5,6 +5,10 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
 
+        this.save = {
+            firstName: props.firstName,
+            lastName: props.lastName,
+        }
         this.state = {
             update: 0,
             firstName: props.firstName,
@@ -35,11 +39,62 @@ class Profile extends React.Component {
                     body: JSON.stringify(body)
                 });
 
-                if( result.ok ) this.setState({update: 0})
-                else console.log('Problème !'); // TODO
+                let id;
+
+                if( path.includes('child') ) id = document.getElementById('child-profile-update');
+                else if ( path.includes('parent') ) id = document.getElementById('parent-profile-update');
+                else id = document.getElementById('doctor-profile-update');
+
+                if( result.ok ) {
+                    this.setState({update: 0});
+                    ReactDOM.render( <p className='validation'>Your information has been updated</p>, id );
+
+                    setTimeout(function () {
+                        ReactDOM.render( '', id );
+                    }, 5000);
+                } else {
+                    if( result.status === 400 ){
+                        ReactDOM.render(
+                            <p className='error'>A problem occured during the update of your information</p>, id
+                        );
+                    } else {
+                        ReactDOM.render(
+                            <p className='error'>Unable to update your information. Check if there are correct.</p>, id
+                        );
+                    }
+                }
             }
         } else {
             this.setState({update : 1});
+        }
+    }
+
+    cancle(profile) {
+
+        switch (profile) {
+            case 'child' :
+                this.setState({
+                    update: 0,
+                    firstName: this.save.firstName,
+                    lastName: this.save.lastName,
+                    age: this.save.age,
+                });
+                ReactDOM.render( '', document.getElementById('child-profile-update') );
+                break;
+            case 'parent' :
+                this.setState({
+                    update: 0,
+                    firstName: this.save.firstName,
+                    lastName: this.save.lastName,
+                    email: this.save.email,
+                    phone: this.save.phone,
+                    city: this.save.city
+                });
+                ReactDOM.render( '', document.getElementById('parent-profile-update') );
+                break;
+            case 'doctor' :
+                // TODO
+                break;
         }
     }
 }
@@ -49,6 +104,7 @@ class ChildProfile extends Profile {
     constructor(props) {
         super(props);
 
+        this.save.age = props.age;
         this.state.age = props.age;
     }
 
@@ -73,9 +129,12 @@ class ChildProfile extends Profile {
                            className='fourth-column second-row input-text'
                            onChange={e => this.updateProfile({age: e.target.value})}/>
 
-                    <input type='button' value='Update' id='childUpdateInfo'
+                    <input type='button' value='Validate' id='childUpdateInfo'
                            className='gradientBlue fiveth-column third-row update'
                            onClick={() => this.switch('/api/child/profile/')}/>
+                    <input type='button' value='Cancle' id='childUpdateInfo'
+                           className='gradientRed fiveth-column second-row update'
+                           onClick={() => this.cancle('child')}/>
                 </div>
             );
         }  else {
@@ -105,6 +164,10 @@ class ParentProfile extends Profile {
 
     constructor(props) {
         super(props);
+
+        this.save.email = props.email;
+        this.save.phone = props.phone;
+        this.save.city = props.city;
 
         this.state.email = props.email;
         this.state.phone = props.phone;
@@ -142,9 +205,12 @@ class ParentProfile extends Profile {
                            className='fourth-column third-row input-text'
                            onChange={e => this.updateProfile({city: e.target.value})}/>
 
-                    <input type='button' value='Update' id='parentUpdateInfo'
+                    <input type='button' value='Validate' id='parentUpdateInfo'
                            className='gradientBlue fiveth-column fourth-row update'
                            onClick={() => this.switch('/api/parent/profile/')}/>
+                    <input type='button' value='Cancle' id='childUpdateInfo'
+                           className='gradientRed fiveth-column third-row update'
+                           onClick={() => this.cancle('parent')}/>
                 </div>
             );
         } else {

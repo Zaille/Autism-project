@@ -33,6 +33,14 @@
     height: calc(50px + 4px);
     font-size: 24px;
 }
+.gradientRed {
+    background: linear-gradient(270deg, #EA5806 0%, rgba(255, 255, 255, 0) 100%), #EC0F0F;
+    border-radius: 50px;
+    color: #FFFFFF;
+    border: none;
+    height: calc(50px + 4px);
+    font-size: 24px;
+}
 .cg{
     color: #3D3D3D;
 }
@@ -191,6 +199,7 @@ div.first-home-presentation>div.left-fhp>input:first-of-type{
     font-weight: bold;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     justify-self: end;
+    align-self: center;
 }
 
 .input-text {
@@ -300,4 +309,16 @@ h2#user-password-title {
     margin: 50px 0 20px 0;
     padding: 15px 0 15px 16.5%;
     color: #3D3D3D;
+}
+
+.validation {
+    color: green;
+    font-size: 15px;
+    padding: 20px 0 20px 100px;
+}
+
+.error {
+    color: red;
+    font-size: 15px;
+    padding: 20px 0 20px 100px;
 }

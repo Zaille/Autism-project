@@ -24,38 +24,74 @@ async function initDoctorProfile() {
 
 async function updatePassword() {
 
-    if (confirm('Are you sure you want to change your password ?')) {
+    const currentPass = document.getElementById('current-password').value;
+    const newPass = document.getElementById('new-password').value;
+    const repeatPass = document.getElementById('repeat-password').value;
 
-        const currentPass = document.getElementById('current-password').value;
-        const newPass = document.getElementById('new-password').value;
-        const repeatPass = document.getElementById('repeat-password').value;
+    if( currentPass && newPass && repeatPass ) {
 
-        if (newPass === repeatPass) {
+        if (confirm('Are you sure you want to change your password ?')) {
 
-            const response = await fetch('/api/password/1');
-            const json = await response.json();
-            const data = json[0];
+            if (newPass === repeatPass) {
 
-            if( data.password === currentPass ){
+                const response = await fetch('/api/password/1');
+                const json = await response.json();
+                const data = json[0];
 
-                const result = await fetch('/api/password/1', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({newPass : newPass})
-                });
+                if (data.password === currentPass) {
 
-                console.log(result);
-                if( result.ok ) console.log('Mot de passe modifié !')
-                else console.log('Problème lors de la modification du mot de passe'); // TODO
+                    const result = await fetch('/api/password/1', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({newPass: newPass})
+                    });
 
+                    if (result.ok) {
+
+                        ReactDOM.render(
+                            <p className='validation'>Your password has been updated</p>,
+                            document.getElementById('patient-password-update')
+                        );
+
+                        document.getElementById('current-password').value = '';
+                        document.getElementById('new-password').value = '';
+                        document.getElementById('repeat-password').value = '';
+
+                        setTimeout(function () {
+                            ReactDOM.render(
+                                '',
+                                document.getElementById('patient-password-update')
+                            );
+                        }, 5000);
+
+                    }
+                    else {
+                        ReactDOM.render(
+                            <p className='error'>A problem occured during the update of your password</p>,
+                            document.getElementById('patient-password-update')
+                        );
+                    }
+
+                } else {
+                    ReactDOM.render(
+                        <p className='error'>Incorrect password</p>,
+                        document.getElementById('patient-password-update')
+                    );
+                }
             } else {
-                console.log('Mot de passe incorrect');
+                ReactDOM.render(
+                    <p className='error'>Passwords must be identic</p>,
+                    document.getElementById('patient-password-update')
+                );
             }
-        } else {
-            console.log('Mot de passe non identique');
         }
+    } else {
+        ReactDOM.render(
+            <p className='error'>Empty fields</p>,
+            document.getElementById('patient-password-update')
+        );
     }
 }

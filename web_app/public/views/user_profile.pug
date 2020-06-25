@@ -7,7 +7,9 @@ body(onload='initPatientProfile()')#user-profile
     include header_user.pug
 
     div#child-profile-content
+    div#child-profile-update
     div#parent-profile-content
+    div#parent-profile-update
     div#user-password
         h2#user-password-title.first-row Password
 
@@ -21,5 +23,7 @@ body(onload='initPatientProfile()')#user-profile
         input(type='password')#repeat-password.third-column.third-row.input-password
 
         input(type='button' value="Update" onClick='updatePassword()').gradientBlue.fourth-column.third-row.update
+
+    div#patient-password-update
 
 include footer.pug
