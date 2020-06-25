@@ -1,9 +1,7 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup3 extends StatefulWidget{
   Followup3({Key key, this.nextPage}) : super(key: key);
@@ -39,6 +37,7 @@ class Followup3State extends State<Followup3> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context, 
           title: title,
           children: [
             Container(
@@ -76,7 +75,13 @@ class Followup3State extends State<Followup3> {
           previousFunction: () {},
           nextFunction: () {
             //Need a response
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "")
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Complete the field"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             //Next question
             else {
               example = exampleController.text;
@@ -96,6 +101,7 @@ class Followup3State extends State<Followup3> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+            context: context, 
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -103,85 +109,90 @@ class Followup3State extends State<Followup3> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Pretend to drink from a toy cup?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Pretend to eat from a toy spoon or fork?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Pretend to talk on the telephone?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Pretend to feed a doll or stuffed animal with real or imaginary food?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Push a car as if it is going along a pretend road?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
+        RoundedContainer(context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Pretend to be a robot, an airplane, a ballerina, or any other favorite character?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(5),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
+        RoundedContainer(context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Put a toy pot on a pretend stove?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(6),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
+        RoundedContainer(context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Stir imaginary food?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(7),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
+        RoundedContainer(context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Put an action figure or doll into a car or truck as if it is the driver or passenger?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(8),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
+        RoundedContainer(context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Pretend to vacuum the rug, sweep the floor, or the mow lawn?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(9),
           ],
         ),
-        RoundedContainer(
-          displayTitle: false,
+        RoundedContainer(context: context, 
+          outerTitle: false,
           children: <Widget>[
             Text("Other (describe)", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(10),
           ],
         ),
         (selected[10] == true)
-            ? RoundedContainer(
-          displayTitle: false,
+            ? RoundedContainer(context: context, 
+          outerTitle: false,
           children: [
             TextField(
               controller: describeController,
@@ -202,7 +213,12 @@ class Followup3State extends State<Followup3> {
           },
           nextFunction: () {
             if (selected.contains(null) | (selected[10] & (describeController.text == "")))
-              Fluttertoast.showToast(msg: "Complete all fields");
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Complete all fields"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             else {
               if (selected[10]) description = describeController.text;
               widget.nextPage(3, selected, null, example, description, selected.contains(true));

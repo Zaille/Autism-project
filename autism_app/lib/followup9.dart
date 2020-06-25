@@ -1,9 +1,7 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup9 extends StatefulWidget{
   Followup9({Key key, this.nextPage}) : super(key: key);
@@ -40,6 +38,7 @@ class Followup9State extends State<Followup9> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -76,7 +75,12 @@ class Followup9State extends State<Followup9> {
           prevCondition: state > 0,
           previousFunction: () {},
           nextFunction: () {
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "") Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else {
               example = exampleController.text;
               setState(() {
@@ -94,6 +98,7 @@ class Followup9State extends State<Followup9> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -105,42 +110,48 @@ class Followup9State extends State<Followup9> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("A picture or toy just to show you?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("A drawing he/she has done?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("A flower he/she has picked?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("A bug he/she has found in the grass?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("A few blocks he/she has put together?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(5),
@@ -148,7 +159,8 @@ class Followup9State extends State<Followup9> {
         ),
         (selected[5] == true)
             ? RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: [
             TextField(
               controller: describeController,
@@ -170,7 +182,12 @@ class Followup9State extends State<Followup9> {
           nextFunction: () {
             //Need responses
             if (selected.indexOf(null) != 6)
-              Fluttertoast.showToast(msg: "Need all responses");
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Need all responses"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             //Respond "Yes" to a any example => Next question
             else if (selected.contains(true))
               setState(() {
@@ -190,6 +207,7 @@ class Followup9State extends State<Followup9> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -207,7 +225,12 @@ class Followup9State extends State<Followup9> {
             setState(() => state --);
           },
           nextFunction: () {
-            if (selected[6] == null) Fluttertoast.showToast(msg: "Complete the field");
+            if (selected[6] == null) Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             //PASS
             else if(selected[6]) widget.nextPage(9, selected, null, example, description, true);
             //FAIL

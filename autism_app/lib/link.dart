@@ -2,7 +2,6 @@ import 'package:autismtest/copyright.dart';
 import 'package:autismtest/form.dart';
 import 'package:autismtest/main.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -71,7 +70,7 @@ class LinkPageState extends State<LinkPage> {
             );
           },
           label: Text("NEXT"),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0)),),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -79,19 +78,20 @@ class LinkPageState extends State<LinkPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           RoundedContainer(
-            title: "Results",
-            titleSize: 30.0,
-            color: Colors.lightBlue.withOpacity(0.2),
-            children: [
-              Container(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                    text,
-                    style: TextStyle(fontSize: 20),
-                    textAlign: TextAlign.justify
+              context: context,
+              title: "Results",
+              titleSize: 30.0,
+              color: Theme.of(context).cardColor,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                      text,
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.justify
+                  ),
                 ),
-              ),
-            ]
+              ]
           ),
           Spacer(),
           Copyright(),

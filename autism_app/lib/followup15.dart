@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -39,6 +38,7 @@ class Followup15State extends State<Followup15> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -94,6 +94,7 @@ class Followup15State extends State<Followup15> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -105,49 +106,56 @@ class Followup15State extends State<Followup15> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Stick out your tongue? ", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Make a funny sound?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Wave good bye?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Clap your hands?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Put your fingers to your lips to signal “Shhh”?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Blow a kiss?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(5),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(6),
@@ -155,7 +163,8 @@ class Followup15State extends State<Followup15> {
         ),
         (selected[6] == true)
             ? RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: [
             TextField(
               controller: describeController,
@@ -197,6 +206,7 @@ class Followup15State extends State<Followup15> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -235,6 +245,7 @@ class Followup15State extends State<Followup15> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(

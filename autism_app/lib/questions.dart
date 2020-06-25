@@ -1,11 +1,11 @@
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/link.dart';
 import 'package:autismtest/navigationButtons.dart';
-import 'package:autismtest/submitButton.dart';
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:autismtest/roundedContainer.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class QuestionWidget extends StatefulWidget {
+class QuestionsPage extends StatefulWidget {
 
   final List<String> questions = <String> [
     "If you point at something across the room, does your child look at it? "
@@ -51,9 +51,7 @@ class QuestionWidget extends StatefulWidget {
   }
 }
 
-class QuestionState extends State<QuestionWidget> {
-
-  final _formKey = GlobalKey<FormState>();
+class QuestionState extends State<QuestionsPage> {
 
   int score = 0;
   List<bool> responses = <bool>[];
@@ -63,51 +61,52 @@ class QuestionState extends State<QuestionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 80),
-              child: RoundedContainer(
-                title: "Question " + (questionIndex + 1).toString(),
-                color: Colors.lightBlue.withOpacity(0.2),
-                children: [
-                  Text(
-                    widget.questions[questionIndex],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(top: 80),
+            child: RoundedContainer(
+              context: context,
+              title: "Question " + (questionIndex + 1).toString(),
+              children: [
+                Text(
+                  widget.questions[questionIndex],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 20, bottom: 10),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(flex: 1, child: Container(),),
+                        myRadioButton(
+                          title: "Yes",
+                          value: true,
+                          onChanged: (newValue) => setState(() => selected = newValue),
+                        ),
+                        myRadioButton(
+                          title: "No",
+                          value: false,
+                          onChanged: (newValue) => setState(() => selected = newValue),
+                        ),
+                      ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 20, bottom: 10),
-                    child: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          myRadioButton(
-                            title: "Yes",
-                            value: true,
-                            onChanged: (newValue) => setState(() => selected = newValue),
-                          ),
-                          myRadioButton(
-                            title: "No",
-                            value: false,
-                            onChanged: (newValue) => setState(() => selected = newValue),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Spacer(),
-            NavigationButtons(
+          ),
+          Spacer(),
+          Builder(
+            builder: (context) => NavigationButtons(
               prevCondition: questionIndex > 0,
               previousFunction: () {
                 setState(() {
@@ -118,7 +117,13 @@ class QuestionState extends State<QuestionWidget> {
                 });
               },
               nextFunction: () {
-                if (selected == null) Fluttertoast.showToast(msg: "Select an item");
+                if (selected == null)
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Select an item"),
+                      behavior: SnackBarBehavior.floating,
+                    )
+                );
                 else {
                   if (
                   (selected & (questionIndex != 1) & (questionIndex != 4) & (questionIndex != 11)) |
@@ -143,92 +148,21 @@ class QuestionState extends State<QuestionWidget> {
                 }
               },
             ),
-            /*IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Expanded(
-                    child:
-                    questionIndex > 0
-                      ? SubmitButton(
-                      text: "PREVIOUS",
-                      padding: const EdgeInsets.only(left: 30, right: 30, bottom: 80),
-                      onPressed: () {
-                        setState(() {
-                          questionIndex --;
-                          if(!responses[questionIndex]) score --;
-                          responses.removeLast();
-                          selected = null;
-                        });
-                      },
-                    )
-                    : Container(),
-                  ),
-                  Expanded(
-                    child: SubmitButton(
-                      text: "     NEXT     ",
-                      padding: const EdgeInsets.only(left: 30, right: 30, bottom: 80),
-                      onPressed: () {
-                        if (selected == null) Fluttertoast.showToast(msg: "Select an item");
-                        else {
-                          if (
-                            (selected & (questionIndex != 1) & (questionIndex != 4) & (questionIndex != 11)) |
-                            (!selected & ( (questionIndex == 1) | (questionIndex == 4) | (questionIndex == 11) ))
-                          ) setState(() => responses.add(true));
-                          else {
-                            setState(() => score ++);
-                            responses.add(false);
-                          }
-                          if (questionIndex == 19) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => LinkPage(responses: this.responses, score: this.score)),
-                            );
-                          }
-                          else {
-                            setState(() {
-                              questionIndex ++;
-                              selected = null;
-                            });
-                          }
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),*/
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("© 2009 Diana Robins, Deborah Fein, & Marianne Barton.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xffaaaaaa)
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          Copyright(),
+        ],
+      ),
     );
   }
   Widget myRadioButton({String title, bool value, Function onChanged}) {
     return Expanded(
+      flex: 6,
       child: RadioListTile(
         value: value,
         groupValue: selected,
         onChanged: onChanged,
         title: Text(title),
       ),
-    );
-  }
-}
-
-class QuestionsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: QuestionWidget(),
     );
   }
 }

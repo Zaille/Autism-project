@@ -1,9 +1,7 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup4 extends StatefulWidget{
   Followup4({Key key, this.nextPage}) : super(key: key);
@@ -37,6 +35,7 @@ class Followup4State extends State<Followup4> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -73,7 +72,12 @@ class Followup4State extends State<Followup4> {
           prevCondition: state > 0,
           previousFunction: () {},
           nextFunction: () {
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "") Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else {
               example = exampleController.text;
               setState(() {
@@ -91,6 +95,7 @@ class Followup4State extends State<Followup4> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+            context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -98,28 +103,32 @@ class Followup4State extends State<Followup4> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Stairs?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Chairs?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Furniture?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Playground equipment?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
@@ -131,7 +140,12 @@ class Followup4State extends State<Followup4> {
             setState(() => state --);
           },
           nextFunction: () {
-            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            if (selected.contains(null)) Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Need all responses"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else widget.nextPage(4, selected, null, example, null, selected.contains(true));
           },
         ),

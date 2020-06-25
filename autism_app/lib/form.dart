@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:autismtest/followup.dart';
 import 'package:autismtest/main.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:autismtest/thank.dart';
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import "package:autismtest/RoundedContainer.dart";
+import "package:autismtest/roundedContainer.dart";
 
 class FormPage extends StatefulWidget {
   FormPage({Key key, this.responses}) : super(key: key);
@@ -24,7 +23,7 @@ class FormPage extends StatefulWidget {
 
 class FormPageState extends State<FormPage> {
 
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   List<File> files = [null, null];
   Color errorMessageColor = Colors.black;
@@ -49,33 +48,37 @@ class FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom==0.0;
     return Scaffold(
-      floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 80),
-        width: 300,
-        child: showFab?FloatingActionButton.extended(
-          onPressed: () {
-            if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
-              sendData();
-            }
-            else {
-              setState(() {
-                errorMessageColor = Colors.red;
-                Fluttertoast.showToast(msg: "Complete all fields");
-              });
-            }
-          },
-          label: Text("SEND"),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0)),),
-        ):Container(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: showFab?FloatingActionButtonLocation.centerFloat:FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Builder(
+          builder: (BuildContext context) {
+            return showFab
+                ? Container(
+                  padding: EdgeInsets.only(bottom: 10),
+                  width: 300,
+                  child:  FloatingActionButton.extended(
+                    onPressed: () {
+                      sendData(context);
+                    },
+                    label: Text("SEND"),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),),
+                  )
+                )
+                : FloatingActionButton(
+                    onPressed: () {
+                      sendData(context);
+                      FocusScope.of(context).unfocus();
+                    },
+                    child: Icon(Icons.send),
+                  );
+          }),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: ListView(
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: Color(0xFFC9F1FD),
+                color: Theme.of(context).cardColor,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -97,57 +100,62 @@ class FormPageState extends State<FormPage> {
               ),
             ),
             RoundedContainer(
-              title: "Child information:",
-              children: <Widget>[
-                TextFormField(
-                  controller: childFirstNameController,
-                  maxLength: 50,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "First Name",
-                    border: OutlineInputBorder(),
+                context: context,
+                title: "Child information:",
+                children: <Widget>[
+                  TextFormField(
+                    key: Key('parentFirstName'),
+                    controller: childFirstNameController,
+                    maxLength: 50,
+                    enableInteractiveSelection: true,
+                    decoration: InputDecoration(
+                      labelText: "First Name*",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter his/her first name';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter his/her first name';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: childLastNameController,
-                  maxLength: 50,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Name",
-                    border: OutlineInputBorder(),
+                  Container(padding: EdgeInsets.all(5),),
+                  TextFormField(
+                    controller: childLastNameController,
+                    maxLength: 50,
+                    enableInteractiveSelection: true,
+                    decoration: InputDecoration(
+                      labelText: "Name*",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter his/her name';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter his/her name';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: childAgeController,
-                  keyboardType: TextInputType.number,
-                  maxLength: 3,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Age",
-                    border: OutlineInputBorder(),
+                  Container(padding: EdgeInsets.all(5),),
+                  TextFormField(
+                    controller: childAgeController,
+                    keyboardType: TextInputType.number,
+                    maxLength: 3,
+                    enableInteractiveSelection: true,
+                    decoration: InputDecoration(
+                      labelText: "Age (months)*",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Enter his/her age';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Enter his/her age';
-                    }
-                    return null;
-                  },
-                ),
-              ]
+                ]
             ),
             RoundedContainer(
+              context: context,
               title: "Parent information:",
               children: <Widget>[
                 TextFormField(
@@ -155,7 +163,7 @@ class FormPageState extends State<FormPage> {
                   maxLength: 50,
                   enableInteractiveSelection: true,
                   decoration: InputDecoration(
-                    labelText: "First Name",
+                    labelText: "First Name*",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -165,12 +173,13 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
+                Container(padding: EdgeInsets.all(5),),
                 TextFormField(
                   controller: parentLastNameController,
                   maxLength: 50,
                   enableInteractiveSelection: true,
                   decoration: InputDecoration(
-                    labelText: "Name",
+                    labelText: "Name*",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -180,29 +189,31 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
+                Container(padding: EdgeInsets.all(5),),
                 TextFormField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                maxLength: 50,
-                enableInteractiveSelection: true,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  border: OutlineInputBorder(),
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  maxLength: 50,
+                  enableInteractiveSelection: true,
+                  decoration: InputDecoration(
+                    labelText: "Email*",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (!EmailValidator.validate(value)) {
+                      return 'Not a valid email';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (!EmailValidator.validate(value)) {
-                    return 'Not a valid email';
-                  }
-                  return null;
-                },
-              ),
+                Container(padding: EdgeInsets.all(5),),
                 TextFormField(
                   controller: phoneNumberController,
                   keyboardType: TextInputType.phone,
                   maxLength: 12,
                   enableInteractiveSelection: true,
                   decoration: InputDecoration(
-                    labelText: "Phone number",
+                    labelText: "Phone number*",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -215,6 +226,7 @@ class FormPageState extends State<FormPage> {
               ],
             ),
             RoundedContainer(
+              context: context,
               title: "Authentication:",
               children: <Widget>[
                 TextFormField(
@@ -223,7 +235,7 @@ class FormPageState extends State<FormPage> {
                   maxLength: 30,
                   enableInteractiveSelection: true,
                   decoration: InputDecoration(
-                    labelText: "Password",
+                    labelText: "Password*",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -233,13 +245,14 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
+                Container(padding: EdgeInsets.all(5),),
                 TextFormField(
                   controller: password2Controller,
                   obscureText: true,
                   maxLength: 30,
                   enableInteractiveSelection: true,
                   decoration: InputDecoration(
-                    labelText: "Confirm password",
+                    labelText: "Confirm password*",
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -252,89 +265,78 @@ class FormPageState extends State<FormPage> {
               ],
             ),
             RoundedContainer(
+              context: context,
               title: "Videos:",
               children: <Widget> [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Spacer(),
-                    files[0] == null
-                        ? Text('No file selected.', style: new TextStyle(color: errorMessageColor),)
-                        : Row(
-                      children: <Widget>[
-                        Icon(Icons.check, color: Colors.green,),
-                        Text('  Selected.', style: new TextStyle(color: Colors.green),)
-                      ],
-                    ),
-                    Spacer(),
-                    RaisedButton(
-                      child: Text(textButton[0]),
-                      onPressed: () {
-                        getFile(0);
-                      },
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                    ),
-                    Spacer(),
-                  ],
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: files[0] == null
+                            ? Text('No file selected.')
+                            : Row(
+                          children: <Widget>[
+                            Icon(Icons.check, color: Colors.green,),
+                            Text('  Selected.', style: new TextStyle(color: Colors.green),)
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: RaisedButton(
+                          child: Text(textButton[0]),
+                          onPressed: () {
+                            getFile(0);
+                          },
+                          color: Theme.of(context).buttonColor,
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Container(
-                  width: screenWidth(context, coeff:1),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Spacer(),
-                    files[1] == null
-                        ? Text('No file selected.', style: new TextStyle(color: errorMessageColor),)
-                        : Row(
-                      children: <Widget>[
-                        Icon(Icons.check, color: Colors.green,),
-                        Text('  Selected.', style: new TextStyle(color: Colors.green),)
-                      ],
-                    ),
-                    Spacer(),
-                    RaisedButton(
-                      child: Text(textButton[1]),
-                      onPressed: () {
-                        getFile(1);
-                      },
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                    ),
-                    Spacer(),
-                  ],
+                IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: files[1] == null
+                            ? Text('No file selected.')
+                            : Row(
+                          children: <Widget>[
+                            Icon(Icons.check, color: Colors.green,),
+                            Text('  Selected.', style: new TextStyle(color: Colors.green),)
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        flex:3,
+                        child: RaisedButton(
+                          child: Text(textButton[1]),
+                          onPressed: () {
+                            getFile(1);
+                          },
+                          color: Theme.of(context).buttonColor,
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            !showFab?SubmitButton(
-              text: "SEND",
-              onPressed: () {
-                if (_formKey.currentState.validate() & (files[0] != null) & (files[1] != null)) {
-                  sendData();
-                }
-                else {
-                  setState(() {
-                    errorMessageColor = Colors.red;
-                    Fluttertoast.showToast(msg: "Complete all fields");
-                  });
-                }
-              },
-            ):Container(),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 100,),
+              padding: EdgeInsets.symmetric(vertical: 70,),
             ),
           ],
         ),
       ),
     );
   }
-
-  Size screenSize(BuildContext context) {return MediaQuery.of(context).size;}
-  double screenHeight(BuildContext context, {double coeff = 1}) {return screenSize(context).height * coeff;}
-  double screenWidth(BuildContext context, {double coeff = 1}) {return screenSize(context).width * coeff;}
 
   void getFile(index) async {
     final pickedFile = await ImagePicker.pickVideo(source: ImageSource.gallery);
@@ -348,61 +350,96 @@ class FormPageState extends State<FormPage> {
       textButton[index] = "Add a video";
   }
 
-  Future sendData() async {
-    Response response;
-    String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
-    Dio dio = new Dio();
-    FormData formData = FormData.fromMap({
-      "childFirstName": childFirstNameController.text,
-      "childLastName": childLastNameController.text,
-      "childAge": childAgeController.text,
-      "parentFirstName": parentFirstNameController.text,
-      "parentLastName": parentLastNameController.text,
-      "phoneNumber": phoneNumberController.text,
-      "email": emailController.text,
-      "password": password1Controller.text,
-      "files": [
-        await MultipartFile.fromFile(files[0].path, filename: files[0].path.split('/').last),
-        await MultipartFile.fromFile(files[1].path, filename: files[1].path.split('/').last),
-      ]
-    });
-    Fluttertoast.showToast(msg: 'Processing data...', toastLength: Toast.LENGTH_SHORT);
-    try {
-      response = await dio.post(uploadURL, data: formData).timeout(const Duration(seconds: 10));
-    }
-    on DioError catch(e) {
-      if (e.response.data["errno"] == 1062)
-        Fluttertoast.showToast(msg: "Email adress already taken.");
-    }
-    catch(e) {
-      await showDialog(
-        context: context,
-        builder:(_) => AlertDialog(
-          title: Text("Server error"),
-          content: Text("The server is unavailable, try again later."),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Go back to the main page"),
-              onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop('dialog');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyApp()),
-                );
-              },
-            ),
-          ],
-        ),
-        barrierDismissible: false,
+  Future sendData(context) async {
+    if (formKey.currentState.validate() & (files[0] != null) & (files[1] !=
+        null)) {
+      Response response;
+      String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
+      Dio dio = new Dio();
+      FormData formData = FormData.fromMap({
+        "childFirstName": childFirstNameController.text,
+        "childLastName": childLastNameController.text,
+        "childAge": childAgeController.text,
+        "parentFirstName": parentFirstNameController.text,
+        "parentLastName": parentLastNameController.text,
+        "phoneNumber": phoneNumberController.text,
+        "email": emailController.text,
+        "password": password1Controller.text,
+        "files": [
+          await MultipartFile.fromFile(files[0].path, filename: files[0].path
+              .split('/')
+              .last),
+          await MultipartFile.fromFile(files[1].path, filename: files[1].path
+              .split('/')
+              .last),
+        ]
+      });
+      Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Processing data..."),
+            behavior: SnackBarBehavior.floating,
+          )
       );
+      try {
+        response = await dio.post(uploadURL, data: formData).timeout(
+            const Duration(seconds: 10));
+      }
+      catch (e) {
+        print(e);
+        if (e.response != null && e.response.data["errno"] == 1062)
+          Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Email adress already taken."),
+                behavior: SnackBarBehavior.floating,
+              )
+          );
+        else
+          await showDialog(
+            context: context,
+            builder: (_) =>
+                AlertDialog(
+                  title: Text("Server error"),
+                  content: Text(
+                      "The server is unavailable, try again later.\n(" +
+                          e.toString().split(",")[1].toString() + ")"),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("Go back to the main page"),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop(
+                            'dialog');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+            barrierDismissible: false,
+          );
+      }
+      if (response != null && response.statusCode == 201) {
+        if (widget.responses == null)
+          nextPage = ThanksPage();
+        else
+          nextPage = FollowupPage(responses: widget.responses,
+              patientId: response.data["patientId"]);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => nextPage),
+        );
+      }
     }
-    if (response != null && response.statusCode == 201) {
-      if(widget.responses == null) nextPage = ThanksPage();
-      else nextPage = FollowupPage(responses: widget.responses, patientId: response.data["patientId"]);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => nextPage),
+    else {
+      setState(() => errorMessageColor = Colors.red);
+      Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Complete all fields"),
+            behavior: SnackBarBehavior.floating,
+          )
       );
     }
   }
+
 }

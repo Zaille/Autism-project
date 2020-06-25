@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -42,6 +41,7 @@ class Followup12State extends State<Followup12> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -53,63 +53,72 @@ class Followup12State extends State<Followup12> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("A washing machine?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Babies crying?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Vacuum cleaner?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Hairdryer?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Traffic?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Babies squealing or screeching?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(5),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Loud music?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(6),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Telephone/ doorbell ringing?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(7),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Noisy places such as a supermarket or restaurant?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
@@ -118,7 +127,8 @@ class Followup12State extends State<Followup12> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(9),
@@ -126,7 +136,8 @@ class Followup12State extends State<Followup12> {
         ),
         (selected[9] == true)
             ? RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: [
             TextField(
               controller: describeController,
@@ -171,6 +182,7 @@ class Followup12State extends State<Followup12> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -226,6 +238,7 @@ class Followup12State extends State<Followup12> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -237,35 +250,40 @@ class Followup12State extends State<Followup12> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Calmly cover his/her ears?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(10),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Tell you that he/she does not like the noise?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(11),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Scream?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(12),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Cry?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(13),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Cover his/her ears while upset?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(14),
@@ -301,6 +319,7 @@ class Followup12State extends State<Followup12> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(

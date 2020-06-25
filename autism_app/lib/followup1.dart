@@ -1,10 +1,8 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup1 extends StatefulWidget{
   Followup1({Key key, this.nextPage}) : super(key: key);
@@ -23,7 +21,7 @@ class Followup1State extends State<Followup1> {
   String example;
   int thirdChoice = -1;
   final exampleController = TextEditingController();
-  final String title = "FollowUp 1";
+  final String title = "FollowUp Question 1";
   int state = 0;
 
   @override
@@ -40,6 +38,7 @@ class Followup1State extends State<Followup1> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -78,7 +77,13 @@ class Followup1State extends State<Followup1> {
             setState(() => state --);
           },
           nextFunction: () {
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "")
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+              );
             else {
               example = exampleController.text;
               setState(() {
@@ -96,6 +101,7 @@ class Followup1State extends State<Followup1> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+            context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -107,49 +113,56 @@ class Followup1State extends State<Followup1> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look at object?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Point to object?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look and comment on object?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look if you point and say “look!”?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Ignores you?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
-            Text("Look around room randomly?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+            Text("Look around room randomly?", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,),
             _yesOrNoRadio(5),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look at your finger?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(6),
@@ -162,7 +175,13 @@ class Followup1State extends State<Followup1> {
             },
           nextFunction: () {
               //Need responses
-              if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+              if (selected.contains(null))
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Need all responses"),
+                      behavior: SnackBarBehavior.floating,
+                    )
+                );
               //Respond "Yes" to a "FAIL" example
               else if (selected.sublist(4, 7).contains(true)) {
                 //And "Yes" to "PASS"
@@ -187,6 +206,7 @@ class Followup1State extends State<Followup1> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -252,7 +272,13 @@ class Followup1State extends State<Followup1> {
           },
           nextFunction: () {
             //Need response
-            if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
+            if (thirdChoice == -1)
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Complete the field"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             //Send data
             else widget.nextPage(1, selected, thirdChoice, example, null, thirdChoice < 4);
           },

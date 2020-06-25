@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -39,6 +38,7 @@ class Followup18State extends State<Followup18> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -94,6 +94,7 @@ class Followup18State extends State<Followup18> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -131,6 +132,7 @@ class Followup18State extends State<Followup18> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -168,6 +170,7 @@ class Followup18State extends State<Followup18> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -180,7 +183,8 @@ class Followup18State extends State<Followup18> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("If you say, “Show me your shoe” without "
                 "pointing, making gestures, or giving hints "
@@ -192,7 +196,8 @@ class Followup18State extends State<Followup18> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("If you say, “Bring me the blanket” or ask "
                 "for another object without pointing, making "
@@ -204,7 +209,8 @@ class Followup18State extends State<Followup18> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("If you say, “Put the book on the chair "
                 "without pointing, making gestures, or giving "

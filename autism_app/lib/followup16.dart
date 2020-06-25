@@ -1,7 +1,6 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -39,6 +38,7 @@ class Followup16State extends State<Followup16> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -92,6 +92,7 @@ class Followup16State extends State<Followup16> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -103,7 +104,8 @@ class Followup16State extends State<Followup16> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look toward the thing you are looking at?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
@@ -112,7 +114,8 @@ class Followup16State extends State<Followup16> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Point toward the thing you are looking at?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
@@ -121,7 +124,8 @@ class Followup16State extends State<Followup16> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look around to see what you are looking at?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
@@ -130,7 +134,8 @@ class Followup16State extends State<Followup16> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Ignore you?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
@@ -139,7 +144,8 @@ class Followup16State extends State<Followup16> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look at your face?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
@@ -177,6 +183,7 @@ class Followup16State extends State<Followup16> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(

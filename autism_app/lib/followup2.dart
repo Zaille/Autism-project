@@ -1,10 +1,8 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup2 extends StatefulWidget{
   Followup2({Key key, this.nextPage}) : super(key: key);
@@ -36,6 +34,7 @@ class Followup2State extends State<Followup2> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+            context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -47,14 +46,16 @@ class Followup2State extends State<Followup2> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Often ignore sounds?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Often ignore people?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
@@ -64,7 +65,13 @@ class Followup2State extends State<Followup2> {
           prevCondition: state > 0,
           previousFunction: () {},
           nextFunction: () {
-            if ((selected.sublist(0,2).contains(null)))Fluttertoast.showToast(msg: "No response selected");
+            if ((selected.sublist(0,2).contains(null)))
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("No response selected"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             else setState(() {
               state ++;
             });
@@ -80,6 +87,7 @@ class Followup2State extends State<Followup2> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text("Has your child’s hearing been tested?", style: TextStyle(fontSize: 18),),
@@ -93,7 +101,13 @@ class Followup2State extends State<Followup2> {
             setState(() => state --);
           },
           nextFunction: () {
-            if (selected[2] == null) Fluttertoast.showToast(msg: "No response selected");
+            if (selected[2] == null)
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("No response selected"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             else if (selected[2]) setState(() {
               state ++;
             });
@@ -110,6 +124,7 @@ class Followup2State extends State<Followup2> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -144,7 +159,13 @@ class Followup2State extends State<Followup2> {
             setState(() => state --);
           },
           nextFunction: () {
-            if (description == null) Fluttertoast.showToast(msg: "No response selected");
+            if (description == null)
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("No response selected"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             else widget.nextPage(2, selected, null, null, description, !selected.sublist(0,3).contains(true));
           },
         ),

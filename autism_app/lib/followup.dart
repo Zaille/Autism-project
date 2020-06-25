@@ -50,7 +50,7 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
   Widget build(BuildContext context) {
     switch(this.questionIdx) {
       case 0:
-        //sendData(0, widget.responses, null, null, null, null);
+      //sendData(0, widget.responses, null, null, null, null);
         return Followup1(nextPage: sendData,);
       case 1:
         return Followup2(nextPage: sendData,);
@@ -124,27 +124,27 @@ class FollowUpWidgetState extends State<FollowUpWidget> {
       await showDialog(
         context: context,
         builder:(_) => AlertDialog(
-            title: Text("Server error"),
-            content: Text("The server is unavailable, try again later."),
-            actions: <Widget>[
-              FlatButton(
-                  child: Text("Go back to the main page"),
-                onPressed: () {
-                  Navigator.of(context, rootNavigator: true).pop('dialog');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyApp()),
-                  );
-                },
-              ),
-            ],
+          title: Text("Server error"),
+          content: Text("The server is unavailable, try again later."),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Go back to the main page"),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyApp()),
+                );
+              },
+            ),
+          ],
         ),
         barrierDismissible: false,
       );
     }
     if (!error && response != null && response.statusCode == 200) setState(() {
-          this.questionIdx = widget.responses.sublist(this.questionIdx + 1).indexOf(false) + 1 + this.questionIdx;
-        });
+      this.questionIdx = widget.responses.sublist(this.questionIdx + 1).indexOf(false) + 1 + this.questionIdx;
+    });
     if (!error & (this.questionIdx == oldIdx))
       Navigator.push(
         context,

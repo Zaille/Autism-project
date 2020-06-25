@@ -2,7 +2,6 @@ import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup5 extends StatefulWidget{
   Followup5({Key key, this.nextPage}) : super(key: key);
@@ -37,6 +36,7 @@ class Followup5State extends State<Followup5> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -44,49 +44,56 @@ class Followup5State extends State<Followup5> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look at hands?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Move fingers when playing peek-a-boo?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Wiggle his/her fingers near his/her eyes?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Hold his/her hands up close to his/her eyes?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Hold his/her hands off to the side of his/her eyes?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Flap his/her hands near his/her face?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(5),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Other", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(6),
@@ -94,7 +101,8 @@ class Followup5State extends State<Followup5> {
         ),
         (selected[6] == true)
             ? RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: [
             TextField(
               controller: describeController,
@@ -114,7 +122,12 @@ class Followup5State extends State<Followup5> {
           nextFunction: () {
             //Need responses
             if ((selected.indexOf(null) != 7) | (selected[6] & (describeController.text == "")))
-              Fluttertoast.showToast(msg: "Need all responses");
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Need all responses"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             //Respond "Yes" to a "fail" example => Next question
             else if (selected.sublist(2, 7).contains(true)) setState(() {
               state ++;
@@ -135,6 +148,7 @@ class Followup5State extends State<Followup5> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -153,7 +167,12 @@ class Followup5State extends State<Followup5> {
           },
           nextFunction: () {
             if (selected[7] == null)
-              Fluttertoast.showToast(msg: "Complete all fields");
+              Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Complete all fields"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
             else
               widget.nextPage(5, selected, null, example, description, !selected[7]);
           },

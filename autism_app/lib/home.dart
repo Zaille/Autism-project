@@ -1,20 +1,28 @@
+import 'package:autismtest/copyright.dart';
 import 'package:autismtest/instructions.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatefulWidget {
-  @override
-  HomeState createState() {
-    return HomeState();
-  }
-}
-
-class HomeState extends State<Home> {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    return Scaffold(
+      floatingActionButton: Container(
+        padding: EdgeInsets.symmetric(vertical: 80),
+        width: 300,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => InstructionsPage()),
+            );
+          },
+          label: Text("START"),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -37,12 +45,13 @@ class HomeState extends State<Home> {
           ),
           Container(
               decoration: BoxDecoration(
-                color: Color(0xFFC9F1FD),
+                color: Theme.of(context).cardColor.withOpacity(0.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFFC9F1FD).withOpacity(1),
+                    color: Theme.of(context).cardColor,
                     spreadRadius: 10,
                     blurRadius: 5,
+                    offset: Offset(0, 5),
                   ),
                 ],
               ),
@@ -72,34 +81,15 @@ class HomeState extends State<Home> {
                         "elit. Sed non risus. Suspendisse lectus tortor, "
                         "dignissim sit amet, adipiscing nec, ultricies sed, "
                         "dolor. Cras elementum ultrices diam. Maecenas ligula "
-                        "massa, varius a, semper congue, euismod non, mi.", textAlign: TextAlign.justify,
+                        "massa, varius a, semper congue, euismod non, mi.",
+                      textAlign: TextAlign.justify,
                     ),
                   ),
                 ],
               )
           ),
-          SubmitButton(
-            text: "START",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => InstructionsPage()),
-              );
-            },
-          ),
-          Center(
-              child: Container(
-//                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-                  padding: const EdgeInsets.symmetric( vertical: 10.0, horizontal: 50 ),
-                  child: Text("© 2009 Diana Robins, Deborah Fein, & Marianne Barton.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xffaaaaaa)
-                    ),
-                  )
-              )
-          )
+          Spacer(),
+          Copyright(),
         ],
       ),
     );

@@ -1,9 +1,7 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup6 extends StatefulWidget{
   Followup6({Key key, this.nextPage}) : super(key: key);
@@ -38,6 +36,7 @@ class Followup6State extends State<Followup6> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -76,7 +75,12 @@ class Followup6State extends State<Followup6> {
             setState(() => state--);
           },
           nextFunction: () {
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "") Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else {
               example = exampleController.text;
               setState(() {
@@ -94,6 +98,7 @@ class Followup6State extends State<Followup6> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -105,28 +110,32 @@ class Followup6State extends State<Followup6> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Reach for the object with his/her whole hand?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Lead you to the object?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Try to get the object for him/herself?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Ask for it using words or sounds?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
@@ -139,7 +148,12 @@ class Followup6State extends State<Followup6> {
           },
           nextFunction: () {
             //Need responses
-            if (selected.indexOf(null) != 4) Fluttertoast.showToast(msg: "Need all responses");
+            if (selected.indexOf(null) != 4) Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Need all responses"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             //Respond "Yes" to a any example
             else if (selected.contains(true)) setState(() {
               state ++;
@@ -158,6 +172,7 @@ class Followup6State extends State<Followup6> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -175,7 +190,12 @@ class Followup6State extends State<Followup6> {
             setState(() => state --);
           },
           nextFunction: () {
-              if (selected[4] == null) Fluttertoast.showToast(msg: "Complete the field");
+              if (selected[4] == null) Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Complete the field"),
+                    behavior: SnackBarBehavior.floating,
+                  )
+              );
               else widget.nextPage(6, selected, null, example, null, selected[4]);
           },
         ),

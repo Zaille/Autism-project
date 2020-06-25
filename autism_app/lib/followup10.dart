@@ -1,9 +1,7 @@
 import 'package:autismtest/copyright.dart';
 import 'package:autismtest/navigationButtons.dart';
 import 'package:autismtest/roundedContainer.dart';
-import 'package:autismtest/submitButton.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Followup10 extends StatefulWidget{
 
@@ -41,6 +39,7 @@ class Followup10State extends State<Followup10> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -76,7 +75,12 @@ class Followup10State extends State<Followup10> {
           prevCondition: state > 1,
           previousFunction: () {},
           nextFunction: () {
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "") Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else {
               example = exampleController.text;
               setState(() {
@@ -96,6 +100,7 @@ class Followup10State extends State<Followup10> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Container(
@@ -132,7 +137,12 @@ class Followup10State extends State<Followup10> {
           prevCondition: state > 1,
           previousFunction: () {},
           nextFunction: () {
-            if (exampleController.text == "") Fluttertoast.showToast(msg: "Complete the field");
+            if (exampleController.text == "") Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else {
               example = exampleController.text;
               setState(() {
@@ -150,6 +160,7 @@ class Followup10State extends State<Followup10> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
             title: title,
             color: Colors.lightBlue.withOpacity(0.2),
             children: [
@@ -161,42 +172,48 @@ class Followup10State extends State<Followup10> {
             ]
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Look up?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(0),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Talk or babble?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(1),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Stop what he/she is doing?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(2),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Make no response?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(3),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Seem to hear but ignores parent?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(4),
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text(
               "Respond only if parent is right in front of the child’s face?",
@@ -206,7 +223,8 @@ class Followup10State extends State<Followup10> {
           ],
         ),
         RoundedContainer(
-          displayTitle: false,
+          context: context,
+          outerTitle: false,
           children: <Widget>[
             Text("Respond only if touched?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
             _yesOrNoRadio(6),
@@ -219,7 +237,12 @@ class Followup10State extends State<Followup10> {
           },
           nextFunction: () {
             //Need responses
-            if (selected.contains(null)) Fluttertoast.showToast(msg: "Need all responses");
+            if (selected.contains(null)) Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Need all responses"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             //"Yes" in "Pass"
             else if (selected.sublist(0,4).contains(true)) {
               //Both "Pass" and "Fail" contain "Yes
@@ -242,6 +265,7 @@ class Followup10State extends State<Followup10> {
     return ListView(
       children: <Widget>[
         RoundedContainer(
+          context: context,
           title: title,
           children: [
             Text(
@@ -306,7 +330,12 @@ class Followup10State extends State<Followup10> {
             setState(() => state --);
           },
           nextFunction: () {
-            if (thirdChoice == -1) Fluttertoast.showToast(msg: "Complete the field");
+            if (thirdChoice == -1) Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Complete the field"),
+                  behavior: SnackBarBehavior.floating,
+                )
+            );
             else widget.nextPage(10, selected, thirdChoice, example, null, thirdChoice < 3);
           },
         ),

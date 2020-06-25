@@ -1,57 +1,64 @@
 import 'package:autismtest/questions.dart';
-import 'package:autismtest/submitButton.dart';
+import 'package:autismtest/roundedContainer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'RoundedContainer.dart';
 
-class Instructions extends StatefulWidget {
+class InstructionsPage extends StatefulWidget {
   @override
-  InstructionsState createState() {
+  State<InstructionsPage> createState() {
     return InstructionsState();
   }
 }
 
-class InstructionsState extends State<Instructions> {
+class InstructionsState extends State<InstructionsPage> {
 
   final _formKey = GlobalKey<FormState>();
   bool checkedValue = false;
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
     return Scaffold(
-      floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 80),
-        width: 300,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            if (checkedValue) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuestionsPage()),
-              );
-            }
-            else {
-              Fluttertoast.showToast(msg: "Please accept ToS and PP", gravity: ToastGravity.BOTTOM);
-            }
-          },
-          label: Text("ACCEPT"),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0)),),
-        ),
+      floatingActionButton: Builder(
+          builder: (BuildContext context) {
+            return Container(
+              margin: EdgeInsets.only(bottom: 10),
+              width: 300,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  if (checkedValue) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => QuestionsPage()),
+                    );
+                  }
+                  else {
+                    Scaffold.of(context)
+                        .showSnackBar(
+                        SnackBar(
+                          content: Text("Please accept ToS and PP"),
+                          behavior: SnackBarBehavior.floating,
+                        )
+                    );
+                  }
+                },
+                label: Text("ACCEPT"),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)),),
+              ),
+            );
+          }
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Form(
         key: _formKey,
         child: ListView(
           children: <Widget>[
-
             RoundedContainer(
+                context: context,
                 title: "Instructions",
                 titleSize: 30.0,
-                color: Colors.lightBlue.withOpacity(0.2),
+                color: Theme.of(context).cardColor,
                 children: <Widget>[
-//
                   RichText(
                     text: TextSpan(
 
@@ -71,69 +78,60 @@ class InstructionsState extends State<Instructions> {
         Phasellus pharetra, erat a volutpat elementum, leo nibh mollis elit, quis bibendum dui tellus non lectus. Aliquam eros nisl, tristique ultricies est at, gravida sagittis felis. Pellentesque lobortis leo ut bibendum porttitor. Aenean aliquam diam tristique bibendum imperdiet. Nullam dui justo, faucibus nec venenatis ac, dapibus in lacus. Maecenas odio leo, placerat sit amet velit mattis, porttitor tincidunt leo.
 
                       ''',
-                      style: DefaultTextStyle.of(context).style,
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
                 ]
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Checkbox(
-                  value: checkedValue,
-                  activeColor: Colors.grey.withOpacity(.2),
-                  checkColor: Colors.blue,
-                  onChanged: (newValue) {
-                    setState(() {
-                      checkedValue = newValue;
-                    });
-                  },
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+              height: 100,
+              child: IntrinsicHeight(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: Checkbox(
+                        value: checkedValue,
+                        activeColor: Colors.grey.withOpacity(.2),
+                        checkColor: Colors.blue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            checkedValue = newValue;
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(text: 'By clicking Accept, you agree to our '),
+                            TextSpan(
+                                text: 'Terms of Service',
+                                style: TextStyle(color: Colors.blue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    print('Terms of Service');
+                                  }),
+                            TextSpan(text: ' and that you have read our '),
+                            TextSpan(
+                                text: 'Privacy Policy',
+                                style: TextStyle(color: Colors.blue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    print('Privacy Policy');
+                                  }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text('I agree to the', style: TextStyle(fontSize: 15),),
-                          GestureDetector(
-                            child: Text('Terms of Service', style: TextStyle(color: Colors.blue)),
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(' and ', style: TextStyle(fontSize: 15),),
-                          GestureDetector(
-                            child: Text('Privacy Policy', style: TextStyle(color: Colors.blue)),
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              )
             ),
-            Container(margin: EdgeInsets.only(bottom: 200),),
-            /*SubmitButton(
-              text:"ACCEPT",
-              onPressed: () {
-                if (checkedValue) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => QuestionsPage()),
-                  );
-                }
-                else {
-                  Scaffold.of(context).showSnackBar(new SnackBar(
-                    content: new Text("Please accept ToS and PP"),
-                    duration: const Duration(seconds: 2),
-                  ));
-                }
-              },
-            ),*/
+            Container(margin: EdgeInsets.only(bottom: 120),),
           ],
         ),
       ),
@@ -142,11 +140,3 @@ class InstructionsState extends State<Instructions> {
 
 }
 
-class InstructionsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Instructions(),
-    );
-  }
-}

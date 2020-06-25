@@ -1,16 +1,6 @@
-import 'package:autismtest/followup.dart';
-import 'package:autismtest/followup1.dart';
-import 'package:autismtest/followup2.dart';
-import 'package:autismtest/link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:autismtest/home.dart';
-import 'package:autismtest/thank.dart';
-import 'package:autismtest/form.dart';
-import 'package:autismtest/questions.dart';
-
-import 'instructions.dart';
-
 
 void main() => runApp(Index());
 
@@ -40,16 +30,26 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Home',
+      title: 'ASD Screening',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        primaryColor: Colors.blueGrey,
+        accentColor: Colors.blueGrey,
+        backgroundColor: Colors.white.withOpacity(0.7),
+        cardColor: Colors.lightBlue.withOpacity(0.2),
+        buttonColor: Colors.blueGrey,
+        highlightColor: Colors.grey.withOpacity(0.6),
       ),
-      home: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Center(
-          child: Home(),
-        ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.white.withOpacity(0.87),
+        accentColor: Colors.blueGrey,
+        backgroundColor: Colors.blueGrey.withOpacity(0.4),
+        cardColor: Colors.black,
+        buttonColor: Colors.blueGrey,
+        highlightColor: Colors.black.withOpacity(0),
       ),
+      home: HomePage(),
     );
   }
 }
