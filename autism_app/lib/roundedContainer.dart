@@ -30,10 +30,7 @@ class RoundedContainer extends StatelessWidget {
           padding: const EdgeInsets.only(top: 40, bottom: 15, left: 30),
           child: Text(
             title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: this.titleSize,
-                color: Theme.of(context).primaryColor),
+            style: Theme.of(context).textTheme.headline1,
           ),
         )
         : Container(padding: EdgeInsets.all(5),),

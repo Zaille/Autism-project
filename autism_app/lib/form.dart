@@ -26,7 +26,7 @@ class FormPageState extends State<FormPage> {
   final formKey = GlobalKey<FormState>();
 
   List<File> files = [null, null];
-  Color errorMessageColor = Colors.black;
+  bool error = false;
   List<String> textButton = ["Add a video", "Add a video"];
   final picker = ImagePicker();
   Widget nextPage;
@@ -46,32 +46,24 @@ class FormPageState extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = MediaQuery.of(context).viewInsets.bottom==0.0;
     return Scaffold(
-      floatingActionButtonLocation: showFab?FloatingActionButtonLocation.centerFloat:FloatingActionButtonLocation.endFloat,
+      resizeToAvoidBottomPadding: false,
       floatingActionButton: Builder(
           builder: (BuildContext context) {
-            return showFab
-                ? Container(
-                  padding: EdgeInsets.only(bottom: 10),
-                  width: 300,
-                  child:  FloatingActionButton.extended(
-                    onPressed: () {
-                      sendData(context);
-                    },
-                    label: Text("SEND"),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),),
-                  )
-                )
-                : FloatingActionButton(
-                    onPressed: () {
-                      sendData(context);
-                      FocusScope.of(context).unfocus();
-                    },
-                    child: Icon(Icons.send),
+            return Container(
+                    padding: EdgeInsets.only(bottom: 10),
+                    width: 300,
+                    child:  FloatingActionButton.extended(
+                      onPressed: () {
+                        sendData(context);
+                      },
+                      label: Text("SEND"),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),),
+                    )
                   );
           }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Form(
         key: formKey,
         child: ListView(
@@ -81,10 +73,10 @@ class FormPageState extends State<FormPage> {
                 color: Theme.of(context).cardColor,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 3,
-                    blurRadius: 5,
-                    offset: Offset(0, 4), // changes position of shadow
+                    color: Theme.of(context).highlightColor,
+                    spreadRadius: 7,
+                    blurRadius: 7,
+                    offset: Offset(0, 5), // changes position of shadow
                   ),
                 ],
               ),
@@ -96,7 +88,8 @@ class FormPageState extends State<FormPage> {
                   "massa, varius a, semper congue, euismod non, mi. "
                   "Cras elementum ultrices diam. Maecenas ligula "
                   "massa, varius a, semper congue, euismod non, mi.",
-                  textAlign: TextAlign.justify
+                textAlign: TextAlign.justify,
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
             RoundedContainer(
@@ -276,7 +269,10 @@ class FormPageState extends State<FormPage> {
                       Expanded(
                         flex: 2,
                         child: files[0] == null
-                            ? Text('No file selected.')
+                            ? Text('No file selected.',
+                                style: error?TextStyle(color: Colors.red)
+                                        :Theme.of(context).textTheme.bodyText2,
+                              )
                             : Row(
                           children: <Widget>[
                             Icon(Icons.check, color: Colors.green,),
@@ -287,11 +283,14 @@ class FormPageState extends State<FormPage> {
                       Expanded(
                         flex: 3,
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder (
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                           child: Text(textButton[0]),
                           onPressed: () {
                             getFile(0);
                           },
-                          color: Theme.of(context).buttonColor,
+                          color: Theme.of(context).accentColor,
                           textColor: Colors.white,
                         ),
                       ),
@@ -305,7 +304,10 @@ class FormPageState extends State<FormPage> {
                       Expanded(
                         flex: 2,
                         child: files[1] == null
-                            ? Text('No file selected.')
+                            ? Text('No file selected.',
+                              style: error?TextStyle(color: Colors.red)
+                                :Theme.of(context).textTheme.bodyText2,
+                        )
                             : Row(
                           children: <Widget>[
                             Icon(Icons.check, color: Colors.green,),
@@ -317,10 +319,13 @@ class FormPageState extends State<FormPage> {
                         flex:3,
                         child: RaisedButton(
                           child: Text(textButton[1]),
+                          shape: RoundedRectangleBorder (
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                           onPressed: () {
                             getFile(1);
                           },
-                          color: Theme.of(context).buttonColor,
+                          color: Theme.of(context).accentColor,
                           textColor: Colors.white,
                         ),
                       ),
@@ -432,7 +437,7 @@ class FormPageState extends State<FormPage> {
       }
     }
     else {
-      setState(() => errorMessageColor = Colors.red);
+      setState(() => error = true);
       Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text("Complete all fields"),

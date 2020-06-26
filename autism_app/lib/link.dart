@@ -21,22 +21,25 @@ class LinkPageState extends State<LinkPage> {
 
   Widget nextPage;
   String text;
+  String description;
 
   @override
   Widget build(BuildContext context) {
 
     if(widget.score < 3) {
       nextPage = MyApp();
-      text = "There is a Low-risk."
-          "\n\n     If child is younger than 24 months, screen again "
+      text = "There is a Low-risk.";
+      description =
+          "     If child is younger than 24 months, screen again "
           "after second birthday."
           "\n Otherwise, no further action required unless "
           "surveillance indicates risk for ASD.";
     }
     else if(widget.score < 8) {
       nextPage = FormPage(responses: widget.responses,);
-      text = "There is a Medium-risk."
-          "\n\n     You will be administer a Follow-Up interview. "
+      text = "There is a Medium-risk.";
+      description =
+          "     You will be administer a Follow-Up interview. "
           "Some of your responses might present a risk, "
           "you will be ask more details about thoses-ones. "
           "You should be aware that even with the Follow-Up, "
@@ -48,8 +51,9 @@ class LinkPageState extends State<LinkPage> {
     }
     else {
       nextPage = FormPage();
-      text = "There is a High-risk."
-          "\n\n Lorem ipsum dolor sit amet, consectetur adipiscing "
+      text = "There is a High-risk.";
+      description =
+          " Lorem ipsum dolor sit amet, consectetur adipiscing "
           "elit. Sed non risus. Suspendisse lectus tortor, "
           "dignissim sit amet, adipiscing nec, ultricies sed, "
           "dolor. Cras elementum ultrices diam. Maecenas ligula "
@@ -83,13 +87,15 @@ class LinkPageState extends State<LinkPage> {
               titleSize: 30.0,
               color: Theme.of(context).cardColor,
               children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                      text,
-                      style: TextStyle(fontSize: 20),
-                      textAlign: TextAlign.justify
-                  ),
+                Text(
+                    text + "\n",
+                    style: Theme.of(context).textTheme.bodyText1,
+                    textAlign: TextAlign.justify
+                ),
+                Text(
+                    description,
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.justify
                 ),
               ]
           ),

@@ -78,7 +78,7 @@ class InstructionsState extends State<InstructionsPage> {
         Phasellus pharetra, erat a volutpat elementum, leo nibh mollis elit, quis bibendum dui tellus non lectus. Aliquam eros nisl, tristique ultricies est at, gravida sagittis felis. Pellentesque lobortis leo ut bibendum porttitor. Aenean aliquam diam tristique bibendum imperdiet. Nullam dui justo, faucibus nec venenatis ac, dapibus in lacus. Maecenas odio leo, placerat sit amet velit mattis, porttitor tincidunt leo.
 
                       ''',
-                      style: TextStyle(fontSize: 16),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
                 ]
@@ -107,7 +107,7 @@ class InstructionsState extends State<InstructionsPage> {
                       child: RichText(
                         text: TextSpan(
                           children: <TextSpan>[
-                            TextSpan(text: 'By clicking Accept, you agree to our '),
+                            TextSpan(text: 'By clicking Accept, you agree to our ', style: Theme.of(context).textTheme.caption),
                             TextSpan(
                                 text: 'Terms of Service',
                                 style: TextStyle(color: Colors.blue),
@@ -115,7 +115,7 @@ class InstructionsState extends State<InstructionsPage> {
                                   ..onTap = () {
                                     print('Terms of Service');
                                   }),
-                            TextSpan(text: ' and that you have read our '),
+                            TextSpan(text: ' and that you have read our ', style: Theme.of(context).textTheme.caption),
                             TextSpan(
                                 text: 'Privacy Policy',
                                 style: TextStyle(color: Colors.blue),

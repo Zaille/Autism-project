@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class NavigationButtons extends StatelessWidget {
   NavigationButtons({
     Key key,
+    this.context,
     this.prevCondition = true,
     this.previousFunction,
     this.nextFunction,
   }) : super(key: key);
 
+  final context;
   final bool prevCondition;
   final nextFunction;
   final previousFunction;
@@ -25,6 +27,7 @@ class NavigationButtons extends StatelessWidget {
             this.prevCondition
                 ? SubmitButton(
               text: "PREVIOUS",
+              color: Theme.of(context).accentColor,
               padding: const EdgeInsets.only(top: 50, left: 30, right: 30, bottom: 80),
               onPressed: this.previousFunction,
             )
@@ -33,6 +36,7 @@ class NavigationButtons extends StatelessWidget {
           Expanded(
             child: SubmitButton(
               text: "     NEXT     ",
+              color: Theme.of(context).accentColor,
               padding: const EdgeInsets.only(top: 50, left: 30, right: 30, bottom: 80),
               onPressed: this.nextFunction,
             ),
@@ -48,15 +52,15 @@ class SubmitButton extends StatelessWidget {
   SubmitButton({
     Key key,
     this.text = "SUBMIT",
+    this.color,
     this.padding = const EdgeInsets.all(50.0),
-    this.onPressed,
-    this.color = Colors.blueGrey,})
+    this.onPressed,})
       : super(key: key);
 
   final text;
+  final color;
   final padding;
   final onPressed;
-  final color;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +73,7 @@ class SubmitButton extends StatelessWidget {
         color: this.color,
         textColor: Colors.white,
         shape: RoundedRectangleBorder (
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         elevation: 10,
         onPressed: this.onPressed,

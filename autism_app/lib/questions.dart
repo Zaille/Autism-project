@@ -73,12 +73,9 @@ class QuestionState extends State<QuestionsPage> {
               title: "Question " + (questionIndex + 1).toString(),
               children: [
                 Text(
-                  widget.questions[questionIndex],
+                  widget.questions[questionIndex].split("\n")[0],
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
@@ -107,6 +104,7 @@ class QuestionState extends State<QuestionsPage> {
           Spacer(),
           Builder(
             builder: (context) => NavigationButtons(
+              context: context,
               prevCondition: questionIndex > 0,
               previousFunction: () {
                 setState(() {

@@ -70,6 +70,7 @@ class Followup6State extends State<Followup6> {
         ),
         Spacer(),
         NavigationButtons(
+          context: context,
           prevCondition: state > 0,
           previousFunction: () {
             setState(() => state--);
@@ -142,6 +143,7 @@ class Followup6State extends State<Followup6> {
           ],
         ),
         NavigationButtons(
+          context: context,
           prevCondition: state > 0,
           previousFunction: () {
             setState(() => state --);
@@ -185,6 +187,7 @@ class Followup6State extends State<Followup6> {
         ),
         Spacer(),
         NavigationButtons(
+          context: context,
           prevCondition: state > 0,
           previousFunction: () {
             setState(() => state --);

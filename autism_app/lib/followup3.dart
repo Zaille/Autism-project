@@ -71,6 +71,7 @@ class Followup3State extends State<Followup3> {
         ),
         Spacer(),
         NavigationButtons(
+          context: context,
           prevCondition: state > 0,
           previousFunction: () {},
           nextFunction: () {
@@ -207,6 +208,7 @@ class Followup3State extends State<Followup3> {
         )
             : Container(),
         NavigationButtons(
+          context: context,
           prevCondition: state > 0,
           previousFunction: () {
             setState(() => state --);

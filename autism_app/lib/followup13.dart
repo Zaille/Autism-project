@@ -43,6 +43,7 @@ class Followup13State extends State<Followup13> {
         ),
         Spacer(),
         NavigationButtons(
+          context: context,
           previousFunction: () {},
           nextFunction: () {
             //Need a response

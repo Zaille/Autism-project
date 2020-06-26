@@ -83,6 +83,7 @@ class HomePage extends StatelessWidget {
                         "dolor. Cras elementum ultrices diam. Maecenas ligula "
                         "massa, varius a, semper congue, euismod non, mi.",
                       textAlign: TextAlign.justify,
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),
                 ],
