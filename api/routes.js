@@ -96,9 +96,9 @@ module.exports = function (app) {
     app.post('/api/parent/profile/:id', [
         body('firstName', 'Invalid first name').exists().isLength({ min: 1, max: 50 }),
         body('lastName', 'Invalid last name').exists().isLength({ min: 1, max: 50 }),
-        // body('city', 'Invalid city').exists().isLength({ min: 1, max: 70 }),
-        // body('mail', 'Invalid mail').exists().isLength({ min: 1, max: 100 }),
-        // body('phone', 'Invalid phone').exists().isLength({ min: 1, max: 20 })
+        body('city', 'Invalid city').exists().isLength({ min: 1, max: 70 }),
+        body('email', 'Invalid mail').exists().isLength({ min: 1, max: 100 }),
+        body('phone', 'Invalid phone').exists().isLength({ min: 1, max: 20 })
     ], function (req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -136,6 +136,28 @@ module.exports = function (app) {
         dbHelper.doctor.profile(req.params.id)
             .then((rows) => res.json(rows.result))
             .catch((err) => res.status(400).json({ err }));
+    });
+
+    /* Update Parent profile */
+    app.post('/api/doctor/profile/:id', [
+        body('firstName', 'Invalid first name').exists().isLength({ min: 1, max: 50 }),
+        body('lastName', 'Invalid last name').exists().isLength({ min: 1, max: 50 }),
+        body('city', 'Invalid city').exists().isLength({ min: 1, max: 70 }),
+        body('email', 'Invalid mail').exists().isLength({ min: 1, max: 100 }),
+        body('clinic', 'Invalid clinic').exists().isLength({ min: 1, max: 100 })
+    ], function (req, res) {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json(errors.array());
+        }
+        dbHelper.doctor.updateProfile(
+            req.body.firstName,
+            req.body.lastName,
+            req.body.city,
+            req.body.email,
+            req.body.clinic,
+            req.params.id
+        ).then(() => res.end()).catch((err) => res.status(400).json({ err }));
     });
 
     /* Get all scores */

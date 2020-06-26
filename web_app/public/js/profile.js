@@ -30,7 +30,7 @@ class Profile extends React.Component {
                     if( key !== 'update' ) body[key] = this.state[key];
                 });
 
-                const result = await fetch(path + '1', {
+                const result = await fetch(path + '3', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -93,7 +93,15 @@ class Profile extends React.Component {
                 ReactDOM.render( '', document.getElementById('parent-profile-update') );
                 break;
             case 'doctor' :
-                // TODO
+                this.setState({
+                    update: 0,
+                    firstName: this.save.firstName,
+                    lastName: this.save.lastName,
+                    email: this.save.email,
+                    clinic: this.save.clinic,
+                    city: this.save.city
+                });
+                ReactDOM.render( '', document.getElementById('doctor-profile-update') );
                 break;
         }
     }
@@ -208,7 +216,7 @@ class ParentProfile extends Profile {
                     <input type='button' value='Validate' id='parentUpdateInfo'
                            className='gradientBlue fiveth-column fourth-row update'
                            onClick={() => this.switch('/api/parent/profile/')}/>
-                    <input type='button' value='Cancle' id='childUpdateInfo'
+                    <input type='button' value='Cancle' id='parentUpdateInfo'
                            className='gradientRed fiveth-column third-row update'
                            onClick={() => this.cancle('parent')}/>
                 </div>
@@ -246,6 +254,10 @@ class DoctorProfile extends Profile {
 
     constructor(props) {
         super(props);
+
+        this.save.email = props.email;
+        this.save.clinic = props.clinic;
+        this.save.city = props.city;
 
         this.state.email = props.email;
         this.state.clinic = props.clinic;
@@ -285,7 +297,10 @@ class DoctorProfile extends Profile {
 
                     <input type='button' value='Update' id='doctorUpdateInfo'
                            className='gradientBlue fiveth-column fourth-row update'
-                           onClick={this.switch}/>
+                           onClick={() => this.switch('/api/doctor/profile/')}/>
+                    <input type='button' value='Cancle' id='doctorUpdateInfo'
+                           className='gradientRed fiveth-column third-row update'
+                           onClick={() => this.cancle('doctor')}/>
                 </div>
             );
         } else {

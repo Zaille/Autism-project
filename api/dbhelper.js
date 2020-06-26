@@ -102,12 +102,14 @@ AND u.patientId  = ?;`), [id])
 
 module.exports.doctor = {
     profile: (id) => query(prepareQuery(`
-SELECT
-    a.mail, d.firstName, d.lastName, d.city, d.clinic
-FROM
-    authentication a, doctors d
-WHERE
-    a.userId = d.doctorId AND a.userId = ?;`, [id]))
+SELECT a.mail, d.firstName, d.lastName, d.city, d.clinic
+FROM authentication a, doctors d
+WHERE a.userId = d.doctorId AND a.userId = ?;`, [id])),
+
+    updateProfile: (firstName, lastName, city, mail, clinic, id) => query(prepareQuery(`
+UPDATE doctors d, authentication a
+SET d.firstName = ?, d.lastName = ?, d.city = ?, d.clinic = ?, a.mail = ?
+WHERE d.doctorId = a.userId AND a.userId = ?;`, [firstName, lastName, city, clinic, mail, id] ))
 }
 
 module.exports.upload =  {

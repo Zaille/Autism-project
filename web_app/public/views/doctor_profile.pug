@@ -7,18 +7,22 @@ body(onload="initDoctorProfile()")
     include header_doctor.pug
 
     div#doctor-profile-content
+    div#doctor-profile-update
     div#doctor-password
         h2#doctor-password-title.first-row Password
 
         p.first-column.second-row.th Current Password
-        input(type='password').first-column.third-row.input-password
+        input(type='password')#current-password.first-column.third-row.input-password
 
         p.second-column.second-row.th New Password
-        input(type='password').second-column.third-row.input-password
+        input(type='password')#new-password.second-column.third-row.input-password
 
         p.third-column.second-row.th Repeat Password
-        input(type='password').third-column.third-row.input-password
+        input(type='password')#repeat-password.third-column.third-row.input-password
 
-        input(type='button' value="Update").gradientBlue.fourth-column.third-row.update
+        input(type='button' value="Update" onClick='updatePassword()').gradientBlue.fourth-column.third-row.update
+
+    div#doctor-password-update
+
 
 include footer.pug
