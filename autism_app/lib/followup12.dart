@@ -57,7 +57,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("A washing machine?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -65,7 +65,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Babies crying?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -73,7 +73,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Vacuum cleaner?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -81,7 +81,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Hairdryer?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -89,7 +89,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Traffic?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         RoundedContainer(
@@ -97,7 +97,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Babies squealing or screeching?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(5),
+            yesNoRadio(5),
           ],
         ),
         RoundedContainer(
@@ -105,7 +105,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Loud music?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(6),
+            yesNoRadio(6),
           ],
         ),
         RoundedContainer(
@@ -113,7 +113,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Telephone/ doorbell ringing?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(7),
+            yesNoRadio(7),
           ],
         ),
         RoundedContainer(
@@ -123,7 +123,7 @@ class Followup12State extends State<Followup12> {
             Text("Noisy places such as a supermarket or restaurant?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(8),
+            yesNoRadio(8),
           ],
         ),
         RoundedContainer(
@@ -131,7 +131,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(9),
+            yesNoRadio(9),
           ],
         ),
         (selected[9] == true)
@@ -256,7 +256,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Calmly cover his/her ears?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(10),
+            yesNoRadio(10),
           ],
         ),
         RoundedContainer(
@@ -264,7 +264,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Tell you that he/she does not like the noise?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(11),
+            yesNoRadio(11),
           ],
         ),
         RoundedContainer(
@@ -272,7 +272,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Scream?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(12),
+            yesNoRadio(12),
           ],
         ),
         RoundedContainer(
@@ -280,7 +280,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Cry?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(13),
+            yesNoRadio(13),
           ],
         ),
         RoundedContainer(
@@ -288,7 +288,7 @@ class Followup12State extends State<Followup12> {
           outerTitle: false,
           children: <Widget>[
             Text("Cover his/her ears while upset?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(14),
+            yesNoRadio(14),
           ],
         ),
         NavigationButtons(
@@ -383,7 +383,7 @@ class Followup12State extends State<Followup12> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -393,6 +393,7 @@ class Followup12State extends State<Followup12> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -401,6 +402,7 @@ class Followup12State extends State<Followup12> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

@@ -55,7 +55,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              height: 350.0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[

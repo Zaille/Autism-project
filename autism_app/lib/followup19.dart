@@ -42,7 +42,7 @@ class Followup19State extends State<Followup19> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         Spacer(),
@@ -79,7 +79,7 @@ class Followup19State extends State<Followup19> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         Spacer(),
@@ -118,7 +118,7 @@ class Followup19State extends State<Followup19> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         Spacer(),
@@ -140,7 +140,7 @@ class Followup19State extends State<Followup19> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -150,6 +150,7 @@ class Followup19State extends State<Followup19> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -158,6 +159,7 @@ class Followup19State extends State<Followup19> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

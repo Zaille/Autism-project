@@ -108,7 +108,7 @@ class Followup4State extends State<Followup4> {
           outerTitle: false,
           children: <Widget>[
             Text("Stairs?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -116,7 +116,7 @@ class Followup4State extends State<Followup4> {
           outerTitle: false,
           children: <Widget>[
             Text("Chairs?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -124,7 +124,7 @@ class Followup4State extends State<Followup4> {
           outerTitle: false,
           children: <Widget>[
             Text("Furniture?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -132,7 +132,7 @@ class Followup4State extends State<Followup4> {
           outerTitle: false,
           children: <Widget>[
             Text("Playground equipment?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         NavigationButtons(
@@ -156,7 +156,7 @@ class Followup4State extends State<Followup4> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -166,6 +166,7 @@ class Followup4State extends State<Followup4> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -174,6 +175,7 @@ class Followup4State extends State<Followup4> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

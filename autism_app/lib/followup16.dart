@@ -111,7 +111,7 @@ class Followup16State extends State<Followup16> {
             Text("Look toward the thing you are looking at?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -121,7 +121,7 @@ class Followup16State extends State<Followup16> {
             Text("Point toward the thing you are looking at?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -131,7 +131,7 @@ class Followup16State extends State<Followup16> {
             Text("Look around to see what you are looking at?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -141,7 +141,7 @@ class Followup16State extends State<Followup16> {
             Text("Ignore you?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -151,7 +151,7 @@ class Followup16State extends State<Followup16> {
             Text("Look at your face?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         NavigationButtons(
@@ -246,7 +246,7 @@ class Followup16State extends State<Followup16> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -256,6 +256,7 @@ class Followup16State extends State<Followup16> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -264,6 +265,7 @@ class Followup16State extends State<Followup16> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

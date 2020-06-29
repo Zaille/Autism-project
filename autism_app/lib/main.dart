@@ -33,7 +33,11 @@ class _MyAppState extends State<MyApp> {
       title: 'ASD Screening',
       theme: ThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
         accentColor: Colors.blueGrey,
+        backgroundColor: Colors.white,
+        cardColor: Colors.lightBlue.withOpacity(0.2),
+        highlightColor: Colors.grey.withOpacity(0.6),
         textTheme: TextTheme(
           headline1: TextStyle(
             fontWeight: FontWeight.bold,
@@ -61,13 +65,14 @@ class _MyAppState extends State<MyApp> {
             color: Colors.black,
           ),
         ),
-        backgroundColor: Colors.white.withOpacity(0.7),
-        cardColor: Colors.lightBlue.withOpacity(0.2),
-        highlightColor: Colors.grey.withOpacity(0.6),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
+        accentColor: Colors.red,
+        cardColor: Colors.blueGrey,
+        backgroundColor: Colors.grey[800],
+        highlightColor: Colors.black.withOpacity(0),
         textTheme: TextTheme(
           headline1: TextStyle(
               fontWeight: FontWeight.bold,
@@ -95,9 +100,6 @@ class _MyAppState extends State<MyApp> {
             color: Colors.white.withOpacity(0.7),
           ),
         ),
-        accentColor: Colors.blueAccent,
-        cardColor: Colors.blueGrey,
-        highlightColor: Colors.black.withOpacity(0),
       ),
       home: HomePage(),
     );

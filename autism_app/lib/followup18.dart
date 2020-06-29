@@ -104,7 +104,7 @@ class Followup18State extends State<Followup18> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         Spacer(),
@@ -143,7 +143,7 @@ class Followup18State extends State<Followup18> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         Spacer(),
@@ -195,7 +195,7 @@ class Followup18State extends State<Followup18> {
                 "dressed), does your child show you his/her shoe?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -208,7 +208,7 @@ class Followup18State extends State<Followup18> {
                 "it to you?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -221,7 +221,7 @@ class Followup18State extends State<Followup18> {
                 "on the chair?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         NavigationButtons(
@@ -243,7 +243,7 @@ class Followup18State extends State<Followup18> {
   }
 
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -253,6 +253,7 @@ class Followup18State extends State<Followup18> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -261,6 +262,7 @@ class Followup18State extends State<Followup18> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

@@ -114,7 +114,7 @@ class Followup3State extends State<Followup3> {
           outerTitle: false,
           children: <Widget>[
             Text("Pretend to drink from a toy cup?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -122,7 +122,7 @@ class Followup3State extends State<Followup3> {
           outerTitle: false,
           children: <Widget>[
             Text("Pretend to eat from a toy spoon or fork?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -130,7 +130,7 @@ class Followup3State extends State<Followup3> {
           outerTitle: false,
           children: <Widget>[
             Text("Pretend to talk on the telephone?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -138,7 +138,7 @@ class Followup3State extends State<Followup3> {
           outerTitle: false,
           children: <Widget>[
             Text("Pretend to feed a doll or stuffed animal with real or imaginary food?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -146,49 +146,49 @@ class Followup3State extends State<Followup3> {
           outerTitle: false,
           children: <Widget>[
             Text("Push a car as if it is going along a pretend road?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         RoundedContainer(context: context, 
           outerTitle: false,
           children: <Widget>[
             Text("Pretend to be a robot, an airplane, a ballerina, or any other favorite character?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(5),
+            yesNoRadio(5),
           ],
         ),
         RoundedContainer(context: context, 
           outerTitle: false,
           children: <Widget>[
             Text("Put a toy pot on a pretend stove?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(6),
+            yesNoRadio(6),
           ],
         ),
         RoundedContainer(context: context, 
           outerTitle: false,
           children: <Widget>[
             Text("Stir imaginary food?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(7),
+            yesNoRadio(7),
           ],
         ),
         RoundedContainer(context: context, 
           outerTitle: false,
           children: <Widget>[
             Text("Put an action figure or doll into a car or truck as if it is the driver or passenger?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(8),
+            yesNoRadio(8),
           ],
         ),
         RoundedContainer(context: context, 
           outerTitle: false,
           children: <Widget>[
             Text("Pretend to vacuum the rug, sweep the floor, or the mow lawn?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(9),
+            yesNoRadio(9),
           ],
         ),
         RoundedContainer(context: context, 
           outerTitle: false,
           children: <Widget>[
             Text("Other (describe)", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(10),
+            yesNoRadio(10),
           ],
         ),
         (selected[10] == true)
@@ -232,7 +232,7 @@ class Followup3State extends State<Followup3> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -242,6 +242,7 @@ class Followup3State extends State<Followup3> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -250,6 +251,7 @@ class Followup3State extends State<Followup3> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

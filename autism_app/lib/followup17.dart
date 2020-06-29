@@ -111,7 +111,7 @@ class Followup17State extends State<Followup17> {
           outerTitle: false,
           children: <Widget>[
             Text("Say “Look!” or “Watch me!”?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -119,7 +119,7 @@ class Followup17State extends State<Followup17> {
           outerTitle: false,
           children: <Widget>[
             Text("Babble or make a noise to get you to watch what he/ she is doing?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -127,7 +127,7 @@ class Followup17State extends State<Followup17> {
           outerTitle: false,
           children: <Widget>[
             Text("Look at you to get praise or comment?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -135,7 +135,7 @@ class Followup17State extends State<Followup17> {
           outerTitle: false,
           children: <Widget>[
             Text("Keep looking to see if you are looking?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -143,7 +143,7 @@ class Followup17State extends State<Followup17> {
           outerTitle: false,
           children: <Widget>[
             Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         (selected[4] == true)
@@ -185,7 +185,7 @@ class Followup17State extends State<Followup17> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -195,6 +195,7 @@ class Followup17State extends State<Followup17> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -203,6 +204,7 @@ class Followup17State extends State<Followup17> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

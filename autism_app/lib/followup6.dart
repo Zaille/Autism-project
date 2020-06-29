@@ -115,7 +115,7 @@ class Followup6State extends State<Followup6> {
           outerTitle: false,
           children: <Widget>[
             Text("Reach for the object with his/her whole hand?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -123,7 +123,7 @@ class Followup6State extends State<Followup6> {
           outerTitle: false,
           children: <Widget>[
             Text("Lead you to the object?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -131,7 +131,7 @@ class Followup6State extends State<Followup6> {
           outerTitle: false,
           children: <Widget>[
             Text("Try to get the object for him/herself?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -139,7 +139,7 @@ class Followup6State extends State<Followup6> {
           outerTitle: false,
           children: <Widget>[
             Text("Ask for it using words or sounds?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         NavigationButtons(
@@ -182,7 +182,7 @@ class Followup6State extends State<Followup6> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         Spacer(),
@@ -208,7 +208,7 @@ class Followup6State extends State<Followup6> {
   }
 
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -218,6 +218,7 @@ class Followup6State extends State<Followup6> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -226,6 +227,7 @@ class Followup6State extends State<Followup6> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

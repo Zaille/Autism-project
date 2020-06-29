@@ -121,7 +121,7 @@ class Followup7State extends State<Followup7> {
               "An airplane in the sky?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -132,7 +132,7 @@ class Followup7State extends State<Followup7> {
               "A truck on the road?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -143,7 +143,7 @@ class Followup7State extends State<Followup7> {
               "A bug on the ground?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -154,7 +154,7 @@ class Followup7State extends State<Followup7> {
               "An animal in the yard?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         NavigationButtons(
@@ -196,7 +196,7 @@ class Followup7State extends State<Followup7> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         Spacer(),
@@ -240,7 +240,7 @@ class Followup7State extends State<Followup7> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(5),
+            yesNoRadio(5),
           ],
         ),
         Spacer(),
@@ -266,7 +266,7 @@ class Followup7State extends State<Followup7> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -276,6 +276,7 @@ class Followup7State extends State<Followup7> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -284,6 +285,7 @@ class Followup7State extends State<Followup7> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

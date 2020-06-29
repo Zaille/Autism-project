@@ -45,7 +45,7 @@ class Followup8State extends State<Followup8> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         Spacer(),
@@ -85,7 +85,7 @@ class Followup8State extends State<Followup8> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         Spacer(),
@@ -204,7 +204,7 @@ class Followup8State extends State<Followup8> {
               "Play with another child?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -215,7 +215,7 @@ class Followup8State extends State<Followup8> {
               "Talk to another child?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -226,7 +226,7 @@ class Followup8State extends State<Followup8> {
               "Babble or make vocal noises?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         RoundedContainer(
@@ -237,7 +237,7 @@ class Followup8State extends State<Followup8> {
               "Watch another child?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(5),
+            yesNoRadio(5),
           ],
         ),
         RoundedContainer(
@@ -245,7 +245,7 @@ class Followup8State extends State<Followup8> {
           outerTitle: false,
           children: <Widget>[
             Text("Smile at another child?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(6),
+            yesNoRadio(6),
           ],
         ),
         RoundedContainer(
@@ -256,7 +256,7 @@ class Followup8State extends State<Followup8> {
               "Act shy at first but then smile?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(7),
+            yesNoRadio(7),
           ],
         ),
         RoundedContainer(
@@ -267,7 +267,7 @@ class Followup8State extends State<Followup8> {
               "Get excited about another child?",
               style: TextStyle(fontSize: 18), textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(8),
+            yesNoRadio(8),
           ],
         ),
         NavigationButtons(
@@ -312,7 +312,7 @@ class Followup8State extends State<Followup8> {
                 style: TextStyle(fontSize: 20,),
                 textAlign: TextAlign.center,
               ),
-              _yesOrNoRadio(9),
+              yesNoRadio(9),
             ],
           ),
           Spacer(),
@@ -341,7 +341,7 @@ class Followup8State extends State<Followup8> {
       );
     }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -351,6 +351,7 @@ class Followup8State extends State<Followup8> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -359,6 +360,7 @@ class Followup8State extends State<Followup8> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

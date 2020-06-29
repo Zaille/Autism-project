@@ -38,7 +38,7 @@ class Followup13State extends State<Followup13> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(),
+            yesNoRadio(),
           ],
         ),
         Spacer(),
@@ -57,7 +57,7 @@ class Followup13State extends State<Followup13> {
     );
   }
 
-  Widget _yesOrNoRadio() {
+  Widget yesNoRadio() {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,6 +67,7 @@ class Followup13State extends State<Followup13> {
               value: true,
               groupValue: selected,
               onChanged: (newValue) => setState(() => selected = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -75,6 +76,7 @@ class Followup13State extends State<Followup13> {
               value: false,
               groupValue: selected,
               onChanged: (newValue) => setState(() => selected = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

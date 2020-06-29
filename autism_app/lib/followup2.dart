@@ -50,7 +50,7 @@ class Followup2State extends State<Followup2> {
           outerTitle: false,
           children: <Widget>[
             Text("Often ignore sounds?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -58,7 +58,7 @@ class Followup2State extends State<Followup2> {
           outerTitle: false,
           children: <Widget>[
             Text("Often ignore people?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         NavigationButtons(
@@ -92,7 +92,7 @@ class Followup2State extends State<Followup2> {
           title: title,
           children: [
             Text("Has your child’s hearing been tested?", style: TextStyle(fontSize: 18),),
-            _yesOrNoRadio(2)
+            yesNoRadio(2)
           ],
         ),
         Spacer(),
@@ -177,7 +177,7 @@ class Followup2State extends State<Followup2> {
     );
   }
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -187,6 +187,7 @@ class Followup2State extends State<Followup2> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -195,6 +196,7 @@ class Followup2State extends State<Followup2> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),

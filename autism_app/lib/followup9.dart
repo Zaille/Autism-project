@@ -115,7 +115,7 @@ class Followup9State extends State<Followup9> {
           outerTitle: false,
           children: <Widget>[
             Text("A picture or toy just to show you?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(0),
+            yesNoRadio(0),
           ],
         ),
         RoundedContainer(
@@ -123,7 +123,7 @@ class Followup9State extends State<Followup9> {
           outerTitle: false,
           children: <Widget>[
             Text("A drawing he/she has done?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(1),
+            yesNoRadio(1),
           ],
         ),
         RoundedContainer(
@@ -131,7 +131,7 @@ class Followup9State extends State<Followup9> {
           outerTitle: false,
           children: <Widget>[
             Text("A flower he/she has picked?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(2),
+            yesNoRadio(2),
           ],
         ),
         RoundedContainer(
@@ -139,7 +139,7 @@ class Followup9State extends State<Followup9> {
           outerTitle: false,
           children: <Widget>[
             Text("A bug he/she has found in the grass?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(3),
+            yesNoRadio(3),
           ],
         ),
         RoundedContainer(
@@ -147,7 +147,7 @@ class Followup9State extends State<Followup9> {
           outerTitle: false,
           children: <Widget>[
             Text("A few blocks he/she has put together?", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(4),
+            yesNoRadio(4),
           ],
         ),
         RoundedContainer(
@@ -155,7 +155,7 @@ class Followup9State extends State<Followup9> {
           outerTitle: false,
           children: <Widget>[
             Text("Other (describe):", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-            _yesOrNoRadio(5),
+            yesNoRadio(5),
           ],
         ),
         (selected[5] == true)
@@ -217,7 +217,7 @@ class Followup9State extends State<Followup9> {
               style: TextStyle(fontSize: 20,),
               textAlign: TextAlign.center,
             ),
-            _yesOrNoRadio(6),
+            yesNoRadio(6),
           ],
         ),
         Spacer(),
@@ -246,7 +246,7 @@ class Followup9State extends State<Followup9> {
   }
 
 
-  Widget _yesOrNoRadio(index) {
+  Widget yesNoRadio(index) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -256,6 +256,7 @@ class Followup9State extends State<Followup9> {
               value: true,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("Yes"),
             ),
           ),
@@ -264,6 +265,7 @@ class Followup9State extends State<Followup9> {
               value: false,
               groupValue: selected[index],
               onChanged: (newValue) => setState(() => selected[index] = newValue),
+              activeColor: Theme.of(context).accentColor,
               title: Text("No"),
             ),
           ),
