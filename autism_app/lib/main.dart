@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
-        accentColor: Colors.red,
+        accentColor: Colors.blueAccent,
         cardColor: Colors.blueGrey,
         backgroundColor: Colors.grey[800],
         highlightColor: Colors.black.withOpacity(0),
