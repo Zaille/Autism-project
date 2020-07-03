@@ -104,11 +104,11 @@ class Followup1State extends State<Followup1> {
         RoundedContainer(
             context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
               Text(
                 "If you point at something, what does your child typically do?",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               )
             ]

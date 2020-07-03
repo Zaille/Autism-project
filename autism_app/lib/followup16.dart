@@ -95,11 +95,11 @@ class Followup16State extends State<Followup16> {
         RoundedContainer(
           context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
               Text(
                 "Does your child…",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               )
             ]

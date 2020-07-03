@@ -43,11 +43,11 @@ class Followup12State extends State<Followup12> {
         RoundedContainer(
           context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
               Text(
                 "Does your child have a negative reaction to the sound of…",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               )
             ]
@@ -242,11 +242,11 @@ class Followup12State extends State<Followup12> {
         RoundedContainer(
           context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
               Text(
                 "Does your child…",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               )
             ]

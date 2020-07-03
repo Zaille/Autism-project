@@ -38,9 +38,9 @@ class Followup5State extends State<Followup5> {
         RoundedContainer(
           context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
-              Text("Does he/she … ", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
+              Text("Does he/she … ", style: Theme.of(context).textTheme.headline2, textAlign: TextAlign.center,)
             ]
         ),
         RoundedContainer(

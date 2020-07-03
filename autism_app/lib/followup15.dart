@@ -97,11 +97,11 @@ class Followup15State extends State<Followup15> {
         RoundedContainer(
           context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
               Text(
                 "Does your child try to copy you if you…",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               )
             ]

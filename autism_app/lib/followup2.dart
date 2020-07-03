@@ -31,16 +31,16 @@ class Followup2State extends State<Followup2> {
   }
 
   Widget firstElement() {
-    return ListView(
+    return Column(
       children: <Widget>[
         RoundedContainer(
             context: context,
             title: title,
-            color: Colors.lightBlue.withOpacity(0.2),
+            color: Theme.of(context).cardColor,
             children: [
               Text(
                 "You reported that you have wondered if you child is deaf. What led you to wonder that?\n Does he/she…",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headline2,
                 textAlign: TextAlign.center,
               )
             ]
@@ -61,6 +61,7 @@ class Followup2State extends State<Followup2> {
             yesNoRadio(1),
           ],
         ),
+        Spacer(),
         NavigationButtons(
           context: context,
           prevCondition: state > 0,

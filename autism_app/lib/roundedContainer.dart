@@ -44,9 +44,9 @@ class RoundedContainer extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).highlightColor,
-                  spreadRadius: 7,
-                  blurRadius: 10,
-                  offset: Offset(0, 3),
+                  spreadRadius: 5,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
                 ),
               ],
             ),

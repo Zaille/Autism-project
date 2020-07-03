@@ -24,24 +24,26 @@ class FormPage extends StatefulWidget {
 class FormPageState extends State<FormPage> {
 
   final formKey = GlobalKey<FormState>();
-
-  List<File> files = [null, null];
   bool error = false;
-  List<String> textButton = ["Add a video", "Add a video"];
+  final List<TextEditingController> myControllers = [
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+    new TextEditingController(),
+  ];
+  final RegExp phoneRegExp = new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
+
   final picker = ImagePicker();
+  List<File> files = [null];
+  List<String> textButton = ["Add a video"];
+
   Widget nextPage;
 
-  final childLastNameController = TextEditingController();
-  final childFirstNameController = TextEditingController();
-  final childAgeController = TextEditingController();
-  final parentLastNameController = TextEditingController();
-  final parentFirstNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final password1Controller = TextEditingController();
-  final password2Controller = TextEditingController();
-
-  final RegExp phoneRegExp = new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
 
   @override
@@ -96,15 +98,9 @@ class FormPageState extends State<FormPage> {
                 context: context,
                 title: "Child information:",
                 children: <Widget>[
-                  TextFormField(
-                    key: Key('parentFirstName'),
-                    controller: childFirstNameController,
-                    maxLength: 50,
-                    enableInteractiveSelection: true,
-                    decoration: InputDecoration(
-                      labelText: "First Name*",
-                      border: OutlineInputBorder(),
-                    ),
+                  formTextField(
+                    index: 0,
+                    label: "First Name*",
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Enter his/her first name';
@@ -112,15 +108,9 @@ class FormPageState extends State<FormPage> {
                       return null;
                     },
                   ),
-                  Container(padding: EdgeInsets.all(5),),
-                  TextFormField(
-                    controller: childLastNameController,
-                    maxLength: 50,
-                    enableInteractiveSelection: true,
-                    decoration: InputDecoration(
-                      labelText: "Name*",
-                      border: OutlineInputBorder(),
-                    ),
+                  formTextField(
+                    index: 1,
+                    label: "Name*",
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Enter his/her name';
@@ -128,16 +118,11 @@ class FormPageState extends State<FormPage> {
                       return null;
                     },
                   ),
-                  Container(padding: EdgeInsets.all(5),),
-                  TextFormField(
-                    controller: childAgeController,
+                  formTextField(
+                    index: 2,
                     keyboardType: TextInputType.number,
                     maxLength: 3,
-                    enableInteractiveSelection: true,
-                    decoration: InputDecoration(
-                      labelText: "Age (months)*",
-                      border: OutlineInputBorder(),
-                    ),
+                    label: "Age (months)*",
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Enter his/her age';
@@ -151,14 +136,9 @@ class FormPageState extends State<FormPage> {
               context: context,
               title: "Parent information:",
               children: <Widget>[
-                TextFormField(
-                  controller: parentFirstNameController,
-                  maxLength: 50,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "First Name*",
-                    border: OutlineInputBorder(),
-                  ),
+                formTextField(
+                  index: 3,
+                  label: "First Name*",
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Enter your first name';
@@ -166,15 +146,9 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                Container(padding: EdgeInsets.all(5),),
-                TextFormField(
-                  controller: parentLastNameController,
-                  maxLength: 50,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Name*",
-                    border: OutlineInputBorder(),
-                  ),
+                formTextField(
+                  index: 4,
+                  label: "Name*",
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Enter your name';
@@ -182,16 +156,10 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                Container(padding: EdgeInsets.all(5),),
-                TextFormField(
-                  controller: emailController,
+                formTextField(
+                  index: 5,
                   keyboardType: TextInputType.emailAddress,
-                  maxLength: 50,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Email*",
-                    border: OutlineInputBorder(),
-                  ),
+                  label: "Email*",
                   validator: (value) {
                     if (!EmailValidator.validate(value)) {
                       return 'Not a valid email';
@@ -199,16 +167,11 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                Container(padding: EdgeInsets.all(5),),
-                TextFormField(
-                  controller: phoneNumberController,
+                formTextField(
+                  index: 6,
                   keyboardType: TextInputType.phone,
                   maxLength: 12,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Phone number*",
-                    border: OutlineInputBorder(),
-                  ),
+                  label: "Phone number*",
                   validator: (value) {
                     if (!phoneRegExp.hasMatch(value)) {
                       return 'Not a valid phone number';
@@ -222,15 +185,11 @@ class FormPageState extends State<FormPage> {
               context: context,
               title: "Authentication:",
               children: <Widget>[
-                TextFormField(
-                  controller: password1Controller,
+                formTextField(
+                  index: 7,
                   obscureText: true,
                   maxLength: 30,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Password*",
-                    border: OutlineInputBorder(),
-                  ),
+                  label: "Password*",
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Choose a password';
@@ -238,20 +197,17 @@ class FormPageState extends State<FormPage> {
                     return null;
                   },
                 ),
-                Container(padding: EdgeInsets.all(5),),
-                TextFormField(
-                  controller: password2Controller,
+                formTextField(
+                  index: 8,
                   obscureText: true,
                   maxLength: 30,
-                  enableInteractiveSelection: true,
-                  decoration: InputDecoration(
-                    labelText: "Confirm password*",
-                    border: OutlineInputBorder(),
-                  ),
+                  label: "Confirm password*",
                   validator: (value) {
                     if (value.isEmpty) {
-                      return 'Choose a password';
+                      return 'Confirm your password';
                     }
+                    else if (value != myControllers[7].text)
+                      return "Enter the same password";
                     return null;
                   },
                 ),
@@ -297,41 +253,6 @@ class FormPageState extends State<FormPage> {
                     ],
                   ),
                 ),
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 2,
-                        child: files[1] == null
-                            ? Text('No file selected.',
-                              style: error?TextStyle(color: Colors.red)
-                                :Theme.of(context).textTheme.bodyText2,
-                        )
-                            : Row(
-                          children: <Widget>[
-                            Icon(Icons.check, color: Colors.green,),
-                            Text('  Selected.', style: new TextStyle(color: Colors.green),)
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex:3,
-                        child: RaisedButton(
-                          child: Text(textButton[1]),
-                          shape: RoundedRectangleBorder (
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {
-                            getFile(1);
-                          },
-                          color: Theme.of(context).accentColor,
-                          textColor: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
             Container(
@@ -356,28 +277,23 @@ class FormPageState extends State<FormPage> {
   }
 
   Future sendData(context) async {
-    if (formKey.currentState.validate() & (files[0] != null) & (files[1] !=
-        null)) {
+    if (formKey.currentState.validate() & (files[0] != null)
+    /*& (files[1] != null)*/) {
       Response response;
       String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
       Dio dio = new Dio();
       FormData formData = FormData.fromMap({
-        "childFirstName": childFirstNameController.text,
-        "childLastName": childLastNameController.text,
-        "childAge": childAgeController.text,
-        "parentFirstName": parentFirstNameController.text,
-        "parentLastName": parentLastNameController.text,
-        "phoneNumber": phoneNumberController.text,
-        "email": emailController.text,
-        "password": password1Controller.text,
-        "files": [
-          await MultipartFile.fromFile(files[0].path, filename: files[0].path
+        "childFirstName": myControllers[0].text,
+        "childLastName": myControllers[1].text,
+        "childAge": myControllers[2].text,
+        "parentFirstName": myControllers[3].text,
+        "parentLastName": myControllers[4].text,
+        "email": myControllers[5].text,
+        "phoneNumber": myControllers[6].text,
+        "password": myControllers[7].text,
+        "file": await MultipartFile.fromFile(files[0].path, filename: files[0].path
               .split('/')
               .last),
-          await MultipartFile.fromFile(files[1].path, filename: files[1].path
-              .split('/')
-              .last),
-        ]
       });
       Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -405,8 +321,8 @@ class FormPageState extends State<FormPage> {
                 AlertDialog(
                   title: Text("Server error"),
                   content: Text(
-                      "The server is unavailable, try again later.\n(" +
-                          e.toString().split(",")[1].toString() + ")"),
+                      "The server is unavailable, try again later.\n("
+                          + e.toString()),
                   actions: <Widget>[
                     FlatButton(
                       child: Text("Go back to the main page"),
@@ -445,6 +361,32 @@ class FormPageState extends State<FormPage> {
           )
       );
     }
+  }
+
+  Widget formTextField({
+    index,
+    keyboardType = TextInputType.text,
+    maxLength = 50,
+    obscureText = false,
+    label,
+    validator}) {
+      return Container(
+        padding: EdgeInsets.only(bottom: 15),
+        child: TextFormField(
+          controller: myControllers[index],
+          keyboardType: keyboardType,
+          maxLength: maxLength,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            labelText: label,
+            border: OutlineInputBorder(),
+          ),
+          onChanged: (value) {
+            if (error) formKey.currentState.validate();
+          },
+          validator: validator,
+        ),
+      );
   }
 
 }

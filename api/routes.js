@@ -4,8 +4,8 @@ module.exports = function (app) {
 
     app.post('/uploadFiles', function (req,res) {
         console.log("Uploading files !");
-        // console.dir(req.body);
-        // console.dir(req.files);
+        console.dir(req.body);
+        console.dir(req.files);
         let splitPath;
         let path;
         let i = 1;
