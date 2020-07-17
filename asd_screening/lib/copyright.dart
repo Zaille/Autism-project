@@ -14,7 +14,7 @@ class Copyright extends StatelessWidget {
         textAlign: TextAlign.center,
         style: TextStyle(
             fontSize: 12,
-            color: Color(0xffaaaaaa)
+            color: Color(0xffaaaaaa),
         ),
       ),
     );
