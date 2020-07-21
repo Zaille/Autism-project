@@ -12,6 +12,7 @@ import "package:asdscreening/roundedContainer.dart";
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
@@ -56,7 +57,7 @@ class FormPageState extends State<FormPage> {
   final smtpServer = gmail("asdscreening.portsmouthuniv@gmail.com", "7XWJXXByubj6h27");
 
 
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -284,18 +285,33 @@ class FormPageState extends State<FormPage> {
       setState(() => textButton = "Add a video");
   }
 
+  Future authentication() async {
+    try {
+      dynamic authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: "asdscreening.portsmouthuniv@gmail.com",
+        password: "NiE936Dh7TidCoxS",
+      );
+      print(authResult.user);
+      return true;
+    }
+    catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   Future<bool> sendEmail(link) async {
     String text =
         "Score: " + widget.score.toString() +
-        ",\nChild First Name: " + myControllers[0].text +
-        ",\nChild Last Name: " + myControllers[1].text +
-        ",\nChild Age: " + myControllers[2].text + " months" +
-        ",\nParent First Name: " + myControllers[3].text +
-        ",\nParent Last Name: " + myControllers[4].text +
-        ",\nEmail: " + myControllers[5].text +
-        ",\nPhoneNumber: " + myControllers[6].text +
-        ",\nVideo link: " + link +
-        ",\nResponses (";
+            ",\nChild First Name: " + myControllers[0].text +
+            ",\nChild Last Name: " + myControllers[1].text +
+            ",\nChild Age: " + myControllers[2].text + " months" +
+            ",\nParent First Name: " + myControllers[3].text +
+            ",\nParent Last Name: " + myControllers[4].text +
+            ",\nEmail: " + myControllers[5].text +
+            ",\nPhoneNumber: " + myControllers[6].text +
+            ",\nVideo link: " + link +
+            ",\nResponses (";
     widget.responses.asMap().forEach((index, element) {
       if (element)
         text += (index + 1).toString() + ": Pass, ";
@@ -321,80 +337,121 @@ class FormPageState extends State<FormPage> {
       print('Message not sent. \n'+ e.toString());
       return false;
     }
-}
+  }
 
   void firebaseUpload(context) async {
-    setState(() => fabContent = CircularProgressIndicator(
-      backgroundColor: Theme.of(context).primaryColor,
-    ),);
-    print(file.path);
-    final StorageReference firebaseStorageRef = FirebaseStorage.instance
-        .ref()
-        .child(myControllers[0].text + myControllers[1].text + "." + file.path.split(".").last);
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(file);
-    StorageTaskSnapshot storageSnapshot = await uploadTask.onComplete;
-    String downloadUrl = await storageSnapshot.ref.getDownloadURL()
-        .timeout(const Duration(seconds: 10));
-    bool emailSent = await sendEmail(downloadUrl);
-    showDialog(
-      context: context,
-      builder: (_) =>
-      (uploadTask.isComplete & emailSent)
-          ?
-      AlertDialog(
-        title: Text("Upload done !", style: Theme.of(context).textTheme.headline1,),
-        content: Icon(Icons.check_box, size: 100, color: Colors.green,),
-        backgroundColor: Theme.of(context).backgroundColor,
-        actions: <Widget>[
-          FlatButton(
-            child: Text("Next", style: TextStyle(
-              color: Theme.of(context).accentColor,
-              fontSize: 18,
-            ),),
-            onPressed: () {
-              if (widget.responses == null)
-                nextPage = ThanksPage();
-              else
-                nextPage = FollowupPage(responses: widget.responses,
-                    patientId: 0);
-              Navigator.of(context, rootNavigator: true).pop('dialog');
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => nextPage),
-              );
-            },
-          ),
-        ],
-      )
-          :
-      AlertDialog(
-        title: Text("Upload failed...", style: Theme.of(context).textTheme.headline1,),
-        content: Icon(Icons.error, size: 100, color: Colors.red,),
-        backgroundColor: Theme.of(context).backgroundColor,
-        actions: <Widget>[
-          FlatButton(
-            child: Text("Retry", style: TextStyle(
-              color: Theme.of(context).accentColor,
-              fontSize: 18,
-            ),),
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop(
-                  'dialog');
-            },
-          ),
-        ],
-      ),
-      barrierDismissible: false,
-    );
+    if (formKey.currentState.validate() & (file != null)) {
+      bool auth = false;
+      bool emailSent = false;
+      StorageUploadTask uploadTask;
 
-    setState(() => fabContent = Text("SEND"));
-    return null;
+      setState(() =>
+      fabContent = CircularProgressIndicator(
+        backgroundColor: Theme
+            .of(context)
+            .primaryColor,
+      ));
+
+      auth = await authentication();
+      if (auth) try {
+        final StorageReference firebaseStorageRef = FirebaseStorage.instance
+            .ref()
+            .child(
+            myControllers[0].text + myControllers[1].text + "." + file.path
+                .split(".")
+                .last);
+        uploadTask = firebaseStorageRef.putFile(file);
+        StorageTaskSnapshot storageSnapshot = await uploadTask.onComplete;
+        String downloadUrl = await storageSnapshot.ref.getDownloadURL();
+        emailSent = await sendEmail(downloadUrl);
+      }
+      catch (e) {
+        uploadTask.cancel();
+      }
+
+      showDialog(
+        context: context,
+        builder: (_) =>
+        (auth & uploadTask.isComplete & emailSent)
+            ?
+        AlertDialog(
+          title: Text("Upload done !", style: Theme
+              .of(context)
+              .textTheme
+              .headline1,),
+          content: Icon(Icons.check_box, size: 100, color: Colors.green,),
+          backgroundColor: Theme
+              .of(context)
+              .backgroundColor,
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Next", style: TextStyle(
+                color: Theme
+                    .of(context)
+                    .accentColor,
+                fontSize: 18,
+              ),),
+              onPressed: () {
+                if (widget.responses == null)
+                  nextPage = ThanksPage();
+                else
+                  nextPage = FollowupPage(responses: widget.responses,
+                      patientId: 0);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => nextPage),
+                );
+              },
+            ),
+          ],
+        )
+            :
+        AlertDialog(
+          title: Text("Upload failed...", style: Theme
+              .of(context)
+              .textTheme
+              .headline1,),
+          content: Icon(Icons.error, size: 100, color: Colors.red,),
+          backgroundColor: Theme
+              .of(context)
+              .backgroundColor,
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Retry", style: TextStyle(
+                color: Theme
+                    .of(context)
+                    .accentColor,
+                fontSize: 18,
+              ),),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop(
+                    'dialog');
+              },
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
+
+      setState(() => fabContent = Text("SEND"));
+      return null;
+    }
+    else {
+      setState(() => error = true);
+      Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Complete all fields"),
+            behavior: SnackBarBehavior.floating,
+          )
+      );
+    }
   }
 
   Future serverUpload(context) async {
     if (formKey.currentState.validate() & (file != null)) {
       Response response;
-      String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
+      String uploadURL = 'http://localhost:8080/api/uploadFiles';
       Dio dio = new Dio();
       FormData formData = FormData.fromMap({
         "childFirstName": myControllers[0].text,

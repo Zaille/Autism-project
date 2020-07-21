@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:asdscreening/home.dart';
 
+import 'form.dart';
+
 void main() => runApp(Index());
 
 class Index extends StatelessWidget {
@@ -101,7 +103,10 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: HomePage(),
+      home: FormPage(
+        responses: [true, false, true, false, true, true, false, true, false, true, true, false, true, false, true, true, false, true, false, true,],
+        score: 12,
+      ),
     );
   }
 }

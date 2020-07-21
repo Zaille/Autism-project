@@ -25,6 +25,7 @@ dependencies:
   firebase_core:
   firebase_analytics:
   firebase_storage:
+  firebase_auth:
   fluttertoast:
   email_validator:
   dio:

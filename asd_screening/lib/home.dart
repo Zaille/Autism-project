@@ -66,14 +66,6 @@ class HomePage extends StatelessWidget {
                             "          Please answer questions to reflect your "
                             "child's usual behaviors. If the behavior is rare "
                             "(e.g., you've seen it only once or twice), "
-                            "answer as if the child has not acquired the behavior.\n\n"
-                            "          Please answer questions to reflect your "
-                            "child's usual behaviors. If the behavior is rare "
-                            "(e.g., you've seen it only once or twice), "
-                            "answer as if the child has not acquired the behavior.\n\n"
-                            "          Please answer questions to reflect your "
-                            "child's usual behaviors. If the behavior is rare "
-                            "(e.g., you've seen it only once or twice), "
                             "answer as if the child has not acquired the behavior.",
                         textAlign: TextAlign.justify,
                         style: Theme.of(context).textTheme.bodyText2,
