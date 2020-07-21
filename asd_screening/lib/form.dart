@@ -10,10 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:asdscreening/roundedContainer.dart";
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+
 class FormPage extends StatefulWidget {
-  FormPage({Key key, this.responses}) : super(key: key);
+  FormPage({Key key, this.responses, this.score}) : super(key: key);
 
   final List<bool> responses;
+  final int score;
 
   @override
   FormPageState createState() {
@@ -39,31 +45,35 @@ class FormPageState extends State<FormPage> {
   final RegExp phoneRegExp = new RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)');
 
   final picker = ImagePicker();
-  List<File> files = [null];
-  List<String> textButton = ["Add a video"];
+  File file;
+  String textButton = "Add a video";
 
   Widget nextPage;
+  Widget fabContent = Text("SEND");
+
+  FirebaseApp app;
+  FirebaseStorage storage;
+  final smtpServer = gmail("asdscreening.portsmouthuniv@gmail.com", "7XWJXXByubj6h27");
 
 
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       floatingActionButton: Builder(
           builder: (BuildContext context) {
             return Container(
-                    padding: EdgeInsets.only(bottom: 10),
-                    width: 300,
-                    child:  FloatingActionButton.extended(
-                      onPressed: () {
-                        nextWithoutUpload(context);
-                      },
-                      label: Text("SEND"),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),),
-                    )
-                  );
+                padding: EdgeInsets.only(bottom: 10),
+                width: 300,
+                child:  FloatingActionButton.extended(
+                  onPressed: () {
+                    firebaseUpload(context);
+                  },
+                  label: fabContent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)),),
+                )
+            );
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Form(
@@ -85,11 +95,11 @@ class FormPageState extends State<FormPage> {
               padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
               child: Text(
                 "          Complete the information requested "
-                "to facilitate the contact between you and our specialists "
-                "and allow them to procede to further analysis.\n\n"
-                "You will be asked to send a video of your child behaviour "
-                "that last at least 1 minute to identify a possible indicator"
-                " of ASD behaviour.",
+                    "to facilitate the contact between you and our specialists "
+                    "and allow them to procede to further analysis.\n\n"
+                    "You will be asked to send a video of your child behaviour "
+                    "that last at least 1 minute to identify a possible indicator"
+                    " of ASD behaviour.",
                 textAlign: TextAlign.justify,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
@@ -224,11 +234,11 @@ class FormPageState extends State<FormPage> {
                     children: <Widget>[
                       Expanded(
                         flex: 2,
-                        child: files[0] == null
+                        child: file == null
                             ? Text('No file selected.',
-                                style: error?TextStyle(color: Colors.red)
-                                        :Theme.of(context).textTheme.bodyText2,
-                              )
+                          style: error?TextStyle(color: Colors.red)
+                              :Theme.of(context).textTheme.bodyText2,
+                        )
                             : Row(
                           children: <Widget>[
                             Icon(Icons.check, color: Colors.green,),
@@ -242,7 +252,7 @@ class FormPageState extends State<FormPage> {
                           shape: RoundedRectangleBorder (
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Text(textButton[0]),
+                          child: Text(textButton),
                           onPressed: () {
                             getFile(0);
                           },
@@ -264,20 +274,125 @@ class FormPageState extends State<FormPage> {
     );
   }
 
+
   void getFile(index) async {
-    final pickedFile = await ImagePicker.pickVideo(source: ImageSource.gallery);
-    if (pickedFile == null) return;
-    setState(() {
-      files[index] = pickedFile;
-    });
-    if(files[index] != null)
-      textButton[index] = "Change video";
+    File pickedFile = await ImagePicker.pickVideo(source: ImageSource.gallery);
+    setState(() => file = pickedFile);
+    if(file != null)
+      setState(() => textButton = "Change video");
     else
-      textButton[index] = "Add a video";
+      setState(() => textButton = "Add a video");
   }
 
-  Future sendData(context) async {
-    if (formKey.currentState.validate() & (files[0] != null)) {
+  Future<bool> sendEmail(link) async {
+    String text =
+        "Score: " + widget.score.toString() +
+        ",\nChild First Name: " + myControllers[0].text +
+        ",\nChild Last Name: " + myControllers[1].text +
+        ",\nChild Age: " + myControllers[2].text + " months" +
+        ",\nParent First Name: " + myControllers[3].text +
+        ",\nParent Last Name: " + myControllers[4].text +
+        ",\nEmail: " + myControllers[5].text +
+        ",\nPhoneNumber: " + myControllers[6].text +
+        ",\nVideo link: " + link +
+        ",\nResponses (";
+    widget.responses.asMap().forEach((index, element) {
+      if (element)
+        text += (index + 1).toString() + ": Pass, ";
+      else
+        text += (index + 1).toString() + ": Fail, ";
+    });
+    text += ").";
+
+    final message = Message()
+      ..from = Address("asdscreening.portsmouthuniv@gmail.com")
+      ..recipients.add("asdscreening.portsmouthuniv@gmail.com")
+      ..subject = "New Request for "
+          + myControllers[0].text + " "
+          + myControllers[1].text
+      ..text = text;
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+      return true;
+    }
+    on MailerException catch (e) {
+      print('Message not sent. \n'+ e.toString());
+      return false;
+    }
+}
+
+  void firebaseUpload(context) async {
+    setState(() => fabContent = CircularProgressIndicator(
+      backgroundColor: Theme.of(context).primaryColor,
+    ),);
+    print(file.path);
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child(myControllers[0].text + myControllers[1].text + "." + file.path.split(".").last);
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(file);
+    StorageTaskSnapshot storageSnapshot = await uploadTask.onComplete;
+    String downloadUrl = await storageSnapshot.ref.getDownloadURL()
+        .timeout(const Duration(seconds: 10));
+    bool emailSent = await sendEmail(downloadUrl);
+    showDialog(
+      context: context,
+      builder: (_) =>
+      (uploadTask.isComplete & emailSent)
+          ?
+      AlertDialog(
+        title: Text("Upload done !", style: Theme.of(context).textTheme.headline1,),
+        content: Icon(Icons.check_box, size: 100, color: Colors.green,),
+        backgroundColor: Theme.of(context).backgroundColor,
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Next", style: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontSize: 18,
+            ),),
+            onPressed: () {
+              if (widget.responses == null)
+                nextPage = ThanksPage();
+              else
+                nextPage = FollowupPage(responses: widget.responses,
+                    patientId: 0);
+              Navigator.of(context, rootNavigator: true).pop('dialog');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => nextPage),
+              );
+            },
+          ),
+        ],
+      )
+          :
+      AlertDialog(
+        title: Text("Upload failed...", style: Theme.of(context).textTheme.headline1,),
+        content: Icon(Icons.error, size: 100, color: Colors.red,),
+        backgroundColor: Theme.of(context).backgroundColor,
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Retry", style: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontSize: 18,
+            ),),
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop(
+                  'dialog');
+            },
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+
+    setState(() => fabContent = Text("SEND"));
+    return null;
+  }
+
+  Future serverUpload(context) async {
+    if (formKey.currentState.validate() & (file != null)) {
       Response response;
       String uploadURL = 'http://192.168.1.45:8080/api/uploadFiles';
       Dio dio = new Dio();
@@ -290,9 +405,9 @@ class FormPageState extends State<FormPage> {
         "email": myControllers[5].text,
         "phoneNumber": myControllers[6].text,
         "password": myControllers[7].text,
-        "file": await MultipartFile.fromFile(files[0].path, filename: files[0].path
-              .split('/')
-              .last),
+        "file": await MultipartFile.fromFile(file.path, filename: file.path
+            .split('/')
+            .last),
       });
       Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -363,7 +478,7 @@ class FormPageState extends State<FormPage> {
   }
 
   nextWithoutUpload(context) {
-    if (formKey.currentState.validate() & (files[0] != null)) {
+    if (formKey.currentState.validate() & (file != null)) {
       if (widget.responses == null)
         nextPage = ThanksPage();
       else
@@ -392,23 +507,23 @@ class FormPageState extends State<FormPage> {
     obscureText = false,
     label,
     validator}) {
-      return Container(
-        padding: EdgeInsets.only(bottom: 15),
-        child: TextFormField(
-          controller: myControllers[index],
-          keyboardType: keyboardType,
-          maxLength: maxLength,
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            labelText: label,
-            border: OutlineInputBorder(),
-          ),
-          onChanged: (value) {
-            if (error) formKey.currentState.validate();
-          },
-          validator: validator,
+    return Container(
+      padding: EdgeInsets.only(bottom: 15),
+      child: TextFormField(
+        controller: myControllers[index],
+        keyboardType: keyboardType,
+        maxLength: maxLength,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(),
         ),
-      );
+        onChanged: (value) {
+          if (error) formKey.currentState.validate();
+        },
+        validator: validator,
+      ),
+    );
   }
 
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "735740845451",
+    "firebase_url": "https://asdscreening-4f601.firebaseio.com",
+    "project_id": "asdscreening-4f601",
+    "storage_bucket": "asdscreening-4f601.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735740845451:android:260d22e0d043357c8ce38e",
+        "android_client_info": {
+          "package_name": "com.example.asdscreening"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735740845451-t93dosttcuodprh38sub5hln5mpfl83b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw4nQYzsF-n-aRhZmdxDI4bWmH3PvsFnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735740845451-t93dosttcuodprh38sub5hln5mpfl83b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

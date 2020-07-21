@@ -36,7 +36,7 @@ class ResultsPageState extends State<ResultsPage> {
           "surveillance indicates risk for ASD.";
     }
     else if(widget.score < 8) {
-      nextPage = FormPage(responses: widget.responses,);
+      nextPage = FormPage(responses: widget.responses, score: widget.score,);
       text = "Medium-risk.";
       description =
           "     You will be administer a Follow-Up interview because " +
@@ -53,7 +53,7 @@ class ResultsPageState extends State<ResultsPage> {
           "in order to be followed by a specialist";
     }
     else {
-      nextPage = FormPage();
+      nextPage = FormPage(responses: widget.responses, score: widget.score,);
       text = "High-risk.";
       description =
           "  It is acceptable to bypass the Follow-Up and refer "

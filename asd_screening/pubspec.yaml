@@ -21,6 +21,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  mailer:
+  firebase_core:
+  firebase_analytics:
+  firebase_storage:
   fluttertoast:
   email_validator:
   dio:
