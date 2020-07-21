@@ -103,10 +103,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: FormPage(
-        responses: [true, false, true, false, true, true, false, true, false, true, true, false, true, false, true, true, false, true, false, true,],
-        score: 12,
-      ),
+      home: HomePage(),
     );
   }
 }
