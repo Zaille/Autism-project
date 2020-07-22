@@ -2,35 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:asdscreening/home.dart';
 
-import 'form.dart';
+void main() => runApp(MyApp());
 
-void main() => runApp(Index());
-
-class Index extends StatelessWidget {
+class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return MaterialApp(
-      title: 'M-CHAT-R Test',
-      home: MyApp(),
-    );
-  }
-}
-
-class MyApp extends StatefulWidget {
-  MyApp({Key key}) : super(key: key);
-
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ASD Screening',
       theme: ThemeData(
@@ -77,9 +57,9 @@ class _MyAppState extends State<MyApp> {
         highlightColor: Colors.black.withOpacity(0),
         textTheme: TextTheme(
           headline1: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 26,
-              color: Colors.white.withOpacity(0.7),
+            fontWeight: FontWeight.bold,
+            fontSize: 26,
+            color: Colors.white.withOpacity(0.7),
           ),
           headline2: TextStyle(
             fontWeight: FontWeight.bold,

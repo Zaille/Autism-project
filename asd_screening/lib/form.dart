@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import "package:asdscreening/roundedContainer.dart";
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
@@ -51,11 +51,6 @@ class FormPageState extends State<FormPage> {
 
   Widget nextPage;
   Widget fabContent = Text("SEND");
-
-  FirebaseApp app;
-  FirebaseStorage storage;
-  final smtpServer = gmail("asdscreening.portsmouthuniv@gmail.com", "7XWJXXByubj6h27");
-
 
   @override
   Widget build(BuildContext context) {
@@ -287,11 +282,7 @@ class FormPageState extends State<FormPage> {
 
   Future authentication() async {
     try {
-      dynamic authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: "asdscreening.portsmouthuniv@gmail.com",
-        password: "NiE936Dh7TidCoxS",
-      );
-      print(authResult.user);
+      await FirebaseAuth.instance.signInAnonymously();
       return true;
     }
     catch (e) {
@@ -300,7 +291,8 @@ class FormPageState extends State<FormPage> {
     }
   }
 
-  Future<bool> sendEmail(link) async {
+  Future<bool> sendEmail(link, id, password) async {
+    //Creating the text based on the form
     String text =
         "Score: " + widget.score.toString() +
             ",\nChild First Name: " + myControllers[0].text +
@@ -320,6 +312,7 @@ class FormPageState extends State<FormPage> {
     });
     text += ").";
 
+    //Creating the email
     final message = Message()
       ..from = Address("asdscreening.portsmouthuniv@gmail.com")
       ..recipients.add("asdscreening.portsmouthuniv@gmail.com")
@@ -328,9 +321,11 @@ class FormPageState extends State<FormPage> {
           + myControllers[1].text
       ..text = text;
 
+    //Sending the email
+    final smtpServer = gmail(id, password);
     try {
       final sendReport = await send(message, smtpServer);
-      print('Message sent: ' + sendReport.toString());
+      print('Email: ' + sendReport.toString());
       return true;
     }
     on MailerException catch (e) {
@@ -345,6 +340,7 @@ class FormPageState extends State<FormPage> {
       bool emailSent = false;
       StorageUploadTask uploadTask;
 
+      //User interface to show the upload process
       setState(() =>
       fabContent = CircularProgressIndicator(
         backgroundColor: Theme
@@ -352,18 +348,30 @@ class FormPageState extends State<FormPage> {
             .primaryColor,
       ));
 
+      //Authentication, uploading the file and getting the downloadURL
       auth = await authentication();
       if (auth) try {
-        final StorageReference firebaseStorageRef = FirebaseStorage.instance
+        final DatabaseReference databaseRef = FirebaseDatabase.instance
+            .reference().child('emailAccount');
+        final StorageReference storageRef = FirebaseStorage.instance
             .ref()
-            .child(
-            myControllers[0].text + myControllers[1].text + "." + file.path
-                .split(".")
-                .last);
-        uploadTask = firebaseStorageRef.putFile(file);
+            .child(myControllers[0].text
+                + myControllers[1].text
+                + "." + file.path.split(".").last
+            );
+
+        uploadTask = storageRef.putFile(file);
         StorageTaskSnapshot storageSnapshot = await uploadTask.onComplete;
         String downloadUrl = await storageSnapshot.ref.getDownloadURL();
-        emailSent = await sendEmail(downloadUrl);
+
+        //Gathering id and password from the database
+        await databaseRef.once().then((data) async {
+          emailSent = await sendEmail(
+              downloadUrl,
+              data.value['id'],
+              data.value['password']
+          );
+        });
       }
       catch (e) {
         uploadTask.cancel();

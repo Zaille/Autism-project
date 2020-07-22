@@ -74,6 +74,7 @@ class HomePage extends StatelessWidget {
                   ],
                 )
             ),
+            Container(padding: EdgeInsets.only(top: 20), child: Copyright()),
             SubmitButton(
               text: "START",
               onPressed: () {
@@ -83,7 +84,6 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
-            Copyright(),
           ],
         ),
       ),
